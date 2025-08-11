@@ -1,0 +1,6 @@
+#ifndef COMMANDFACTORY_HPP
+#define COMMANDFACTORY_HPP
+
+
+
+#endif
