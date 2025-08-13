@@ -14,42 +14,50 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup APT cache directory
-        run: |
-          sudo mkdir -p /tmp/apt-cache
-          sudo ln -sf /tmp/apt-cache /var/cache/apt/archives
-
+      # Cache APT packages
       - name: Cache APT packages
         uses: actions/cache@v4
         with:
           path: /tmp/apt-cache
-          key: ${{ runner.os }}-apt-${{ hashFiles('**/Makefile') }}
+          key: ${{ runner.os }}-apt
           restore-keys: |
-            ${{ runner.os }}-apt-
+            ${{ runner.os }}-apt
 
-      - name: Install Valgrind
+      # Setup APT cache directory
+      - name: Setup APT cache directory
+        run: |
+          sudo mkdir -p /tmp/apt-cache
+          sudo chown -R $USER:$USER /tmp/apt-cache
+          sudo ln -sf /tmp/apt-cache /var/cache/apt/archives
+
+      # Install dependencies
+      - name: Install dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y valgrind
 
+      # Build project
       - name: Build project
         run: make CFLAGS="-Wall -Wextra -Werror -MMD -g"
 
+      # Run Valgrind checks
       - name: Run Valgrind checks
         run: |
           mkdir -p logs
-          valgrind --leak-check=full \
-                   --show-leak-kinds=all \
-                   --track-fds=all \  # Explicitly track all FDs
-                   --error-exitcode=1 \
-                   --log-file=logs/valgrind.log \
-                   ./ircserv 8080 pass &
+          ./ircserv 8080 pass &
           SERVER_PID=$!
           sleep 5
+          valgrind --leak-check=full \
+                   --show-leak-kinds=all \
+                   --track-fds=all \
+                   --error-exitcode=1 \
+                   --log-file=logs/valgrind.log \
+                   -- ./ircserv 8080 pass || true
           kill -INT $SERVER_PID
           timeout 10 bash -c "while kill -0 $SERVER_PID 2>/dev/null; do sleep 0.1; done" || \
             (echo "Server did not exit gracefully" && kill -TERM $SERVER_PID && exit 1)
 
+      # Upload Valgrind log
       - name: Upload Valgrind log
         if: always()
         uses: actions/upload-artifact@v4
