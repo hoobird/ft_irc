@@ -4,6 +4,8 @@
 #include <signal.h>
 #include <unistd.h>
 #include <string>
+#include <cstdlib>
+#include <cerrno>
 
 static bool serverRunning = true; // Control epoll loop
 
@@ -43,7 +45,14 @@ bool checkInputArgs(int argc, char** argv, std::string& port, std::string& passw
     }
 
     // Validate port
-    long portNum = strtol(port.c_str(), NULL, 10);
+    errno = 0;
+    char *endptr;
+    int base = 10; // Base 10 for decimal
+    long portNum = std::strtol(port.c_str(), NULL, base);
+    if (errno == ERANGE || portNum < 0 || *endptr != '\0') {
+        std::cerr << "Error: Invalid port number." << std::endl;
+        return false;
+    }
     if (portNum <= 1023 || portNum > 65535) // Port must be between 1024 and 65535 as ports below 1024 are reserved
     {
         std::cerr << "Error: Port number must be between 1024 and 65535." << std::endl;
