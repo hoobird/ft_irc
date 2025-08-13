@@ -15,19 +15,29 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. Install Valgrind
-      - name: Install dependencies
-        run: sudo apt-get update && sudo apt-get install -y valgrind
+      # 2. Cache APT packages (including Valgrind's .deb files)
+      - name: Cache APT packages
+        uses: actions/cache@v4
+        with:
+          path: /var/cache/apt/archives
+          key: ${{ runner.os }}-apt-${{ hashFiles('**/Makefile') }}
+          restore-keys: |
+            ${{ runner.os }}-apt-
 
-      # 3. Build with your Makefile
+      # 3. Install Valgrind (will use cached .deb files if available)
+      - name: Install Valgrind
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y valgrind
+
+      # 4. Build with your Makefile
       - name: Build project
         run: make CFLAGS="-Wall -Wextra -Werror -MMD -g"
 
-      # 4. Run Valgrind memory leak check with graceful shutdown
+      # 5. Run Valgrind memory leak check with graceful shutdown
       - name: Run Valgrind checks
         run: |
           mkdir -p logs
-          # Start server in background through Valgrind
           valgrind --leak-check=full \
                    --show-leak-kinds=all \
                    --track-fds=yes \
@@ -35,19 +45,13 @@ jobs:
                    --log-file=logs/valgrind.log \
                    ./ircserv 8080 pass &
           SERVER_PID=$!
-          
-          # Give server time to initialize
           sleep 5
-          
-          # Send SIGINT to trigger graceful shutdown
           kill -INT $SERVER_PID
-          
-          # Wait for server to exit (with timeout to prevent hanging)
           timeout 10 wait $SERVER_PID || (echo "Server did not exit gracefully" && exit 1)
 
-      # 5. Upload Valgrind log as artifact
+      # 6. Upload Valgrind log as artifact
       - name: Upload Valgrind log
-        if: always()   # Always upload even if the previous step failed
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: valgrind-log
