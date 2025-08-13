@@ -91,11 +91,12 @@ jobs:
                     # Check valgrind log for fd leaks
           if grep -q "FILE DESCRIPTORS: " logs/valgrind.log; then
             echo -e "${YELLOW}${BOLD}Checking for fd leaks...${NC}"
-            # Check for open FDs but ignore inherited ones and the valgrind log file
-            if grep -A 20 "FILE DESCRIPTORS:" logs/valgrind.log | grep -v "<inherited from parent>" | grep -v "valgrind.log" | grep -q "Open file descriptor"; then
+            # Extract FD section, then count non-inherited, non-valgrind-log file descriptors
+            fd_section=$(grep -A 20 "FILE DESCRIPTORS:" logs/valgrind.log)
+            if echo "$fd_section" | grep "Open file descriptor" | grep -v "<inherited from parent>" | grep -v "valgrind.log" | grep -q .; then
               echo -e "${RED}${BOLD}⚠️ FAILED: Found file descriptor leaks! ⚠️${NC}"
               echo -e "${RED}----------------------------------------${NC}"
-              grep -A 20 "FILE DESCRIPTORS:" logs/valgrind.log
+              echo "$fd_section"
               echo -e "${RED}----------------------------------------${NC}"
               exit 1
             else
