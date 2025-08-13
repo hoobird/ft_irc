@@ -29,7 +29,13 @@ jobs:
           valgrind --leak-check=full \
                    --show-leak-kinds=all \
                    --track-fds=yes \
+        run: |
+          mkdir -p logs
+          valgrind --leak-check=full \
+                   --show-leak-kinds=all \
+                   --track-fds=yes \
                    --error-exitcode=1 \
+                   --log-file=logs/valgrind.log \
                    ./ircserv 8080 pass || (echo "Valgrind check failed" && exit 1)
 
       # 5. Upload Valgrind log as artifact
