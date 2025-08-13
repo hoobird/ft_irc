@@ -65,34 +65,53 @@ jobs:
           
           chmod +x run_valgrind.sh
           
+          # Define color codes for better visibility
+          GREEN='\033[0;32m'
+          RED='\033[0;31m'
+          YELLOW='\033[1;33m'
+          BLUE='\033[0;34m'
+          BOLD='\033[1m'
+          NC='\033[0m' # No Color
+          
+          echo -e "${BLUE}${BOLD}=== STARTING VALGRIND TEST ====${NC}"
+          
           # Run the script in background
           ./run_valgrind.sh &
           SERVER_PID=$!
           
           # Wait for server to initialize
+          echo -e "${YELLOW}Waiting for server initialization...${NC}"
           sleep 5
           
           # Send shutdown signal
+          echo -e "${YELLOW}Sending shutdown signal to server...${NC}"
           kill -INT $SERVER_PID
           
           # Wait for graceful shutdown (max 10 seconds)
+          echo -e "${YELLOW}Waiting for server shutdown...${NC}"
           timeout 10 bash -c "while kill -0 $SERVER_PID 2>/dev/null; do sleep 0.1; done" || \
-            (echo "Server did not exit gracefully" && kill -TERM $SERVER_PID && exit 1)
+            (echo -e "${RED}${BOLD}ERROR: Server did not exit gracefully${NC}" && kill -TERM $SERVER_PID && exit 1)
+          
+          echo -e "${BLUE}${BOLD}=== ANALYZING VALGRIND RESULTS ====${NC}"
           
           # Check valgrind log for fd leaks
           if grep -q "FILE DESCRIPTORS: " logs/valgrind.log; then
-            echo "Checking for fd leaks..."
+            echo -e "${YELLOW}${BOLD}Checking for fd leaks...${NC}"
             if grep -A 20 "FILE DESCRIPTORS:" logs/valgrind.log | grep -q "Open file descriptor"; then
-              echo "Found file descriptor leaks!"
+              echo -e "${RED}${BOLD}⚠️ FAILED: Found file descriptor leaks! ⚠️${NC}"
+              echo -e "${RED}----------------------------------------${NC}"
               grep -A 20 "FILE DESCRIPTORS:" logs/valgrind.log
+              echo -e "${RED}----------------------------------------${NC}"
               exit 1
             else
-              echo "No file descriptor leaks detected."
+              echo -e "${GREEN}${BOLD}✅ PASSED: No file descriptor leaks detected.${NC}"
             fi
           else
-            echo "Valgrind did not report file descriptor information."
+            echo -e "${RED}${BOLD}⚠️ ERROR: Valgrind did not report file descriptor information.${NC}"
             exit 1
           fi
+          
+          echo -e "${BLUE}${BOLD}=== VALGRIND TEST COMPLETED ====${NC}"
 
       # Upload Valgrind log
       - name: Upload Valgrind log
