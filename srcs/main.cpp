@@ -48,7 +48,7 @@ bool checkInputArgs(int argc, char** argv, std::string& port, std::string& passw
     errno = 0;
     char *endptr;
     int base = 10; // Base 10 for decimal
-    long portNum = std::strtol(port.c_str(), NULL, base);
+    long portNum = std::strtol(port.c_str(), &endptr, base);
     if (errno == ERANGE || portNum < 0 || *endptr != '\0') {
         std::cerr << "Error: Invalid port number." << std::endl;
         return false;
@@ -74,7 +74,6 @@ int main(int argc, char** argv) {
 
     // Check input arguments
     if (!checkInputArgs(argc, argv, port, password)) {
-        std::cerr << "Error: Invalid input arguments." << std::endl;
         return -1;
     }
 
