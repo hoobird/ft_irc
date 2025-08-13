@@ -15,7 +15,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. Cache APT packages (including Valgrind's .deb files)
+      # 2. Cache APT packages to speed up Valgrind installation
       - name: Cache APT packages
         uses: actions/cache@v4
         with:
@@ -24,8 +24,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-apt-
 
-      # 3. Install Valgrind (will use cached .deb files if available)
-      - name: Install Valgrind
+      # 3. Install Valgrind
+      - name: Install dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y valgrind
@@ -34,10 +34,11 @@ jobs:
       - name: Build project
         run: make CFLAGS="-Wall -Wextra -Werror -MMD -g"
 
-           - name: Run Valgrind checks
+      # 5. Run Valgrind memory leak check with proper process management
+      - name: Run Valgrind checks
         run: |
           mkdir -p logs
-          # Start server in background through Valgrind
+          # Start server through Valgrind in background
           valgrind --leak-check=full \
                    --show-leak-kinds=all \
                    --track-fds=yes \
@@ -49,14 +50,31 @@ jobs:
           # Give server time to initialize
           sleep 5
           
-          # Send SIGINT to trigger graceful shutdown
+          # Send SIGINT for graceful shutdown
           kill -INT $SERVER_PID
           
-          # Wait for server to exit with timeout
-          timeout 10 bash -c "while kill -0 $SERVER_PID 2>/dev/null; do sleep 0.1; done" || \
-            (echo "Server did not exit gracefully" && kill -TERM $SERVER_PID && exit 1)
-            
-      # 6. Upload Valgrind log as artifact
+          # Wait for process to exit with timeout
+          TIMEOUT=10
+          ELAPSED=0
+          while kill -0 $SERVER_PID 2>/dev/null && [ $ELAPSED -lt $TIMEOUT ]; do
+            sleep 1
+            ELAPSED=$((ELAPSED + 1))
+          done
+          
+          # Force kill if still running
+          if kill -0 $SERVER_PID 2>/dev/null; then
+            echo "Server did not exit gracefully - sending SIGTERM"
+            kill -TERM $SERVER_PID
+            sleep 1
+            # Final attempt with SIGKILL if needed
+            if kill -0 $SERVER_PID 2>/dev/null; then
+              echo "Server still not terminated - sending SIGKILL"
+              kill -KILL $SERVER_PID
+            fi
+            exit 1
+          fi
+
+      # 6. Upload Valgrind log as artifact (even if previous step failed)
       - name: Upload Valgrind log
         if: always()
         uses: actions/upload-artifact@v4
