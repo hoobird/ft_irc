@@ -6,8 +6,15 @@
 #include <string>
 #include <cstdlib>
 #include <cerrno>
+#include <limits>
+#include <fcntl.h>
+
 
 static bool serverRunning = true; // Control epoll loop
+
+// Port must be between 1024 and 65535 as ports below 1024 are reserved
+const int MIN_PORT = 1024;
+const int MAX_PORT = 65535;
 
 void    signalHandler(int signum) {
     if (signum == SIGINT || signum == SIGQUIT) {
@@ -49,11 +56,11 @@ bool checkInputArgs(int argc, char** argv, std::string& port, std::string& passw
     char *endptr;
     int base = 10; // Base 10 for decimal
     long portNum = std::strtol(port.c_str(), &endptr, base);
-    if (errno == ERANGE || portNum < 0 || *endptr != '\0') {
+    if (errno == ERANGE || portNum < 0 || portNum > std::numeric_limits<int>::max() || *endptr != '\0') {
         std::cerr << "Error: Invalid port number." << std::endl;
         return false;
     }
-    if (portNum <= 1023 || portNum > 65535) // Port must be between 1024 and 65535 as ports below 1024 are reserved
+    if (portNum <= MIN_PORT || portNum > MAX_PORT) 
     {
         std::cerr << "Error: Port number must be between 1024 and 65535." << std::endl;
         return false;
@@ -74,6 +81,13 @@ int main(int argc, char** argv) {
 
     // Check input arguments
     if (!checkInputArgs(argc, argv, port, password)) {
+        return -1;
+    }
+
+    // open a random file descriptor to simulate valgrind fd open error
+    int fd = open("/dev/null", O_RDONLY);
+    if (fd < 0) {
+        std::cerr << "Error: Unable to open /dev/null." << std::endl;
         return -1;
     }
 

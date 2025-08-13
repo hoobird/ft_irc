@@ -40,21 +40,59 @@ jobs:
       - name: Build project
         run: make CFLAGS="-Wall -Wextra -Werror -MMD -g"
 
-      - name: Run Valgrind checks
+      - name: Run Valgrind checks for fd leaks
         run: |
           mkdir -p logs
-          valgrind --leak-check=full \
-                   --show-leak-kinds=all \
-                   --track-fds=yes \
-                   --child-silent-after-fork=yes \
-                   --error-exitcode=1 \
-                   --log-file=logs/valgrind.log \
-                   ./ircserv 8080 pass &
+          # Create a script to run the server with Valgrind
+          cat > run_valgrind.sh << 'EOF'
+          #!/bin/bash
+          # Close all inherited file descriptors except stdin, stdout, stderr
+          for fd in $(ls /proc/$$/fd); do
+            if [ "$fd" -gt 2 ]; then
+              eval "exec $fd>&-"
+            fi
+          done
+          
+          # Now run valgrind
+          exec valgrind --leak-check=full \
+                        --show-leak-kinds=all \
+                        --track-fds=yes \
+                        --child-silent-after-fork=yes \
+                        --error-exitcode=1 \
+                        --log-file=logs/valgrind.log \
+                        ./ircserv 8080 pass
+          EOF
+          
+          chmod +x run_valgrind.sh
+          
+          # Run the script in background
+          ./run_valgrind.sh &
           SERVER_PID=$!
+          
+          # Wait for server to initialize
           sleep 5
+          
+          # Send shutdown signal
           kill -INT $SERVER_PID
+          
+          # Wait for graceful shutdown (max 10 seconds)
           timeout 10 bash -c "while kill -0 $SERVER_PID 2>/dev/null; do sleep 0.1; done" || \
             (echo "Server did not exit gracefully" && kill -TERM $SERVER_PID && exit 1)
+          
+          # Check valgrind log for fd leaks
+          if grep -q "FILE DESCRIPTORS: " logs/valgrind.log; then
+            echo "Checking for fd leaks..."
+            if grep -A 20 "FILE DESCRIPTORS:" logs/valgrind.log | grep -q "Open file descriptor"; then
+              echo "Found file descriptor leaks!"
+              grep -A 20 "FILE DESCRIPTORS:" logs/valgrind.log
+              exit 1
+            else
+              echo "No file descriptor leaks detected."
+            fi
+          else
+            echo "Valgrind did not report file descriptor information."
+            exit 1
+          fi
 
       # Upload Valgrind log
       - name: Upload Valgrind log
