@@ -25,6 +25,10 @@ jobs:
       # Set up valgrind - install from cache or from apt
       - name: Install Valgrind with dependencies
         run: |
+          # Disable man-db updates to speed up installation
+          sudo rm -f /var/lib/man-db/auto-update
+          echo 'man-db man-db/auto-update boolean false' | sudo debconf-set-selections
+          
           sudo mkdir -p /var/cache/apt/archives
           
           # Check if we have cache
@@ -36,9 +40,9 @@ jobs:
             mkdir -p ~/.local/apt-archives
           fi
           
-          # Install valgrind and dependencies
+          # Install valgrind and dependencies with man-db updates disabled
           sudo apt-get update
-          sudo apt-get install -y valgrind gdb
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends valgrind gdb
           
           # Cache the .deb files for next time
           cp /var/cache/apt/archives/*.deb ~/.local/apt-archives/ 2>/dev/null || true
