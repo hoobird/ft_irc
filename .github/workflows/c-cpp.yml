@@ -1,0 +1,41 @@
+name: C++ CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Check out code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Install Valgrind
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y valgrind
+
+      # 3. Build with your Makefile
+      - name: Build project
+        run: make CFLAGS="-Wall -Wextra -Werror -MMD -g"
+
+      # 4. Run Valgrind memory leak check
+      - name: Run Valgrind checks
+        run: |
+          valgrind --leak-check=full \
+                   --show-leak-kinds=all \
+                   --track-fds=yes \
+                   --error-exitcode=1 \
+                   ./ircserv 8080 pass || (echo "Valgrind check failed" && exit 1)
+
+      # 5. Upload Valgrind log as artifact
+      - name: Upload Valgrind log
+        if: always()   # Always upload even if the previous step failed
+        uses: actions/upload-artifact@v4
+        with:
+          name: valgrind-log
+          path: logs/valgrind.log
