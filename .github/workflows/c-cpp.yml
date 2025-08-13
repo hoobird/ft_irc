@@ -44,15 +44,14 @@ jobs:
       - name: Run Valgrind checks
         run: |
           mkdir -p logs
-          ./ircserv 8080 pass &
-          SERVER_PID=$!
-          sleep 5
           valgrind --leak-check=full \
                    --show-leak-kinds=all \
                    --track-fds=all \
                    --error-exitcode=1 \
                    --log-file=logs/valgrind.log \
-                   -- ./ircserv 8080 pass || true
+                   ./ircserv 8080 pass &
+          SERVER_PID=$!
+          sleep 5
           kill -INT $SERVER_PID
           timeout 10 bash -c "while kill -0 $SERVER_PID 2>/dev/null; do sleep 0.1; done" || \
             (echo "Server did not exit gracefully" && kill -TERM $SERVER_PID && exit 1)
