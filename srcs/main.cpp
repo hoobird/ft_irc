@@ -85,7 +85,7 @@ int main(int argc, char** argv) {
     }
 
     std::string *strr = new std::string("Server started on port: " + port + " with password: " + password);
-
+    (void)strr; // Suppress unused variable warning
     // while loop that just runs some waiting logic
     while (serverRunning) {
         // Simulate waiting logic
