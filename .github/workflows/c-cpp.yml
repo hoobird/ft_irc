@@ -14,29 +14,40 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Cache APT packages with extended dependencies
-      - name: Cache APT packages
+      # Simple binary cache for installed packages
+      - name: Cache installed packages
+        id: cache-valgrind
         uses: actions/cache@v4
         with:
-          path: /tmp/apt-cache
-          key: Linux-apt-valgrind-extended-${{ hashFiles('.github/workflows/c-cpp.yml') }}
-          restore-keys: |
-            Linux-apt-valgrind-extended-
-            Linux-apt-
+          path: ~/.local/valgrind-cache
+          key: ubuntu-valgrind-${{ hashFiles('.github/workflows/c-cpp.yml') }}
 
-      # Set up APT caching properly
-      - name: Setup APT cache directory
+      # Set up valgrind - install from cache or from apt
+      - name: Install Valgrind
         run: |
-          sudo mkdir -p /tmp/apt-cache
-          sudo chown -R $USER:$USER /tmp/apt-cache
-          sudo rm -rf /var/cache/apt/archives
-          sudo ln -s /tmp/apt-cache /var/cache/apt/archives
-
-      # Install dependencies with caching all related packages
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-update valgrind gdb libbabeltrace1 libc6-dbg libdebuginfod-common libdebuginfod1t64 libipt2 libsource-highlight-common libsource-highlight4t64
+          if [[ -d ~/.local/valgrind-cache ]]; then
+            echo "Using cached Valgrind"
+            sudo cp -r ~/.local/valgrind-cache/* /usr/
+          else
+            echo "Installing Valgrind from repositories"
+            sudo apt-get update
+            sudo apt-get install -y valgrind gdb
+            
+            # Cache the binaries and libraries
+            mkdir -p ~/.local/valgrind-cache/bin
+            mkdir -p ~/.local/valgrind-cache/lib
+            mkdir -p ~/.local/valgrind-cache/libexec
+            mkdir -p ~/.local/valgrind-cache/share
+            
+            # Copy the important files to our cache location
+            cp $(which valgrind) ~/.local/valgrind-cache/bin/
+            cp -r /usr/lib/valgrind ~/.local/valgrind-cache/lib/
+            cp -r /usr/libexec/valgrind ~/.local/valgrind-cache/libexec/ 2>/dev/null || true
+            cp -r /usr/share/valgrind ~/.local/valgrind-cache/share/ 2>/dev/null || true
+          fi
+          
+          # Verify valgrind is available
+          valgrind --version
 
       # Build project
       - name: Build project
@@ -45,10 +56,8 @@ jobs:
       - name: Run Valgrind checks for fd leaks
         run: |
           mkdir -p logs
-                   # Create a script to run the server with Valgrind
           cat > run_valgrind.sh << 'EOF'
           #!/bin/bash
-          # Run valgrind - no need to close inherited fds
           exec valgrind --leak-check=full \
                         --show-leak-kinds=all \
                         --track-fds=yes \
@@ -82,19 +91,16 @@ jobs:
           echo -e "${YELLOW}Sending shutdown signal to server...${NC}"
           kill -INT $SERVER_PID
           
-          # Wait for graceful shutdown (max 10 seconds)
+          # Wait for graceful shutdown
           echo -e "${YELLOW}Waiting for server shutdown...${NC}"
           timeout 10 bash -c "while kill -0 $SERVER_PID 2>/dev/null; do sleep 0.1; done" || \
             (echo -e "${RED}${BOLD}ERROR: Server did not exit gracefully${NC}" && kill -TERM $SERVER_PID && exit 1)
           
           echo -e "${BLUE}${BOLD}=== ANALYZING VALGRIND RESULTS ====${NC}"
           
-                    # Check valgrind log for fd leaks
+          # Check valgrind log for fd leaks
           if grep -q "FILE DESCRIPTORS: " logs/valgrind.log; then
             echo -e "${YELLOW}${BOLD}Checking for fd leaks...${NC}"
-            
-            # Extract full fd sections including the "inherited from parent" line
-            valgrind_output=$(cat logs/valgrind.log)
             
             # Use awk to properly parse multiline fd entries
             fd_leak_count=$(awk '
@@ -104,13 +110,12 @@ jobs:
                 if ($0 !~ /inherited from parent/ && $0 !~ /valgrind\.log/)
                   leaks++;
               }
-              END { print leaks+0 }  # +0 to convert null to 0
+              END { print leaks+0 }
             ' logs/valgrind.log)
             
             if [ "$fd_leak_count" -gt 0 ]; then
               echo -e "${RED}${BOLD}⚠️ FAILED: Found $fd_leak_count file descriptor leaks! ⚠️${NC}"
-              echo -e "${RED}----------------------------------------${NC}"
-              # Show actual leaking file descriptors
+              # Show the leaking FDs and exit with error
               awk '
                 /Open file descriptor/ {
                   fd_entry = $0;
@@ -119,13 +124,10 @@ jobs:
                     print fd_entry "\n" $0;
                 }
               ' logs/valgrind.log
-              echo -e "${RED}----------------------------------------${NC}"
-              # Show the full FD section for context
               grep -A 30 "FILE DESCRIPTORS:" logs/valgrind.log
-              echo -e "${RED}----------------------------------------${NC}"
               exit 1
             else
-              echo -e "${GREEN}${BOLD}✅ PASSED: No file descriptor leaks detected. All non-standard FDs are inherited.${NC}"
+              echo -e "${GREEN}${BOLD}✅ PASSED: No file descriptor leaks detected.${NC}"
             fi
           else
             echo -e "${RED}${BOLD}⚠️ ERROR: Valgrind did not report file descriptor information.${NC}"
@@ -133,14 +135,11 @@ jobs:
           fi
 
           # Check for memory leaks
-                    # Check for memory leaks
           if grep -q "definitely lost:" logs/valgrind.log; then
             memory_leaks=$(grep "definitely lost:" logs/valgrind.log | grep -v "0 bytes in 0 blocks")
             if [ -n "$memory_leaks" ]; then
               echo -e "${RED}${BOLD}⚠️ FAILED: Found memory leaks! ⚠️${NC}"
-              echo -e "${RED}----------------------------------------${NC}"
               grep -A 30 "LEAK SUMMARY:" logs/valgrind.log
-              echo -e "${RED}----------------------------------------${NC}"
               exit 1
             else
               echo -e "${GREEN}${BOLD}✅ PASSED: No memory leaks detected.${NC}"
