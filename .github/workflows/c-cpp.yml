@@ -14,14 +14,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Cache APT packages
+      # Cache APT packages with extended dependencies
       - name: Cache APT packages
         uses: actions/cache@v4
         with:
           path: /tmp/apt-cache
-          key: ${{ runner.os }}-apt
+          key: ${{ runner.os }}-apt-valgrind-extended-${{ hashFiles('.github/workflows/c-cpp.yml') }}
           restore-keys: |
-            ${{ runner.os }}-apt
+            ${{ runner.os }}-apt-valgrind-extended-
+            ${{ runner.os }}-apt-
 
       # Setup APT cache directory
       - name: Setup APT cache directory
@@ -30,11 +31,11 @@ jobs:
           sudo chown -R $USER:$USER /tmp/apt-cache
           sudo ln -sf /tmp/apt-cache /var/cache/apt/archives
 
-      # Install dependencies
+      # Install dependencies with caching all related packages
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y --no-update valgrind
+          sudo apt-get install -y --no-update valgrind gdb libbabeltrace1 libc6-dbg libdebuginfod-common libdebuginfod1t64 libipt2 libsource-highlight-common libsource-highlight4t64
 
       # Build project
       - name: Build project
