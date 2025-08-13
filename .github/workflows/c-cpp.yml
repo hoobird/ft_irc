@@ -14,28 +14,42 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Cache APT packages with extended dependencies
-      - name: Cache APT packages
+      # Simple binary cache for installed packages
+      - name: Cache installed packages
+        id: cache-valgrind
         uses: actions/cache@v4
         with:
-          path: /tmp/apt-cache
-          key: ${{ runner.os }}-apt-valgrind-extended-${{ hashFiles('.github/workflows/c-cpp.yml') }}
-          restore-keys: |
-            ${{ runner.os }}-apt-valgrind-extended-
-            ${{ runner.os }}-apt-
+          path: ~/.local/apt-archives
+          key: ubuntu-valgrind-apt-${{ hashFiles('.github/workflows/c-cpp.yml') }}
 
-      # Setup APT cache directory
-      - name: Setup APT cache directory
+      # Set up valgrind - install from cache or from apt
+      - name: Install Valgrind with dependencies
         run: |
-          sudo mkdir -p /tmp/apt-cache
-          sudo chown -R $USER:$USER /tmp/apt-cache
-          sudo ln -sf /tmp/apt-cache /var/cache/apt/archives
-
-      # Install dependencies with caching all related packages
-      - name: Install dependencies
-        run: |
+          # Disable man-db updates to speed up installation
+          sudo rm -f /var/lib/man-db/auto-update
+          echo 'man-db man-db/auto-update boolean false' | sudo debconf-set-selections
+          
+          sudo mkdir -p /var/cache/apt/archives
+          
+          # Check if we have cache
+          if [[ -d ~/.local/apt-archives && "$(ls -A ~/.local/apt-archives)" ]]; then
+            echo "Using cached apt packages"
+            sudo cp ~/.local/apt-archives/*.deb /var/cache/apt/archives/ 2>/dev/null || true
+          else
+            echo "No cache found - will create one"
+            mkdir -p ~/.local/apt-archives
+          fi
+          
+          # Install valgrind and dependencies with man-db updates disabled
           sudo apt-get update
-          sudo apt-get install -y --no-update valgrind gdb libbabeltrace1 libc6-dbg libdebuginfod-common libdebuginfod1t64 libipt2 libsource-highlight-common libsource-highlight4t64
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends valgrind gdb
+          
+          # Cache the .deb files for next time
+          cp /var/cache/apt/archives/*.deb ~/.local/apt-archives/ 2>/dev/null || true
+          echo "Cached $(ls -1 ~/.local/apt-archives | wc -l) .deb files for future runs"
+          
+          # Verify valgrind is available
+          valgrind --version
 
       # Build project
       - name: Build project
@@ -44,10 +58,8 @@ jobs:
       - name: Run Valgrind checks for fd leaks
         run: |
           mkdir -p logs
-                   # Create a script to run the server with Valgrind
           cat > run_valgrind.sh << 'EOF'
           #!/bin/bash
-          # Run valgrind - no need to close inherited fds
           exec valgrind --leak-check=full \
                         --show-leak-kinds=all \
                         --track-fds=yes \
@@ -81,19 +93,16 @@ jobs:
           echo -e "${YELLOW}Sending shutdown signal to server...${NC}"
           kill -INT $SERVER_PID
           
-          # Wait for graceful shutdown (max 10 seconds)
+          # Wait for graceful shutdown
           echo -e "${YELLOW}Waiting for server shutdown...${NC}"
           timeout 10 bash -c "while kill -0 $SERVER_PID 2>/dev/null; do sleep 0.1; done" || \
             (echo -e "${RED}${BOLD}ERROR: Server did not exit gracefully${NC}" && kill -TERM $SERVER_PID && exit 1)
           
           echo -e "${BLUE}${BOLD}=== ANALYZING VALGRIND RESULTS ====${NC}"
           
-                    # Check valgrind log for fd leaks
+          # Check valgrind log for fd leaks
           if grep -q "FILE DESCRIPTORS: " logs/valgrind.log; then
             echo -e "${YELLOW}${BOLD}Checking for fd leaks...${NC}"
-            
-            # Extract full fd sections including the "inherited from parent" line
-            valgrind_output=$(cat logs/valgrind.log)
             
             # Use awk to properly parse multiline fd entries
             fd_leak_count=$(awk '
@@ -103,13 +112,12 @@ jobs:
                 if ($0 !~ /inherited from parent/ && $0 !~ /valgrind\.log/)
                   leaks++;
               }
-              END { print leaks+0 }  # +0 to convert null to 0
+              END { print leaks+0 }
             ' logs/valgrind.log)
             
             if [ "$fd_leak_count" -gt 0 ]; then
               echo -e "${RED}${BOLD}⚠️ FAILED: Found $fd_leak_count file descriptor leaks! ⚠️${NC}"
-              echo -e "${RED}----------------------------------------${NC}"
-              # Show actual leaking file descriptors
+              # Show the leaking FDs and exit with error
               awk '
                 /Open file descriptor/ {
                   fd_entry = $0;
@@ -118,17 +126,26 @@ jobs:
                     print fd_entry "\n" $0;
                 }
               ' logs/valgrind.log
-              echo -e "${RED}----------------------------------------${NC}"
-              # Show the full FD section for context
               grep -A 30 "FILE DESCRIPTORS:" logs/valgrind.log
-              echo -e "${RED}----------------------------------------${NC}"
               exit 1
             else
-              echo -e "${GREEN}${BOLD}✅ PASSED: No file descriptor leaks detected. All non-standard FDs are inherited.${NC}"
+              echo -e "${GREEN}${BOLD}✅ PASSED: No file descriptor leaks detected.${NC}"
             fi
           else
             echo -e "${RED}${BOLD}⚠️ ERROR: Valgrind did not report file descriptor information.${NC}"
             exit 1
+          fi
+
+          # Check for memory leaks
+          if grep -q "definitely lost:" logs/valgrind.log; then
+            memory_leaks=$(grep "definitely lost:" logs/valgrind.log | grep -v "0 bytes in 0 blocks")
+            if [ -n "$memory_leaks" ]; then
+              echo -e "${RED}${BOLD}⚠️ FAILED: Found memory leaks! ⚠️${NC}"
+              grep -A 30 "LEAK SUMMARY:" logs/valgrind.log
+              exit 1
+            else
+              echo -e "${GREEN}${BOLD}✅ PASSED: No memory leaks detected.${NC}"
+            fi
           fi
           
           echo -e "${BLUE}${BOLD}=== VALGRIND TEST COMPLETED ====${NC}"
