@@ -40,7 +40,7 @@ jobs:
           mkdir -p logs
           valgrind --leak-check=full \
                    --show-leak-kinds=all \
-                   --track-fds=yes \
+                   --track-fds=all \  # Explicitly track all FDs
                    --error-exitcode=1 \
                    --log-file=logs/valgrind.log \
                    ./ircserv 8080 pass &
