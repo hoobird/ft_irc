@@ -40,13 +40,13 @@ jobs:
       - name: Build project
         run: make CFLAGS="-Wall -Wextra -Werror -MMD -g"
 
-      # Run Valgrind checks
       - name: Run Valgrind checks
         run: |
           mkdir -p logs
           valgrind --leak-check=full \
                    --show-leak-kinds=all \
-                   --track-fds=all \
+                   --track-fds=yes \
+                   --child-silent-after-fork=yes \
                    --error-exitcode=1 \
                    --log-file=logs/valgrind.log \
                    ./ircserv 8080 pass &
