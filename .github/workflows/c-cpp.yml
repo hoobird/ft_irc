@@ -26,10 +26,6 @@ jobs:
       # 4. Run Valgrind memory leak check
       - name: Run Valgrind checks
         run: |
-          valgrind --leak-check=full \
-                   --show-leak-kinds=all \
-                   --track-fds=yes \
-        run: |
           mkdir -p logs
           valgrind --leak-check=full \
                    --show-leak-kinds=all \
