@@ -19,41 +19,30 @@ jobs:
         id: cache-valgrind
         uses: actions/cache@v4
         with:
-          path: ~/.local/valgrind-cache
-          key: ubuntu-valgrind-full-${{ hashFiles('.github/workflows/c-cpp.yml') }}
+          path: ~/.local/apt-archives
+          key: ubuntu-valgrind-apt-${{ hashFiles('.github/workflows/c-cpp.yml') }}
 
       # Set up valgrind - install from cache or from apt
-      - name: Install Valgrind
+      - name: Install Valgrind with dependencies
         run: |
-          if [[ -d ~/.local/valgrind-cache && -f ~/.local/valgrind-cache/bin/valgrind.bin ]]; then
-            echo "Using cached Valgrind"
-            # Create directory structure first
-            sudo mkdir -p /usr/lib/valgrind
-            sudo mkdir -p /usr/bin
-            
-            # Copy files with proper permissions
-            sudo cp ~/.local/valgrind-cache/bin/valgrind /usr/bin/
-            sudo cp ~/.local/valgrind-cache/bin/valgrind.bin /usr/bin/
-            sudo cp -r ~/.local/valgrind-cache/lib/valgrind/* /usr/lib/valgrind/
-            
-            # Set executable permissions
-            sudo chmod +x /usr/bin/valgrind
-            sudo chmod +x /usr/bin/valgrind.bin
+          sudo mkdir -p /var/cache/apt/archives
+          
+          # Check if we have cache
+          if [[ -d ~/.local/apt-archives && "$(ls -A ~/.local/apt-archives)" ]]; then
+            echo "Using cached apt packages"
+            sudo cp ~/.local/apt-archives/*.deb /var/cache/apt/archives/ 2>/dev/null || true
           else
-            echo "Installing Valgrind from repositories"
-            sudo apt-get update
-            sudo apt-get install -y valgrind gdb
-            
-            # Clean and recreate cache directory
-            rm -rf ~/.local/valgrind-cache
-            mkdir -p ~/.local/valgrind-cache/bin
-            mkdir -p ~/.local/valgrind-cache/lib/valgrind
-            
-            # Copy the important files to our cache location
-            cp /usr/bin/valgrind ~/.local/valgrind-cache/bin/
-            cp /usr/bin/valgrind.bin ~/.local/valgrind-cache/bin/ 2>/dev/null || true
-            cp -r /usr/lib/valgrind/* ~/.local/valgrind-cache/lib/valgrind/
+            echo "No cache found - will create one"
+            mkdir -p ~/.local/apt-archives
           fi
+          
+          # Install valgrind and dependencies
+          sudo apt-get update
+          sudo apt-get install -y valgrind gdb
+          
+          # Cache the .deb files for next time
+          cp /var/cache/apt/archives/*.deb ~/.local/apt-archives/ 2>/dev/null || true
+          echo "Cached $(ls -1 ~/.local/apt-archives | wc -l) .deb files for future runs"
           
           # Verify valgrind is available
           valgrind --version
