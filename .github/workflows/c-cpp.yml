@@ -92,27 +92,25 @@ jobs:
           if grep -q "FILE DESCRIPTORS: " logs/valgrind.log; then
             echo -e "${YELLOW}${BOLD}Checking for fd leaks...${NC}"
             
-            # First, count total FDs and standard FDs to verify if there are non-standard FDs
-            fd_info=$(grep -A 1 "FILE DESCRIPTORS:" logs/valgrind.log)
-            total_fds=$(echo "$fd_info" | grep -o "[0-9]\+ open" | grep -o "[0-9]\+")
-            std_fds=$(echo "$fd_info" | grep -o "([0-9]\+ std)" | grep -o "[0-9]\+")
+            # Extract all "Open file descriptor" lines first
+            fd_lines=$(grep "Open file descriptor" logs/valgrind.log)
             
-            # If all open FDs are standard, we're good
-            if [ "$total_fds" = "$std_fds" ]; then
-              echo -e "${GREEN}${BOLD}✅ PASSED: All file descriptors are standard (stdin/stdout/stderr).${NC}"
+            # Count non-inherited, non-valgrind-log FDs
+            non_inherited_count=0
+            if [ -n "$fd_lines" ]; then
+              non_inherited_count=$(echo "$fd_lines" | grep -v "<inherited from parent>" | grep -v "valgrind.log" | wc -l)
+            fi
+            
+            if [ "$non_inherited_count" -gt 0 ]; then
+              echo -e "${RED}${BOLD}⚠️ FAILED: Found $non_inherited_count file descriptor leaks! ⚠️${NC}"
+              echo -e "${RED}----------------------------------------${NC}"
+              echo "$fd_lines" | grep -v "<inherited from parent>" | grep -v "valgrind.log"
+              echo -e "${RED}----------------------------------------${NC}"
+              grep -A 30 "FILE DESCRIPTORS:" logs/valgrind.log
+              echo -e "${RED}----------------------------------------${NC}"
+              exit 1
             else
-              # Count non-inherited, non-valgrind-log FDs
-              non_inherited_count=$(grep -A 30 "FILE DESCRIPTORS:" logs/valgrind.log | grep "Open file descriptor" | grep -v "<inherited from parent>" | grep -v "valgrind.log" | wc -l)
-              
-              if [ "$non_inherited_count" -gt 0 ]; then
-                echo -e "${RED}${BOLD}⚠️ FAILED: Found $non_inherited_count file descriptor leaks! ⚠️${NC}"
-                echo -e "${RED}----------------------------------------${NC}"
-                grep -A 30 "FILE DESCRIPTORS:" logs/valgrind.log
-                echo -e "${RED}----------------------------------------${NC}"
-                exit 1
-              else
-                echo -e "${GREEN}${BOLD}✅ PASSED: No file descriptor leaks detected. All non-standard FDs are inherited.${NC}"
-              fi
+              echo -e "${GREEN}${BOLD}✅ PASSED: No file descriptor leaks detected. All non-standard FDs are inherited.${NC}"
             fi
           else
             echo -e "${RED}${BOLD}⚠️ ERROR: Valgrind did not report file descriptor information.${NC}"
