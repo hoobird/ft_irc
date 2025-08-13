@@ -44,17 +44,10 @@ jobs:
       - name: Run Valgrind checks for fd leaks
         run: |
           mkdir -p logs
-          # Create a script to run the server with Valgrind
+                   # Create a script to run the server with Valgrind
           cat > run_valgrind.sh << 'EOF'
           #!/bin/bash
-          # Close all inherited file descriptors except stdin, stdout, stderr
-          for fd in $(ls /proc/$$/fd); do
-            if [ "$fd" -gt 2 ]; then
-              eval "exec $fd>&-"
-            fi
-          done
-          
-          # Now run valgrind
+          # Run valgrind - no need to close inherited fds
           exec valgrind --leak-check=full \
                         --show-leak-kinds=all \
                         --track-fds=yes \
@@ -95,10 +88,11 @@ jobs:
           
           echo -e "${BLUE}${BOLD}=== ANALYZING VALGRIND RESULTS ====${NC}"
           
-          # Check valgrind log for fd leaks
+                    # Check valgrind log for fd leaks
           if grep -q "FILE DESCRIPTORS: " logs/valgrind.log; then
             echo -e "${YELLOW}${BOLD}Checking for fd leaks...${NC}"
-            if grep -A 20 "FILE DESCRIPTORS:" logs/valgrind.log | grep -q "Open file descriptor"; then
+            # Check for open FDs but ignore inherited ones and the valgrind log file
+            if grep -A 20 "FILE DESCRIPTORS:" logs/valgrind.log | grep -v "<inherited from parent>" | grep -v "valgrind.log" | grep -q "Open file descriptor"; then
               echo -e "${RED}${BOLD}⚠️ FAILED: Found file descriptor leaks! ⚠️${NC}"
               echo -e "${RED}----------------------------------------${NC}"
               grep -A 20 "FILE DESCRIPTORS:" logs/valgrind.log
