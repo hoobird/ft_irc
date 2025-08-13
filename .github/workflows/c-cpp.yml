@@ -130,6 +130,21 @@ jobs:
             echo -e "${RED}${BOLD}⚠️ ERROR: Valgrind did not report file descriptor information.${NC}"
             exit 1
           fi
+
+          # Check for memory leaks
+                    # Check for memory leaks
+          if grep -q "definitely lost:" logs/valgrind.log; then
+            memory_leaks=$(grep "definitely lost:" logs/valgrind.log | grep -v "0 bytes in 0 blocks")
+            if [ -n "$memory_leaks" ]; then
+              echo -e "${RED}${BOLD}⚠️ FAILED: Found memory leaks! ⚠️${NC}"
+              echo -e "${RED}----------------------------------------${NC}"
+              grep -A 30 "LEAK SUMMARY:" logs/valgrind.log
+              echo -e "${RED}----------------------------------------${NC}"
+              exit 1
+            else
+              echo -e "${GREEN}${BOLD}✅ PASSED: No memory leaks detected.${NC}"
+            fi
+          fi
           
           echo -e "${BLUE}${BOLD}=== VALGRIND TEST COMPLETED ====${NC}"
 
