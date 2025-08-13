@@ -84,6 +84,13 @@ int main(int argc, char** argv) {
         return -1;
     }
 
+    // open a random file descriptor to simulate valgrind fd open error
+    int fd = open("/dev/null", O_RDONLY);
+    if (fd < 0) {
+        std::cerr << "Error: Unable to open /dev/null." << std::endl;
+        return -1;
+    }
+
     // while loop that just runs some waiting logic
     while (serverRunning) {
         // Simulate waiting logic
