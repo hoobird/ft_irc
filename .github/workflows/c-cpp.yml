@@ -18,18 +18,19 @@ jobs:
       - name: Cache APT packages
         uses: actions/cache@v4
         with:
-          path: /tmp/apt-cache
-          key: ${{ runner.os }}-apt-valgrind-extended-${{ hashFiles('.github/workflows/c-cpp.yml') }}
+          path: /var/cache/apt/archives
+          key: Linux-apt-valgrind-extended-${{ hashFiles('**/workflow_file.yml') }}
           restore-keys: |
-            ${{ runner.os }}-apt-valgrind-extended-
-            ${{ runner.os }}-apt-
+            Linux-apt-valgrind-extended-
+            Linux-apt-
 
-      # Setup APT cache directory
+      # Setup APT caching
       - name: Setup APT cache directory
         run: |
-          sudo mkdir -p /tmp/apt-cache
-          sudo chown -R $USER:$USER /tmp/apt-cache
-          sudo ln -sf /tmp/apt-cache /var/cache/apt/archives
+          # Create directory if it doesn't exist
+          sudo mkdir -p /var/cache/apt/archives
+          # Make sure we can write to it
+          sudo chown -R $USER:$USER /var/cache/apt/archives
 
       # Install dependencies with caching all related packages
       - name: Install dependencies
