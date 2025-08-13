@@ -23,16 +23,27 @@ jobs:
       - name: Build project
         run: make CFLAGS="-Wall -Wextra -Werror -MMD -g"
 
-      # 4. Run Valgrind memory leak check
+      # 4. Run Valgrind memory leak check with graceful shutdown
       - name: Run Valgrind checks
         run: |
           mkdir -p logs
+          # Start server in background through Valgrind
           valgrind --leak-check=full \
                    --show-leak-kinds=all \
                    --track-fds=yes \
                    --error-exitcode=1 \
                    --log-file=logs/valgrind.log \
-                   ./ircserv 8080 pass || (echo "Valgrind check failed" && exit 1)
+                   ./ircserv 8080 pass &
+          SERVER_PID=$!
+          
+          # Give server time to initialize
+          sleep 5
+          
+          # Send SIGINT to trigger graceful shutdown
+          kill -INT $SERVER_PID
+          
+          # Wait for server to exit (with timeout to prevent hanging)
+          timeout 10 wait $SERVER_PID || (echo "Server did not exit gracefully" && exit 1)
 
       # 5. Upload Valgrind log as artifact
       - name: Upload Valgrind log
