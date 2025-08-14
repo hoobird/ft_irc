@@ -49,7 +49,7 @@ jobs:
       - name: Fail job if Cppcheck found warnings or errors
         if: always()  # always runs, even if previous step failed
         run: |
-          if grep -E '\[error\]|\[warning\]' cppcheck-report.txt; then
+          if grep -E 'error:' cppcheck-report.txt; then
             echo "Cppcheck found issues. Failing the job."
             exit 1
           fi
