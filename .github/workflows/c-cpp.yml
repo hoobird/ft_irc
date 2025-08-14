@@ -19,6 +19,28 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Remove man-db and disable docs (ultra-fast apt)
+        run: |
+          # Remove man-db FIRST to prevent any post-install triggers
+          sudo apt-get remove -y --purge man-db
+          
+          # Block docs from being installed (saves space and time)
+          sudo tee /etc/dpkg/dpkg.cfg.d/01_nodoc > /dev/null << 'EOF'
+          path-exclude /usr/share/doc/*
+          path-exclude /usr/share/man/*
+          path-exclude /usr/share/info/*
+          path-exclude /usr/share/locale/*
+          EOF
+          
+          # Stop recommends/suggests (reduces package count)
+          sudo tee /etc/apt/apt.conf.d/99norecommend > /dev/null << 'EOF'
+          APT::Install-Recommends "false";
+          APT::Install-Suggests "false";
+          EOF
+          
+          # Clean up any leftover man-db cruft (optional but thorough)
+          sudo apt-get autoremove -y
+
       - name: Install Valgrind and dependencies
         run: |
           sudo apt-get update
