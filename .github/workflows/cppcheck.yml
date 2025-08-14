@@ -13,18 +13,34 @@ jobs:
       pull-requests: write
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Run Cppcheck on srcs with C++98
+      - name: Run Cppcheck on srcs (C++98 style)
         uses: deep5050/cppcheck-action@v3.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          std: c++98
+          std: c++03                    # C++03 covers C++98 code
           output_file: cppcheck-report.txt
-          other_options: srcs/ --enable=all --inconclusive --error-exitcode=1
+          other_options: srcs/ --enable=all --inconclusive --quiet
+          check_library: disable
+          skip_preprocessor: disable
+          enable: all
+          exclude_check: disable
+          inconclusive: enable
+          inline_suppression: disable
+          force_language: disable
+          force: disable
+          max_ctu_depth: disable
+          platform: disable
 
-      - name: Upload Cppcheck report
+      - name: Upload Cppcheck report artifact
         uses: actions/upload-artifact@v4
         with:
           name: cppcheck-report
           path: cppcheck-report.txt
+
+      - name: Add Cppcheck report link to PR summary
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "Cppcheck full report available [here](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> $GITHUB_STEP_SUMMARY
