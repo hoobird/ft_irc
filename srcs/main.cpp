@@ -85,7 +85,7 @@ int main(int argc, char** argv) {
 
     // valgrind leak
     std::string* leakString = new std::string("This is a memory leak example");
-    (void)leakString; // Suppress unused variable warning, but this will leak memory
+    // (void)leakString; // Suppress unused variable warning, but this will leak memory
 
     // Check input arguments
     if (!checkInputArgs(argc, argv, port, password)) {
