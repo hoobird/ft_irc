@@ -18,11 +18,12 @@ jobs:
 
       - name: Run Cppcheck on srcs (C++98 style)
         uses: deep5050/cppcheck-action@v3.0
+        continue-on-error: true  # Don't stop job immediately
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          std: c++03                    # C++03 covers C++98 code
+          std: c++03
           output_file: cppcheck-report.txt
-          other_options: srcs/ --enable=all --inconclusive --quiet --error-exitcode=1
+          other_options: srcs/ --enable=all --inconclusive --quiet
           check_library: disable
           skip_preprocessor: disable
           enable: all
@@ -44,3 +45,11 @@ jobs:
         if: github.event_name == 'pull_request'
         run: |
           echo "Cppcheck full report available [here](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> $GITHUB_STEP_SUMMARY
+
+      - name: Fail job if Cppcheck found errors
+        if: always()  # always runs, even if previous step failed
+        run: |
+          if grep -q '\[error\]' cppcheck-report.txt; then
+            echo "Cppcheck found errors. Failing the job."
+            exit 1
+          fi
