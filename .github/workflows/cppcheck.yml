@@ -1,0 +1,92 @@
+name: Cppcheck CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  cppcheck:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5  # Job fails if it exceeds 5 minutes
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+    steps:
+      - name: Run a task
+        run: echo "This job will timeout after 5 minutes"
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Run Cppcheck
+        uses: deep5050/cppcheck-action@v3.0
+        continue-on-error: true
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          std: c++03
+          output_file: cppcheck-report.txt
+          other_options: srcs/ --enable=all --inconclusive
+          force: enable
+
+      - name: Upload report artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: cppcheck-report
+          path: cppcheck-report.txt
+
+      - name: Process results
+        if: github.event_name == 'pull_request'
+        run: |
+          # Check for errors using 'error:' pattern
+          if grep -q 'error:' cppcheck-report.txt; then
+            ISSUE_COUNT=$(grep -c 'error:' cppcheck-report.txt)
+            
+            # PR Summary - Fix indentation
+            echo "### ❌ Cppcheck Found $ISSUE_COUNT Issues" > summary.md
+            echo "" >> summary.md
+            echo "[Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> summary.md
+            echo "" >> summary.md
+            echo "\`\`\`" >> summary.md
+            grep 'error:' cppcheck-report.txt | head -n 10 >> summary.md
+            echo "\`\`\`" >> summary.md
+            cat summary.md >> $GITHUB_STEP_SUMMARY
+            
+            # PR Comment with proper multiline formatting - Fix indentation
+            echo "### ❌ Cppcheck Found $ISSUE_COUNT Issues" > comment.md
+            echo "" >> comment.md
+            echo "⚠️ Static analysis problems detected:" >> comment.md
+            echo "" >> comment.md
+            echo "\`\`\`" >> comment.md
+            grep 'error:' cppcheck-report.txt | head -n 5 >> comment.md
+            echo "\`\`\`" >> comment.md
+            echo "" >> comment.md
+            echo "📊 [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> comment.md
+            
+            # Post comment to PR
+            gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md
+            
+            echo "::error::Cppcheck found $ISSUE_COUNT issues"
+            exit 1
+          else
+            # PR Summary - Fix indentation
+            echo "### ✅ Cppcheck Passed" > summary.md
+            echo "" >> summary.md
+            echo "🎉 No static analysis issues found!" >> summary.md
+            echo "" >> summary.md
+            echo "[Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> summary.md
+            cat summary.md >> $GITHUB_STEP_SUMMARY
+            
+            # PR Comment with proper multiline formatting - Fix indentation
+            echo "### ✅ Cppcheck Passed" > comment.md
+            echo "" >> comment.md
+            echo "🎉 No static analysis issues found!" >> comment.md
+            echo "" >> comment.md
+            echo "📊 [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> comment.md
+            
+            # Post comment to PR
+            gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
