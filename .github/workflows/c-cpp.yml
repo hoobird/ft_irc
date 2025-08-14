@@ -9,10 +9,14 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    timeout-minutes: 5  # Job fails if it exceeds 5 minutes
     permissions:
       contents: read
       pull-requests: write
       issues: write
+    steps:
+      - name: Run a task
+        run: echo "This job will timeout after 5 minutes"
 
     steps:
       - name: Checkout repository
@@ -150,7 +154,7 @@ jobs:
           name: valgrind-log
           path: logs/valgrind.log
 
-            - name: Process Valgrind results
+      - name: Process Valgrind results
         if: github.event_name == 'pull_request'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
