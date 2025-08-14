@@ -64,12 +64,8 @@ jobs:
             echo "" >> comment.md
             echo "📊 [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> comment.md
             
-            # Post comment and get the ID - Fix reaction handling
-            COMMENT_ID=$(gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md)
-            COMMENT_ID=$(echo $COMMENT_ID | awk '{print $NF}')
-            
-            # Fix reaction API call
-            gh api repos/${GITHUB_REPOSITORY}/issues/comments/${COMMENT_ID}/reactions --method POST -f content="eyes"
+            # Post comment to PR
+            gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md
             
             echo "::error::Cppcheck found $ISSUE_COUNT issues"
             exit 1
@@ -89,12 +85,8 @@ jobs:
             echo "" >> comment.md
             echo "📊 [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> comment.md
             
-            # Post comment and get the ID - Fix reaction handling
-            COMMENT_ID=$(gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md)
-            COMMENT_ID=$(echo $COMMENT_ID | awk '{print $NF}')
-            
-            # Fix reaction API call
-            gh api repos/${GITHUB_REPOSITORY}/issues/comments/${COMMENT_ID}/reactions --method POST -f content="+1"
+            # Post comment to PR
+            gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

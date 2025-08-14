@@ -211,9 +211,8 @@ jobs:
             echo "" >> comment.md
             echo "📊 [See Build Log](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> comment.md
             
-            COMMENT_ID=$(gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md)
-            COMMENT_ID=$(echo $COMMENT_ID | awk '{print $NF}')
-            gh api repos/${GITHUB_REPOSITORY}/issues/comments/${COMMENT_ID}/reactions --method POST -f content="confused"
+            # Post comment to PR
+            gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md
             exit 0
           fi
           
@@ -226,9 +225,8 @@ jobs:
             echo "" >> comment.md
             echo "📊 [See Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> comment.md
             
-            COMMENT_ID=$(gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md)
-            COMMENT_ID=$(echo $COMMENT_ID | awk '{print $NF}')
-            gh api repos/${GITHUB_REPOSITORY}/issues/comments/${COMMENT_ID}/reactions --method POST -f content="confused"
+            # Post comment to PR
+            gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md
             exit 0
           fi
           
@@ -240,9 +238,8 @@ jobs:
             echo "" >> comment.md
             echo "📊 [See Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> comment.md
             
-            COMMENT_ID=$(gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md)
-            COMMENT_ID=$(echo $COMMENT_ID | awk '{print $NF}')
-            gh api repos/${GITHUB_REPOSITORY}/issues/comments/${COMMENT_ID}/reactions --method POST -f content="confused"
+            # Post comment to PR
+            gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md
             exit 0
           fi
           
@@ -259,9 +256,8 @@ jobs:
             echo "" >> comment.md
             echo "📊 [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> comment.md
             
-            COMMENT_ID=$(gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md)
-            COMMENT_ID=$(echo $COMMENT_ID | awk '{print $NF}')
-            gh api repos/${GITHUB_REPOSITORY}/issues/comments/${COMMENT_ID}/reactions --method POST -f content="+1"
+            # Post comment to PR
+            gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md
           else
             # Write to step summary
             echo "### ❌ Memory and FD Checks Failed" >> $GITHUB_STEP_SUMMARY
@@ -310,7 +306,6 @@ jobs:
             echo "📊 [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> $GITHUB_STEP_SUMMARY
             echo "📊 [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> comment.md
             
-            COMMENT_ID=$(gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md)
-            COMMENT_ID=$(echo $COMMENT_ID | awk '{print $NF}')
-            gh api repos/${GITHUB_REPOSITORY}/issues/comments/${COMMENT_ID}/reactions --method POST -f content="eyes"
+            # Post comment to PR
+            gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md
           fi
