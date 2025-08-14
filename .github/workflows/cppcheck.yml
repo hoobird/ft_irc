@@ -44,94 +44,63 @@ jobs:
             ISSUE_COUNT=$(grep -c 'error:' cppcheck-report.txt)
             
             # PR Summary
-            cat <<EOF >> $GITHUB_STEP_SUMMARY
+            cat > summary.md << EOF
           ### ❌ Cppcheck Found $ISSUE_COUNT Issues
-          
+
           [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})
-          
+
           \`\`\`
           $(grep 'error:' cppcheck-report.txt | head -n 10)
           \`\`\`
           EOF
-          
-            # PR Comment
-            COMMENT_FILE=$(mktemp)
-            cat <<EOF > "$COMMENT_FILE"
+            cat summary.md >> $GITHUB_STEP_SUMMARY
+            
+            # PR Comment with proper multiline formatting
+            cat > comment.md << EOF
           ### ❌ Cppcheck Found $ISSUE_COUNT Issues
-          
+
           ⚠️ Static analysis problems detected:
-          
+
           \`\`\`
           $(grep 'error:' cppcheck-report.txt | head -n 5)
           \`\`\`
-          
+
           📊 [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})
           EOF
-          
-            gh pr comment ${{ github.event.pull_request.number}} --body-file "$COMMENT_FILE"
-            rm "$COMMENT_FILE"
-            # Fix: Using the correct format for reaction command
-            gh pr reaction add ${{ github.event.pull_request.number}} --reaction "eyes"
+            
+            # Post comment and get the ID
+            COMMENT_ID=$(gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md | cut -f3)
+            
+            # React to comment
+            gh api repos/${GITHUB_REPOSITORY}/issues/comments/$COMMENT_ID/reactions -X POST -f content="eyes"
             
             echo "::error::Cppcheck found $ISSUE_COUNT issues"
             exit 1
           else
-            cat <<EOF >> $GITHUB_STEP_SUMMARY
+            # PR Summary
+            cat > summary.md << EOF
           ### ✅ Cppcheck Passed
-          
+
+          🎉 No static analysis issues found!
+
           [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})
           EOF
-          
-            COMMENT_FILE=$(mktemp)
-            cat <<EOF > "$COMMENT_FILE"
+            cat summary.md >> $GITHUB_STEP_SUMMARY
+            
+            # PR Comment with proper multiline formatting
+            cat > comment.md << EOF
           ### ✅ Cppcheck Passed
-          
+
           🎉 No static analysis issues found!
-          
+
           📊 [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})
           EOF
-      
-            gh pr comment ${{ github.event.pull_request.number}} --body-file "$COMMENT_FILE"
-            rm "$COMMENT_FILE"
-            # Fix: Using the correct format for reaction command
-            gh pr reaction add ${{ github.event.pull_request.number}} --reaction "+1"
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Process results
-        if: github.event_name == 'pull_request'
-        run: |
-          # Check for errors using 'error:' pattern
-          if grep -q 'error:' cppcheck-report.txt; then
-            ISSUE_COUNT=$(grep -c 'error:' cppcheck-report.txt)
             
-            # PR Summary
-            echo "### ❌ Cppcheck Found $ISSUE_COUNT Issues" >> $GITHUB_STEP_SUMMARY
-            echo "[Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> $GITHUB_STEP_SUMMARY
-            echo '```' >> $GITHUB_STEP_SUMMARY
-            grep 'error:' cppcheck-report.txt | head -n 10 >> $GITHUB_STEP_SUMMARY
-            echo '```' >> $GITHUB_STEP_SUMMARY
+            # Post comment and get the ID
+            COMMENT_ID=$(gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md | cut -f3)
             
-            # PR Comment
-            COMMENT=$(printf "### ❌ Cppcheck Found %d Issues\n\n" "$ISSUE_COUNT")
-            COMMENT+=$(printf "⚠️ Static analysis problems detected:\n\n")
-            COMMENT+=$(printf "\`\`\`\n%s\n\`\`\`\n\n" "$(grep 'error:' cppcheck-report.txt | head -n 5)")
-            COMMENT+=$(printf "📊 [Full Report](%s/%s/actions/runs/%s)" \
-                       "${GITHUB_SERVER_URL}" "${GITHUB_REPOSITORY}" "${GITHUB_RUN_ID}")
-            
-            gh pr comment ${{ github.event.pull_request.number}} --body "$COMMENT"
-            gh pr react ${{ github.event.pull_request.number}} --reaction "eyes"
-            
-            # Exit with error
-            echo "::error::Cppcheck found $ISSUE_COUNT issues"
-            exit 1
-          else
-            echo "### ✅ Cppcheck Passed" >> $GITHUB_STEP_SUMMARY
-            echo "[Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> $GITHUB_STEP_SUMMARY
-            
-            gh pr comment ${{ github.event.pull_request.number}} --body "### ✅ Cppcheck Passed\n\n🎉 No static analysis issues found!"
-            gh pr react ${{ github.event.pull_request.number}} --reaction "+1"
+            # React to comment
+            gh api repos/${GITHUB_REPOSITORY}/issues/comments/$COMMENT_ID/reactions -X POST -f content="+1"
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
