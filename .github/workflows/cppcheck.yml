@@ -43,64 +43,58 @@ jobs:
           if grep -q 'error:' cppcheck-report.txt; then
             ISSUE_COUNT=$(grep -c 'error:' cppcheck-report.txt)
             
-            # PR Summary
-            cat > summary.md << EOF
-          ### ❌ Cppcheck Found $ISSUE_COUNT Issues
-
-          [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})
-
-          \`\`\`
-          $(grep 'error:' cppcheck-report.txt | head -n 10)
-          \`\`\`
-          EOF
+            # PR Summary - Fix indentation
+            echo "### ❌ Cppcheck Found $ISSUE_COUNT Issues" > summary.md
+            echo "" >> summary.md
+            echo "[Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> summary.md
+            echo "" >> summary.md
+            echo "\`\`\`" >> summary.md
+            grep 'error:' cppcheck-report.txt | head -n 10 >> summary.md
+            echo "\`\`\`" >> summary.md
             cat summary.md >> $GITHUB_STEP_SUMMARY
             
-            # PR Comment with proper multiline formatting
-            cat > comment.md << EOF
-          ### ❌ Cppcheck Found $ISSUE_COUNT Issues
-
-          ⚠️ Static analysis problems detected:
-
-          \`\`\`
-          $(grep 'error:' cppcheck-report.txt | head -n 5)
-          \`\`\`
-
-          📊 [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})
-          EOF
+            # PR Comment with proper multiline formatting - Fix indentation
+            echo "### ❌ Cppcheck Found $ISSUE_COUNT Issues" > comment.md
+            echo "" >> comment.md
+            echo "⚠️ Static analysis problems detected:" >> comment.md
+            echo "" >> comment.md
+            echo "\`\`\`" >> comment.md
+            grep 'error:' cppcheck-report.txt | head -n 5 >> comment.md
+            echo "\`\`\`" >> comment.md
+            echo "" >> comment.md
+            echo "📊 [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> comment.md
             
-            # Post comment and get the ID
-            COMMENT_ID=$(gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md | cut -f3)
+            # Post comment and get the ID - Fix reaction handling
+            COMMENT_ID=$(gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md)
+            COMMENT_ID=$(echo $COMMENT_ID | awk '{print $NF}')
             
-            # React to comment
-            gh api repos/${GITHUB_REPOSITORY}/issues/comments/$COMMENT_ID/reactions -X POST -f content="eyes"
+            # Fix reaction API call
+            gh api repos/${GITHUB_REPOSITORY}/issues/comments/${COMMENT_ID}/reactions --method POST -f content="eyes"
             
             echo "::error::Cppcheck found $ISSUE_COUNT issues"
             exit 1
           else
-            # PR Summary
-            cat > summary.md << EOF
-          ### ✅ Cppcheck Passed
-
-          🎉 No static analysis issues found!
-
-          [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})
-          EOF
+            # PR Summary - Fix indentation
+            echo "### ✅ Cppcheck Passed" > summary.md
+            echo "" >> summary.md
+            echo "🎉 No static analysis issues found!" >> summary.md
+            echo "" >> summary.md
+            echo "[Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> summary.md
             cat summary.md >> $GITHUB_STEP_SUMMARY
             
-            # PR Comment with proper multiline formatting
-            cat > comment.md << EOF
-          ### ✅ Cppcheck Passed
-
-          🎉 No static analysis issues found!
-
-          📊 [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})
-          EOF
+            # PR Comment with proper multiline formatting - Fix indentation
+            echo "### ✅ Cppcheck Passed" > comment.md
+            echo "" >> comment.md
+            echo "🎉 No static analysis issues found!" >> comment.md
+            echo "" >> comment.md
+            echo "📊 [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> comment.md
             
-            # Post comment and get the ID
-            COMMENT_ID=$(gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md | cut -f3)
+            # Post comment and get the ID - Fix reaction handling
+            COMMENT_ID=$(gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md)
+            COMMENT_ID=$(echo $COMMENT_ID | awk '{print $NF}')
             
-            # React to comment
-            gh api repos/${GITHUB_REPOSITORY}/issues/comments/$COMMENT_ID/reactions -X POST -f content="+1"
+            # Fix reaction API call
+            gh api repos/${GITHUB_REPOSITORY}/issues/comments/${COMMENT_ID}/reactions --method POST -f content="+1"
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
