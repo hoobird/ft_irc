@@ -41,18 +41,56 @@ jobs:
           name: cppcheck-report
           path: cppcheck-report.txt
 
-      - name: Add Cppcheck report link to PR summary
+      - name: Add Cppcheck results to PR summary
         if: github.event_name == 'pull_request'
         run: |
-          echo "Cppcheck full report available [here](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> $GITHUB_STEP_SUMMARY
+          echo "### Cppcheck Static Analysis Results" >> $GITHUB_STEP_SUMMARY
+          
+          if grep -q -E '\[error\]|\[warning\]' cppcheck-report.txt; then
+            echo "❌ **Failed** - Issues found" >> $GITHUB_STEP_SUMMARY
+            echo "[Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> $GITHUB_STEP_SUMMARY
+            echo "\n**Error/Warning Summary:**" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            grep -E '\[error\]|\[warning\]' cppcheck-report.txt >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            exit 1  # Mark step as failed
+          else
+            echo "✅ **Passed** - No issues found" >> $GITHUB_STEP_SUMMARY
+            echo "[Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> $GITHUB_STEP_SUMMARY
+          fi
 
-      - name: Comment PR with report link
+      - name: Analyze and comment Cppcheck results
         if: github.event_name == 'pull_request'
-        uses: thollander/actions-comment-pull-request@v2
-        with:
-          message: |
-            ### Cppcheck Results
+        run: |
+          # Check for errors/warnings
+          if grep -q -E '\[error\]|\[warning\]' cppcheck-report.txt; then
+            ISSUE_COUNT=$(grep -c -E '\[error\]|\[warning\]' cppcheck-report.txt)
+            MESSAGE="### ❌ Cppcheck Found Issues ($ISSUE_COUNT) ❌
+            ⚠️ **Please fix these static analysis issues** ⚠️
             📊 [Full Report](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            ```
+            $(grep -E '\[error\]|\[warning\]' cppcheck-report.txt | head -n 5)
+            ```
+            _Showing first 5 issues - check full report for all_"
+            echo "ISSUES_FOUND=true" >> $GITHUB_ENV
+          else
+            MESSAGE="### ✅ Cppcheck Passed ✅
+            🎉 No static analysis issues found!
+            📊 [Full Report](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+            echo "ISSUES_FOUND=false" >> $GITHUB_ENV
+          fi
+      
+          # Post comment
+          echo "$MESSAGE" > comment.md
+          gh pr comment ${{ github.event.pull_request.number}} --body-file comment.md
+          
+          # Add reaction
+          if ${{ env.ISSUES_FOUND }}; then
+            gh pr react ${{ github.event.pull_request.number}} --reaction "-1"
+          else
+            gh pr react ${{ github.event.pull_request.number}} --reaction "+1"
+          fi
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Fail job if Cppcheck found warnings or errors
