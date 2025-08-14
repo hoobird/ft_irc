@@ -46,19 +46,14 @@ jobs:
         run: |
           echo "Cppcheck full report available [here](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> $GITHUB_STEP_SUMMARY
 
-      # Add this debug step to your workflow
-      - name: Debug Event Info
-        run: |
-          echo "Event: ${{ github.event_name }}"
-          echo "Action: ${{ github.event.action }}"
-      - name: Verify Report Exists
-        run: |
-          if [ -f "cppcheck-report.txt" ]; then
-            echo "Report exists. Contents:"
-            head -n 20 cppcheck-report.txt
-          else
-            echo "Error: cppcheck-report.txt not found!"
-          fi
+      - name: Comment PR with report link
+        if: github.event_name == 'pull_request'
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            ### Cppcheck Results
+            📊 [Full Report](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Fail job if Cppcheck found warnings or errors
         if: always()  # always runs, even if previous step failed
