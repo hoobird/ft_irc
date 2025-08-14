@@ -11,92 +11,62 @@ jobs:
     permissions:
       contents: read
       pull-requests: write
+      issues: write
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Run Cppcheck on srcs (C++98 style)
+      - name: Run Cppcheck
         uses: deep5050/cppcheck-action@v3.0
-        continue-on-error: true  # Don't stop job immediately
+        continue-on-error: true
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          std: c++03                    # C++03 covers C++98 code
+          std: c++03
           output_file: cppcheck-report.txt
           other_options: srcs/ --enable=all --inconclusive
           force: enable
-          check_library: disable
-          skip_preprocessor: disable
-          enable: all
-          exclude_check: disable
-          inconclusive: enable
-          inline_suppression: disable
-          force_language: disable
-          max_ctu_depth: disable
-          platform: disable
 
-      - name: Upload Cppcheck report artifact
+      - name: Upload report artifact
         uses: actions/upload-artifact@v4
         with:
           name: cppcheck-report
           path: cppcheck-report.txt
 
-      - name: Add Cppcheck results to PR summary
+      - name: Process results
         if: github.event_name == 'pull_request'
         run: |
-          echo "### Cppcheck Static Analysis Results" >> $GITHUB_STEP_SUMMARY
-          
-          if grep -E 'error:' cppcheck-report.txt; then
-            echo "❌ **Failed** - Issues found" >> $GITHUB_STEP_SUMMARY
+          # Check for errors using 'error:' pattern
+          if grep -q 'error:' cppcheck-report.txt; then
+            ISSUE_COUNT=$(grep -c 'error:' cppcheck-report.txt)
+            
+            # PR Summary
+            echo "### ❌ Cppcheck Found $ISSUE_COUNT Issues" >> $GITHUB_STEP_SUMMARY
             echo "[Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> $GITHUB_STEP_SUMMARY
-            echo "\n**Error/Warning Summary:**" >> $GITHUB_STEP_SUMMARY
             echo '```' >> $GITHUB_STEP_SUMMARY
-            grep -E 'error' cppcheck-report.txt >> $GITHUB_STEP_SUMMARY
+            grep 'error:' cppcheck-report.txt | head -n 10 >> $GITHUB_STEP_SUMMARY
             echo '```' >> $GITHUB_STEP_SUMMARY
-            exit 1  # Mark step as failed
+            
+            # PR Comment
+            COMMENT="### ❌ Cppcheck Found $ISSUE_COUNT Issues\n\n"
+            COMMENT+="⚠️ Static analysis problems detected:\n\n"
+            COMMENT+="\`\`\`\n"
+            COMMENT+="$(grep 'error:' cppcheck-report.txt | head -n 5)\n"
+            COMMENT+="\`\`\`\n\n"
+            COMMENT+="📊 [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})"
+            
+            gh pr comment ${{ github.event.pull_request.number}} --body "$COMMENT"
+            gh pr react ${{ github.event.pull_request.number}} --reaction "eyes"
+            
+            # Exit with error
+            echo "::error::Cppcheck found $ISSUE_COUNT issues"
+            exit 1
           else
-            echo "✅ **Passed** - No issues found" >> $GITHUB_STEP_SUMMARY
+            echo "### ✅ Cppcheck Passed" >> $GITHUB_STEP_SUMMARY
             echo "[Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> $GITHUB_STEP_SUMMARY
-          fi
-
-      - name: Analyze and comment Cppcheck results
-        if: github.event_name == 'pull_request'
-        run: |
-          # Check for errors/warnings
-          if grep -E 'error:' cppcheck-report.txt; then
-            ISSUE_COUNT=$(grep -c -E 'error' cppcheck-report.txt)
-            MESSAGE="### ❌ Cppcheck Found Issues ($ISSUE_COUNT) ❌
-            ⚠️ **Please fix these static analysis issues** ⚠️
-            📊 [Full Report](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
-            ```
-            $(grep -E 'error' cppcheck-report.txt | head -n 5)
-            ```
-            _Showing first 5 issues - check full report for all_"
-            echo "ISSUES_FOUND=true" >> $GITHUB_ENV
-          else
-            MESSAGE="### ✅ Cppcheck Passed ✅
-            🎉 No static analysis issues found!
-            📊 [Full Report](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
-            echo "ISSUES_FOUND=false" >> $GITHUB_ENV
-          fi
-      
-          # Post comment
-          echo "$MESSAGE" > comment.md
-          gh pr comment ${{ github.event.pull_request.number}} --body-file comment.md
-          
-          # Add reaction
-          if ${{ env.ISSUES_FOUND }}; then
-            gh pr react ${{ github.event.pull_request.number}} --reaction "-1"
-          else
+            
+            gh pr comment ${{ github.event.pull_request.number}} --body "### ✅ Cppcheck Passed\n\n🎉 No static analysis issues found!"
             gh pr react ${{ github.event.pull_request.number}} --reaction "+1"
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
-      - name: Fail job if Cppcheck found warnings or errors
-        if: always()  # always runs, even if previous step failed
-        run: |
-          if grep -E 'error:' cppcheck-report.txt; then
-            echo "Cppcheck found issues. Failing the job."
-            exit 1
-          fi
