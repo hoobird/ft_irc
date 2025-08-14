@@ -191,10 +191,15 @@ jobs:
           
           # Create summary based on build status
           if [[ "${{ steps.build.outcome }}" == "failure" ]]; then
+            # Use echo commands instead of heredoc for better control
             echo "### ❌ Build Failed" > comment.md
             echo "" >> comment.md
             echo "\`\`\`" >> comment.md
-            echo "${{ steps.extract_errors.outputs.error_details }}" >> comment.md
+            if [ -f build_log.txt ]; then
+              grep -B 1 -A 3 "error:" build_log.txt | head -20 >> comment.md
+            else
+              echo "Build log file not found" >> comment.md
+            fi
             echo "\`\`\`" >> comment.md
             echo "" >> comment.md
             echo "Fix compilation errors before running memory checks." >> comment.md
@@ -208,6 +213,7 @@ jobs:
           
           # Check for server start/shutdown issues
           if [[ "${{ steps.valgrind-test.outputs.server_status }}" == "failed" ]]; then
+            # Use echo commands instead of heredoc
             echo "### ❌ Server Failed to Start" > comment.md
             echo "" >> comment.md
             echo "Your IRC server failed to start properly for the memory test." >> comment.md
@@ -220,6 +226,7 @@ jobs:
           fi
           
           if [[ "${{ steps.valgrind-test.outputs.server_status }}" == "hanging" ]]; then
+            # Use echo commands instead of heredoc
             echo "### ❌ Server Did Not Shut Down Gracefully" > comment.md
             echo "" >> comment.md
             echo "Your IRC server did not respond to the shutdown signal within the timeout period." >> comment.md
@@ -233,9 +240,11 @@ jobs:
           
           # Create summary for valgrind results
           if [[ "${{ steps.valgrind-test.outputs.valgrind_passed }}" == "true" ]]; then
+            # Write to step summary
             echo "### ✅ Memory and FD Checks Passed" >> $GITHUB_STEP_SUMMARY
             echo "🎉 No memory leaks or file descriptor leaks detected!" >> $GITHUB_STEP_SUMMARY
             
+            # Use echo commands instead of heredoc
             echo "### ✅ Memory and FD Checks Passed" > comment.md
             echo "" >> comment.md
             echo "🎉 All checks passed successfully!" >> comment.md
@@ -245,39 +254,47 @@ jobs:
             gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md
             gh pr react ${{ github.event.pull_request.number }} --reaction "+1"
           else
+            # Write to step summary
             echo "### ❌ Memory and FD Checks Failed" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
             
+            # Use echo commands instead of heredoc
             echo "### ❌ Memory and FD Checks Failed" > comment.md
             echo "" >> comment.md
             
             if [[ "${{ steps.valgrind-test.outputs.fd_leaks }}" == "true" ]]; then
+              # Write to step summary
               echo "⚠️ Found ${{ steps.valgrind-test.outputs.fd_leak_count }} file descriptor leaks:" >> $GITHUB_STEP_SUMMARY
-              echo "⚠️ Found ${{ steps.valgrind-test.outputs.fd_leak_count }} file descriptor leaks:" >> comment.md
               echo "" >> $GITHUB_STEP_SUMMARY
-              echo "" >> comment.md
-              echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-              echo "\`\`\`" >> comment.md
+              echo "```" >> $GITHUB_STEP_SUMMARY
               echo "${{ steps.valgrind-test.outputs.fd_leak_details }}" >> $GITHUB_STEP_SUMMARY
-              echo "${{ steps.valgrind-test.outputs.fd_leak_details }}" >> comment.md
-              echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-              echo "\`\`\`" >> comment.md
+              echo "```" >> $GITHUB_STEP_SUMMARY
               echo "" >> $GITHUB_STEP_SUMMARY
+              
+              # Write to PR comment
+              echo "⚠️ Found ${{ steps.valgrind-test.outputs.fd_leak_count }} file descriptor leaks:" >> comment.md
+              echo "" >> comment.md
+              echo "\`\`\`" >> comment.md
+              echo "${{ steps.valgrind-test.outputs.fd_leak_details }}" >> comment.md
+              echo "\`\`\`" >> comment.md
               echo "" >> comment.md
             fi
             
             if [[ "${{ steps.valgrind-test.outputs.memory_leaks }}" == "true" ]]; then
+              # Write to step summary
               echo "⚠️ Found memory leaks:" >> $GITHUB_STEP_SUMMARY
-              echo "⚠️ Found memory leaks:" >> comment.md
               echo "" >> $GITHUB_STEP_SUMMARY
-              echo "" >> comment.md
-              echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-              echo "\`\`\`" >> comment.md
+              echo "```" >> $GITHUB_STEP_SUMMARY
               echo "${{ steps.valgrind-test.outputs.leak_summary }}" >> $GITHUB_STEP_SUMMARY
-              echo "${{ steps.valgrind-test.outputs.leak_summary }}" >> comment.md
-              echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-              echo "\`\`\`" >> comment.md
+              echo "```" >> $GITHUB_STEP_SUMMARY
               echo "" >> $GITHUB_STEP_SUMMARY
+              
+              # Write to PR comment
+              echo "⚠️ Found memory leaks:" >> comment.md
+              echo "" >> comment.md
+              echo "\`\`\`" >> comment.md
+              echo "${{ steps.valgrind-test.outputs.leak_summary }}" >> comment.md
+              echo "\`\`\`" >> comment.md
               echo "" >> comment.md
             fi
             
