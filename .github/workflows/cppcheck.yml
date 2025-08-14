@@ -46,7 +46,7 @@ jobs:
         run: |
           echo "### Cppcheck Static Analysis Results" >> $GITHUB_STEP_SUMMARY
           
-          if grep -q -E '\[error\]|\[warning\]' cppcheck-report.txt; then
+          if grep -E 'error:' cppcheck-report.txt; then
             echo "❌ **Failed** - Issues found" >> $GITHUB_STEP_SUMMARY
             echo "[Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> $GITHUB_STEP_SUMMARY
             echo "\n**Error/Warning Summary:**" >> $GITHUB_STEP_SUMMARY
@@ -63,7 +63,7 @@ jobs:
         if: github.event_name == 'pull_request'
         run: |
           # Check for errors/warnings
-          if grep -q -E 'error:' cppcheck-report.txt; then
+          if grep -E 'error:' cppcheck-report.txt; then
             ISSUE_COUNT=$(grep -c -E '\[error\]|\[warning\]' cppcheck-report.txt)
             MESSAGE="### ❌ Cppcheck Found Issues ($ISSUE_COUNT) ❌
             ⚠️ **Please fix these static analysis issues** ⚠️
