@@ -79,14 +79,6 @@ int main(int argc, char** argv) {
         return -1;
     }
 
-    // add a case that will fail cppcheck
-    int numbers[] = {1, 2, 3, 4, 5};
-    std::cout << "the 6th number is: " << numbers[5] << std::endl; // This will cause an out-of-bounds access
-
-    // valgrind leak
-    std::string* leakString = new std::string("This is a memory leak example");
-    (void)leakString; // Suppress unused variable warning, but this will leak memory
-
     // Check input arguments
     if (!checkInputArgs(argc, argv, port, password)) {
         return -1;
