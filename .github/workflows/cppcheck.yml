@@ -51,7 +51,7 @@ jobs:
             echo "[Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> $GITHUB_STEP_SUMMARY
             echo "\n**Error/Warning Summary:**" >> $GITHUB_STEP_SUMMARY
             echo '```' >> $GITHUB_STEP_SUMMARY
-            grep -E '\[error\]|\[warning\]' cppcheck-report.txt >> $GITHUB_STEP_SUMMARY
+            grep -E 'error' cppcheck-report.txt >> $GITHUB_STEP_SUMMARY
             echo '```' >> $GITHUB_STEP_SUMMARY
             exit 1  # Mark step as failed
           else
@@ -64,12 +64,12 @@ jobs:
         run: |
           # Check for errors/warnings
           if grep -E 'error:' cppcheck-report.txt; then
-            ISSUE_COUNT=$(grep -c -E '\[error\]|\[warning\]' cppcheck-report.txt)
+            ISSUE_COUNT=$(grep -c -E 'error' cppcheck-report.txt)
             MESSAGE="### ❌ Cppcheck Found Issues ($ISSUE_COUNT) ❌
             ⚠️ **Please fix these static analysis issues** ⚠️
             📊 [Full Report](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
             ```
-            $(grep -E '\[error\]|\[warning\]' cppcheck-report.txt | head -n 5)
+            $(grep -E 'error' cppcheck-report.txt | head -n 5)
             ```
             _Showing first 5 issues - check full report for all_"
             echo "ISSUES_FOUND=true" >> $GITHUB_ENV
