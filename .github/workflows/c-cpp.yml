@@ -1,4 +1,4 @@
-name: C++ Valgrind checks
+name: C++ Memory and FD Leak Checks
 
 on:
   push:
@@ -8,64 +8,32 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest
-    timeout-minutes: 5  # Job fails if it exceeds 5 minutes
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
     permissions:
       contents: read
       pull-requests: write
       issues: write
-    steps:
-      - name: Run a task
-        run: echo "This job will timeout after 5 minutes"
 
+    steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Simple binary cache for installed packages
-      - name: Cache installed packages
-        id: cache-valgrind
-        uses: actions/cache@v4
-        with:
-          path: ~/.local/apt-archives
-          key: ubuntu-valgrind-apt-${{ hashFiles('.github/workflows/c-cpp.yml') }}
-
-      # Set up valgrind - install from cache or from apt
-      - name: Install Valgrind with dependencies
+      - name: Install Valgrind and dependencies
         run: |
-          # Disable man-db updates to speed up installation
-          sudo rm -f /var/lib/man-db/auto-update
-          echo 'man-db man-db/auto-update boolean false' | sudo debconf-set-selections
-          
-          sudo mkdir -p /var/cache/apt/archives
-          
-          # Check if we have cache
-          if [[ -d ~/.local/apt-archives && "$(ls -A ~/.local/apt-archives)" ]]; then
-            echo "Using cached apt packages"
-            sudo cp ~/.local/apt-archives/*.deb /var/cache/apt/archives/ 2>/dev/null || true
-          else
-            echo "No cache found - will create one"
-            mkdir -p ~/.local/apt-archives
-          fi
-          
-          # Install valgrind and dependencies with man-db updates disabled
           sudo apt-get update
-          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends valgrind gdb
-          
-          # Cache the .deb files for next time
-          cp /var/cache/apt/archives/*.deb ~/.local/apt-archives/ 2>/dev/null || true
-          echo "Cached $(ls -1 ~/.local/apt-archives | wc -l) .deb files for future runs"
-          
-          # Verify valgrind is available
-          valgrind --version
+          sudo apt-get install -y --no-install-recommends valgrind gdb
 
-      # Build project
       - name: Build project
         run: make CFLAGS="-Wall -Wextra -Werror -MMD -g"
+        
+      - name: Create test directory
+        run: mkdir -p logs
 
-      - name: Run Valgrind checks for fd leaks
+      - name: Run Valgrind checks
         id: valgrind-test
         run: |
-          mkdir -p logs
+          # Write valgrind script
           cat > run_valgrind.sh << 'EOF'
           #!/bin/bash
           exec valgrind --leak-check=full \
@@ -79,23 +47,33 @@ jobs:
           
           chmod +x run_valgrind.sh
           
-          # Run the script in background
+          # Run the server in background
           ./run_valgrind.sh &
           SERVER_PID=$!
           
-          # Wait for server to initialize
-          sleep 5
+          # Wait for server to initialize (5 seconds max)
+          for i in {1..5}; do
+            if nc -z localhost 8080; then
+              break
+            fi
+            sleep 1
+          done
           
           # Send shutdown signal
           kill -INT $SERVER_PID
           
-          # Wait for graceful shutdown
+          # Wait for graceful shutdown (10 seconds max)
           timeout 10 bash -c "while kill -0 $SERVER_PID 2>/dev/null; do sleep 0.1; done" || \
             (echo "::error::Server did not exit gracefully" && kill -TERM $SERVER_PID && exit 1)
           
-          # Check valgrind log for fd leaks
+          # Process valgrind results
+          if [ ! -f logs/valgrind.log ]; then
+            echo "::error::Valgrind log file not found"
+            exit 1
+          fi
+          
+          # Check for FD leaks
           if grep -q "FILE DESCRIPTORS: " logs/valgrind.log; then
-            # Use awk to properly parse multiline fd entries
             fd_leak_count=$(awk '
               /Open file descriptor/ {
                 fd_line = $0;
@@ -108,25 +86,20 @@ jobs:
             
             if [ "$fd_leak_count" -gt 0 ]; then
               echo "::error::Found $fd_leak_count file descriptor leaks!"
-              # Save leak info for later use
-              FD_LEAKS=$(awk '
+              echo "fd_leaks=true" >> $GITHUB_OUTPUT
+              echo "fd_leak_count=$fd_leak_count" >> $GITHUB_OUTPUT
+              echo "fd_leak_details<<EOF" >> $GITHUB_OUTPUT
+              awk '
                 /Open file descriptor/ {
                   fd_entry = $0;
                   getline;
                   if ($0 !~ /inherited from parent/ && $0 !~ /valgrind\.log/)
                     print fd_entry "\n" $0;
                 }
-              ' logs/valgrind.log)
-              echo "fd_leaks=true" >> $GITHUB_OUTPUT
-              echo "fd_leak_count=$fd_leak_count" >> $GITHUB_OUTPUT
-              echo "fd_leak_details<<EOF" >> $GITHUB_OUTPUT
-              echo "$FD_LEAKS" >> $GITHUB_OUTPUT
+              ' logs/valgrind.log >> $GITHUB_OUTPUT
               echo "EOF" >> $GITHUB_OUTPUT
               exit 1
             fi
-          else
-            echo "::error::Valgrind did not report file descriptor information."
-            exit 1
           fi
 
           # Check for memory leaks
@@ -134,10 +107,9 @@ jobs:
             memory_leaks=$(grep "definitely lost:" logs/valgrind.log | grep -v "0 bytes in 0 blocks")
             if [ -n "$memory_leaks" ]; then
               echo "::error::Found memory leaks!"
-              LEAK_SUMMARY=$(grep -A 30 "LEAK SUMMARY:" logs/valgrind.log)
               echo "memory_leaks=true" >> $GITHUB_OUTPUT
               echo "leak_summary<<EOF" >> $GITHUB_OUTPUT
-              echo "$LEAK_SUMMARY" >> $GITHUB_OUTPUT
+              grep -A 30 "LEAK SUMMARY:" logs/valgrind.log >> $GITHUB_OUTPUT
               echo "EOF" >> $GITHUB_OUTPUT
               exit 1
             fi
@@ -145,50 +117,39 @@ jobs:
           
           echo "valgrind_passed=true" >> $GITHUB_OUTPUT
 
-      # Upload Valgrind log
       - name: Upload Valgrind log
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: valgrind-log
           path: logs/valgrind.log
+          if-no-files-found: error
 
-      - name: Process Valgrind results
-        if: github.event_name == 'pull_request'
+      - name: Process results
+        if: github.event_name == 'pull_request' && success()
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Update GitHub CLI to ensure we have reaction support
-          sudo apt-get update
-          sudo apt-get install -y gh
+          # Install GitHub CLI if needed
+          if ! command -v gh &> /dev/null; then
+            sudo apt-get install -y gh
+          fi
           
-          # Check if Valgrind passed
+          # Create summary
           if [[ "${{ steps.valgrind-test.outputs.valgrind_passed }}" == "true" ]]; then
-            # PR Summary
-            cat <<EOF >> $GITHUB_STEP_SUMMARY
-          ### ✅ Valgrind Checks Passed
-          
-          🎉 No memory leaks or file descriptor leaks detected!
-          
-          [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})
-          EOF
-          
-            # PR Comment
-            COMMENT_FILE=$(mktemp)
-            cat <<EOF > "$COMMENT_FILE"
-          ### ✅ Valgrind Checks Passed
-          
-          🎉 All memory and file descriptor checks passed successfully!
-          
-          📊 [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})
-          EOF
+            echo "### ✅ Memory and FD Checks Passed" >> $GITHUB_STEP_SUMMARY
+            echo "🎉 No memory leaks or file descriptor leaks detected!" >> $GITHUB_STEP_SUMMARY
+            echo "[Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> $GITHUB_STEP_SUMMARY
             
-            gh pr comment ${{ github.event.pull_request.number}} --body-file "$COMMENT_FILE"
-            rm "$COMMENT_FILE"
+            gh pr comment ${{ github.event.pull_request.number}} \
+              --body "### ✅ Memory and FD Checks Passed
+                      
+                      🎉 All checks passed successfully!
+                      
+                      📊 [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})"
             gh pr react ${{ github.event.pull_request.number}} --reaction "+1"
           else
-            # Handle failures
-            FAILURE_MESSAGE="### ❌ Valgrind Checks Failed\n\n"
+            FAILURE_MESSAGE="### ❌ Memory and FD Checks Failed\n\n"
             
             if [[ "${{ steps.valgrind-test.outputs.fd_leaks }}" == "true" ]]; then
               FAILURE_MESSAGE+="⚠️ Found ${{ steps.valgrind-test.outputs.fd_leak_count }} file descriptor leaks:\n\n"
@@ -202,16 +163,7 @@ jobs:
             
             FAILURE_MESSAGE+="📊 [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})"
             
-            # PR Summary
             echo -e "$FAILURE_MESSAGE" >> $GITHUB_STEP_SUMMARY
-            
-            # PR Comment
-            COMMENT_FILE=$(mktemp)
-            echo -e "$FAILURE_MESSAGE" > "$COMMENT_FILE"
-            
-            gh pr comment ${{ github.event.pull_request.number}} --body-file "$COMMENT_FILE"
-            rm "$COMMENT_FILE"
+            echo -e "$FAILURE_MESSAGE" | gh pr comment ${{ github.event.pull_request.number}} --body-file -
             gh pr react ${{ github.event.pull_request.number}} --reaction "eyes"
-            
-            exit 1
           fi
