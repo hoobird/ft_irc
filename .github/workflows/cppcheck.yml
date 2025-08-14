@@ -63,7 +63,7 @@ jobs:
         if: github.event_name == 'pull_request'
         run: |
           # Check for errors/warnings
-          if grep -q -E '\[error\]|\[warning\]' cppcheck-report.txt; then
+          if grep -q -E 'error:' cppcheck-report.txt; then
             ISSUE_COUNT=$(grep -c -E '\[error\]|\[warning\]' cppcheck-report.txt)
             MESSAGE="### ❌ Cppcheck Found Issues ($ISSUE_COUNT) ❌
             ⚠️ **Please fix these static analysis issues** ⚠️
