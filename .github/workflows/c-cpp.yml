@@ -54,15 +54,20 @@ jobs:
         id: build_check
         run: |
           echo "::error::Build failed! Cannot proceed with memory and FD checks."
+          
+          # Create clearer step summary with proper error details
           echo "### ❌ Build Failed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
           echo "Fix compilation errors before running memory checks." >> $GITHUB_STEP_SUMMARY
-          echo "```" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           if [ -f build_log.txt ]; then
-            cat build_log.txt | grep -B 1 -A 3 "error:" | head -20 >> $GITHUB_STEP_SUMMARY
+            grep -B 1 -A 3 "error:" build_log.txt | head -20 >> $GITHUB_STEP_SUMMARY
           else
             echo "Build log file not found" >> $GITHUB_STEP_SUMMARY
           fi
-          echo "```" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          
           exit 1
 
       - name: Run Valgrind checks
