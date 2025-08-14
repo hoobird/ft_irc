@@ -1,0 +1,30 @@
+name: Cppcheck CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  cppcheck:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run Cppcheck on srcs with C++98
+        uses: deep5050/cppcheck-action@v3.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          std: c++98
+          output_file: cppcheck-report.txt
+          other_options: srcs/ --enable=all --inconclusive
+          
+      - name: Upload Cppcheck report
+        uses: actions/upload-artifact@v4
+        with:
+          name: cppcheck-report
+          path: cppcheck-report.txt
