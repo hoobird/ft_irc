@@ -48,12 +48,11 @@ jobs:
             echo '```' >> $GITHUB_STEP_SUMMARY
             
             # PR Comment
-            COMMENT="### ❌ Cppcheck Found $ISSUE_COUNT Issues\n\n"
-            COMMENT+="⚠️ Static analysis problems detected:\n\n"
-            COMMENT+="\`\`\`\n"
-            COMMENT+="$(grep 'error:' cppcheck-report.txt | head -n 5)\n"
-            COMMENT+="\`\`\`\n\n"
-            COMMENT+="📊 [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})"
+            COMMENT=$(printf "### ❌ Cppcheck Found %d Issues\n\n" "$ISSUE_COUNT")
+            COMMENT+=$(printf "⚠️ Static analysis problems detected:\n\n")
+            COMMENT+=$(printf "\`\`\`\n%s\n\`\`\`\n\n" "$(grep 'error:' cppcheck-report.txt | head -n 5)")
+            COMMENT+=$(printf "📊 [Full Report](%s/%s/actions/runs/%s)" \
+                       "${GITHUB_SERVER_URL}" "${GITHUB_REPOSITORY}" "${GITHUB_RUN_ID}")
             
             gh pr comment ${{ github.event.pull_request.number}} --body "$COMMENT"
             gh pr react ${{ github.event.pull_request.number}} --reaction "eyes"
