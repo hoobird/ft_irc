@@ -41,6 +41,67 @@ jobs:
             ISSUE_COUNT=$(grep -c 'error:' cppcheck-report.txt)
             
             # PR Summary
+            cat <<EOF >> $GITHUB_STEP_SUMMARY
+          ### ❌ Cppcheck Found $ISSUE_COUNT Issues
+          
+          [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})
+          
+          \`\`\`
+          $(grep 'error:' cppcheck-report.txt | head -n 10)
+          \`\`\`
+          EOF
+          
+                # PR Comment
+                COMMENT_FILE=$(mktemp)
+                cat <<EOF > "$COMMENT_FILE"
+          ### ❌ Cppcheck Found $ISSUE_COUNT Issues
+          
+          ⚠️ Static analysis problems detected:
+          
+          \`\`\`
+          $(grep 'error:' cppcheck-report.txt | head -n 5)
+          \`\`\`
+          
+          📊 [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})
+          EOF
+          
+                gh pr comment ${{ github.event.pull_request.number}} --body-file "$COMMENT_FILE"
+                rm "$COMMENT_FILE"
+                gh pr react ${{ github.event.pull_request.number}} --reaction "eyes"
+                
+                echo "::error::Cppcheck found $ISSUE_COUNT issues"
+                exit 1
+              else
+                cat <<EOF >> $GITHUB_STEP_SUMMARY
+          ### ✅ Cppcheck Passed
+          
+          [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})
+          EOF
+          
+                COMMENT_FILE=$(mktemp)
+                cat <<EOF > "$COMMENT_FILE"
+          ### ✅ Cppcheck Passed
+          
+          🎉 No static analysis issues found!
+          
+          📊 [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})
+          EOF
+      
+            gh pr comment ${{ github.event.pull_request.number}} --body-file "$COMMENT_FILE"
+            rm "$COMMENT_FILE"
+            gh pr react ${{ github.event.pull_request.number}} --reaction "+1"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Process results
+        if: github.event_name == 'pull_request'
+        run: |
+          # Check for errors using 'error:' pattern
+          if grep -q 'error:' cppcheck-report.txt; then
+            ISSUE_COUNT=$(grep -c 'error:' cppcheck-report.txt)
+            
+            # PR Summary
             echo "### ❌ Cppcheck Found $ISSUE_COUNT Issues" >> $GITHUB_STEP_SUMMARY
             echo "[Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> $GITHUB_STEP_SUMMARY
             echo '```' >> $GITHUB_STEP_SUMMARY
