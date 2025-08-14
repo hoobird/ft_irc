@@ -30,18 +30,28 @@ jobs:
       - name: Build project
         id: build
         continue-on-error: true
-        run: make CFLAGS="-Wall -Wextra -Werror -MMD -g"
+        run: |
+          make CFLAGS="-Wall -Wextra -Werror -MMD -g" 2>&1 | tee build_log.txt
+          exit ${PIPESTATUS[0]}
 
       - name: Check build status
         if: steps.build.outcome == 'failure'
+        id: build_check
         run: |
           echo "::error::Build failed! Cannot proceed with memory and FD checks."
+          echo "error_details<<EOF" >> $GITHUB_OUTPUT
+          grep -A 5 "error:" build_log.txt | head -10 >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
           echo "### ❌ Build Failed" >> $GITHUB_STEP_SUMMARY
           echo "Fix compilation errors before running memory checks." >> $GITHUB_STEP_SUMMARY
+          echo "```" >> $GITHUB_STEP_SUMMARY
+          grep -A 5 "error:" build_log.txt | head -10 >> $GITHUB_STEP_SUMMARY
+          echo "```" >> $GITHUB_STEP_SUMMARY
           exit 1
 
       - name: Run Valgrind checks
         id: valgrind-test
+        if: steps.build.outcome != 'failure'
         run: |
           # Write valgrind script
           cat > run_valgrind.sh << 'EOF'
@@ -146,7 +156,7 @@ jobs:
           if-no-files-found: warn
 
       - name: Process results
-        if: github.event_name == 'pull_request' && (success() || steps.build.outcome == 'failure')
+        if: github.event_name == 'pull_request' && always()
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -156,32 +166,32 @@ jobs:
           fi
           
           # Create summary based on build status
-          if [[ "${{ steps.build.outcome }}" == "failure" ]]; then
-            echo "### ❌ Build Failed" >> $GITHUB_STEP_SUMMARY
-            echo "Fix compilation errors before running memory checks." >> $GITHUB_STEP_SUMMARY
-            
+          if [[ "${{ steps.build.outcome }}" == "failure" ]]; then            
             gh pr comment ${{ github.event.pull_request.number }} \
               --body "### ❌ Build Failed
-                      
-                      Fix compilation errors before running memory checks.
-                      
-                      📊 [See Build Log](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})"
-            gh pr react ${{ github.event.pull_request.number }} --reaction "confused"
-            exit 0
+
+            \`\`\`
+            ${{ steps.build_check.outputs.error_details }}
+            \`\`\`
+
+            Fix compilation errors before running memory checks.
+
+            📊 [See Build Log](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})"
+                        gh pr react ${{ github.event.pull_request.number }} --reaction "confused"
+                        exit 0
           fi
           
           # Create summary for valgrind results
           if [[ "${{ steps.valgrind-test.outputs.valgrind_passed }}" == "true" ]]; then
             echo "### ✅ Memory and FD Checks Passed" >> $GITHUB_STEP_SUMMARY
             echo "🎉 No memory leaks or file descriptor leaks detected!" >> $GITHUB_STEP_SUMMARY
-            echo "[Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> $GITHUB_STEP_SUMMARY
             
             gh pr comment ${{ github.event.pull_request.number }} \
               --body "### ✅ Memory and FD Checks Passed
                       
-                      🎉 All checks passed successfully!
-                      
-                      📊 [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})"
+            🎉 All checks passed successfully!
+
+            📊 [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})"
             gh pr react ${{ github.event.pull_request.number }} --reaction "+1"
           else
             FAILURE_MESSAGE="### ❌ Memory and FD Checks Failed\n\n"
