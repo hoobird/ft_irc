@@ -22,7 +22,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           std: c++03                    # C++03 covers C++98 code
           output_file: cppcheck-report.txt
-          other_options: srcs/ --enable=all --inconclusive --quiet
+          other_options: srcs/ --enable=all --inconclusive --quiet --error-exitcode=1
           check_library: disable
           skip_preprocessor: disable
           enable: all
