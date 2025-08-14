@@ -9,7 +9,7 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-24.04
-    timeout-minutes: 8
+    timeout-minutes: 5
     permissions:
       contents: read
       pull-requests: write
@@ -31,21 +31,37 @@ jobs:
         id: build
         continue-on-error: true
         run: |
-          make CFLAGS="-Wall -Wextra -Werror -MMD -g" 2>&1 | tee build_log.txt
-          exit ${PIPESTATUS[0]}
+          make CFLAGS="-Wall -Wextra -Werror -MMD -g" > build_log.txt 2>&1 || {
+            echo "Build failed with status $?"
+            cat build_log.txt
+            exit 1
+          }
+
+      - name: Extract build errors
+        if: steps.build.outcome == 'failure'
+        id: extract_errors
+        run: |
+          if [ -f build_log.txt ]; then
+            echo "error_details<<EOF" >> $GITHUB_OUTPUT
+            cat build_log.txt | grep -B 1 -A 3 "error:" | head -20 >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          else
+            echo "error_details=Build log file not found" >> $GITHUB_OUTPUT
+          fi
 
       - name: Check build status
         if: steps.build.outcome == 'failure'
         id: build_check
         run: |
           echo "::error::Build failed! Cannot proceed with memory and FD checks."
-          echo "error_details<<EOF" >> $GITHUB_OUTPUT
-          grep -A 5 "error:" build_log.txt | head -10 >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
           echo "### ❌ Build Failed" >> $GITHUB_STEP_SUMMARY
           echo "Fix compilation errors before running memory checks." >> $GITHUB_STEP_SUMMARY
           echo "```" >> $GITHUB_STEP_SUMMARY
-          grep -A 5 "error:" build_log.txt | head -10 >> $GITHUB_STEP_SUMMARY
+          if [ -f build_log.txt ]; then
+            cat build_log.txt | grep -B 1 -A 3 "error:" | head -20 >> $GITHUB_STEP_SUMMARY
+          else
+            echo "Build log file not found" >> $GITHUB_STEP_SUMMARY
+          fi
           echo "```" >> $GITHUB_STEP_SUMMARY
           exit 1
 
@@ -82,6 +98,7 @@ jobs:
           # Check if server is still running
           if ! kill -0 $SERVER_PID 2>/dev/null; then
             echo "::error::Server failed to start properly"
+            echo "server_status=failed" >> $GITHUB_OUTPUT
             # Create empty log file so artifact upload doesn't fail
             touch logs/valgrind.log
             exit 1
@@ -91,12 +108,17 @@ jobs:
           kill -INT $SERVER_PID
           
           # Wait for graceful shutdown (10 seconds max)
-          timeout 10 bash -c "while kill -0 $SERVER_PID 2>/dev/null; do sleep 0.1; done" || \
-            (echo "::error::Server did not exit gracefully" && kill -TERM $SERVER_PID && exit 1)
+          if ! timeout 10 bash -c "while kill -0 $SERVER_PID 2>/dev/null; do sleep 0.1; done"; then
+            echo "::error::Server did not exit gracefully"
+            echo "server_status=hanging" >> $GITHUB_OUTPUT
+            kill -TERM $SERVER_PID
+            exit 1
+          fi
           
           # Process valgrind results
           if [ ! -f logs/valgrind.log ]; then
             echo "::error::Valgrind log file not found"
+            echo "valgrind_status=no_log" >> $GITHUB_OUTPUT
             # Create empty log file so artifact upload doesn't fail
             touch logs/valgrind.log
             exit 1
@@ -152,7 +174,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: valgrind-log
-          path: logs/valgrind.log
+          path: |
+            logs/valgrind.log
+            build_log.txt
           if-no-files-found: warn
 
       - name: Process results
@@ -166,19 +190,45 @@ jobs:
           fi
           
           # Create summary based on build status
-          if [[ "${{ steps.build.outcome }}" == "failure" ]]; then            
-            gh pr comment ${{ github.event.pull_request.number }} \
-              --body "### ❌ Build Failed
-
-            \`\`\`
-            ${{ steps.build_check.outputs.error_details }}
-            \`\`\`
-
-            Fix compilation errors before running memory checks.
-
-            📊 [See Build Log](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})"
-                        gh pr react ${{ github.event.pull_request.number }} --reaction "confused"
-                        exit 0
+          if [[ "${{ steps.build.outcome }}" == "failure" ]]; then
+            echo "### ❌ Build Failed" > comment.md
+            echo "" >> comment.md
+            echo "\`\`\`" >> comment.md
+            echo "${{ steps.extract_errors.outputs.error_details }}" >> comment.md
+            echo "\`\`\`" >> comment.md
+            echo "" >> comment.md
+            echo "Fix compilation errors before running memory checks." >> comment.md
+            echo "" >> comment.md
+            echo "📊 [See Build Log](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> comment.md
+            
+            gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md
+            gh pr react ${{ github.event.pull_request.number }} --reaction "confused"
+            exit 0
+          fi
+          
+          # Check for server start/shutdown issues
+          if [[ "${{ steps.valgrind-test.outputs.server_status }}" == "failed" ]]; then
+            echo "### ❌ Server Failed to Start" > comment.md
+            echo "" >> comment.md
+            echo "Your IRC server failed to start properly for the memory test." >> comment.md
+            echo "" >> comment.md
+            echo "📊 [See Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> comment.md
+            
+            gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md
+            gh pr react ${{ github.event.pull_request.number }} --reaction "confused"
+            exit 0
+          fi
+          
+          if [[ "${{ steps.valgrind-test.outputs.server_status }}" == "hanging" ]]; then
+            echo "### ❌ Server Did Not Shut Down Gracefully" > comment.md
+            echo "" >> comment.md
+            echo "Your IRC server did not respond to the shutdown signal within the timeout period." >> comment.md
+            echo "" >> comment.md
+            echo "📊 [See Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> comment.md
+            
+            gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md
+            gh pr react ${{ github.event.pull_request.number }} --reaction "confused"
+            exit 0
           fi
           
           # Create summary for valgrind results
@@ -186,29 +236,54 @@ jobs:
             echo "### ✅ Memory and FD Checks Passed" >> $GITHUB_STEP_SUMMARY
             echo "🎉 No memory leaks or file descriptor leaks detected!" >> $GITHUB_STEP_SUMMARY
             
-            gh pr comment ${{ github.event.pull_request.number }} \
-              --body "### ✅ Memory and FD Checks Passed
-                      
-            🎉 All checks passed successfully!
-
-            📊 [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})"
+            echo "### ✅ Memory and FD Checks Passed" > comment.md
+            echo "" >> comment.md
+            echo "🎉 All checks passed successfully!" >> comment.md
+            echo "" >> comment.md
+            echo "📊 [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> comment.md
+            
+            gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md
             gh pr react ${{ github.event.pull_request.number }} --reaction "+1"
           else
-            FAILURE_MESSAGE="### ❌ Memory and FD Checks Failed\n\n"
+            echo "### ❌ Memory and FD Checks Failed" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            
+            echo "### ❌ Memory and FD Checks Failed" > comment.md
+            echo "" >> comment.md
             
             if [[ "${{ steps.valgrind-test.outputs.fd_leaks }}" == "true" ]]; then
-              FAILURE_MESSAGE+="⚠️ Found ${{ steps.valgrind-test.outputs.fd_leak_count }} file descriptor leaks:\n\n"
-              FAILURE_MESSAGE+="\`\`\`\n${{ steps.valgrind-test.outputs.fd_leak_details }}\n\`\`\`\n\n"
+              echo "⚠️ Found ${{ steps.valgrind-test.outputs.fd_leak_count }} file descriptor leaks:" >> $GITHUB_STEP_SUMMARY
+              echo "⚠️ Found ${{ steps.valgrind-test.outputs.fd_leak_count }} file descriptor leaks:" >> comment.md
+              echo "" >> $GITHUB_STEP_SUMMARY
+              echo "" >> comment.md
+              echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+              echo "\`\`\`" >> comment.md
+              echo "${{ steps.valgrind-test.outputs.fd_leak_details }}" >> $GITHUB_STEP_SUMMARY
+              echo "${{ steps.valgrind-test.outputs.fd_leak_details }}" >> comment.md
+              echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+              echo "\`\`\`" >> comment.md
+              echo "" >> $GITHUB_STEP_SUMMARY
+              echo "" >> comment.md
             fi
             
             if [[ "${{ steps.valgrind-test.outputs.memory_leaks }}" == "true" ]]; then
-              FAILURE_MESSAGE+="⚠️ Found memory leaks:\n\n"
-              FAILURE_MESSAGE+="\`\`\`\n${{ steps.valgrind-test.outputs.leak_summary }}\n\`\`\`\n\n"
+              echo "⚠️ Found memory leaks:" >> $GITHUB_STEP_SUMMARY
+              echo "⚠️ Found memory leaks:" >> comment.md
+              echo "" >> $GITHUB_STEP_SUMMARY
+              echo "" >> comment.md
+              echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+              echo "\`\`\`" >> comment.md
+              echo "${{ steps.valgrind-test.outputs.leak_summary }}" >> $GITHUB_STEP_SUMMARY
+              echo "${{ steps.valgrind-test.outputs.leak_summary }}" >> comment.md
+              echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+              echo "\`\`\`" >> comment.md
+              echo "" >> $GITHUB_STEP_SUMMARY
+              echo "" >> comment.md
             fi
             
-            FAILURE_MESSAGE+="📊 [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})"
+            echo "📊 [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> $GITHUB_STEP_SUMMARY
+            echo "📊 [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> comment.md
             
-            echo -e "$FAILURE_MESSAGE" >> $GITHUB_STEP_SUMMARY
-            echo -e "$FAILURE_MESSAGE" | gh pr comment ${{ github.event.pull_request.number }} --body-file -
+            gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md
             gh pr react ${{ github.event.pull_request.number }} --reaction "eyes"
           fi
