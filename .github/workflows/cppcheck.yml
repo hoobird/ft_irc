@@ -54,9 +54,9 @@ jobs:
           \`\`\`
           EOF
           
-                # PR Comment
-                COMMENT_FILE=$(mktemp)
-                cat <<EOF > "$COMMENT_FILE"
+            # PR Comment
+            COMMENT_FILE=$(mktemp)
+            cat <<EOF > "$COMMENT_FILE"
           ### ❌ Cppcheck Found $ISSUE_COUNT Issues
           
           ⚠️ Static analysis problems detected:
@@ -68,21 +68,22 @@ jobs:
           📊 [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})
           EOF
           
-                gh pr comment ${{ github.event.pull_request.number}} --body-file "$COMMENT_FILE"
-                rm "$COMMENT_FILE"
-                gh pr react ${{ github.event.pull_request.number}} --reaction "eyes"
-                
-                echo "::error::Cppcheck found $ISSUE_COUNT issues"
-                exit 1
-              else
-                cat <<EOF >> $GITHUB_STEP_SUMMARY
+            gh pr comment ${{ github.event.pull_request.number}} --body-file "$COMMENT_FILE"
+            rm "$COMMENT_FILE"
+            # Fix: Using the correct format for reaction command
+            gh pr reaction add ${{ github.event.pull_request.number}} --reaction "eyes"
+            
+            echo "::error::Cppcheck found $ISSUE_COUNT issues"
+            exit 1
+          else
+            cat <<EOF >> $GITHUB_STEP_SUMMARY
           ### ✅ Cppcheck Passed
           
           [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})
           EOF
           
-                COMMENT_FILE=$(mktemp)
-                cat <<EOF > "$COMMENT_FILE"
+            COMMENT_FILE=$(mktemp)
+            cat <<EOF > "$COMMENT_FILE"
           ### ✅ Cppcheck Passed
           
           🎉 No static analysis issues found!
@@ -92,7 +93,8 @@ jobs:
       
             gh pr comment ${{ github.event.pull_request.number}} --body-file "$COMMENT_FILE"
             rm "$COMMENT_FILE"
-            gh pr react ${{ github.event.pull_request.number}} --reaction "+1"
+            # Fix: Using the correct format for reaction command
+            gh pr reaction add ${{ github.event.pull_request.number}} --reaction "+1"
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
