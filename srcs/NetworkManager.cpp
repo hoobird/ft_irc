@@ -189,6 +189,7 @@ void NetworkManager::addNewClient() {
 void NetworkManager::handleClientData(int fd) {
     std::cout << "Reading existing client data from fd " << fd << std::endl;
     char buffer[MAX_BUFFER_SIZE];
+    memset(buffer, 0, sizeof(buffer));
     ssize_t bytesRead = recv(fd, buffer, sizeof(buffer) - 1, 0);
     if (bytesRead < 0) {
         if (errno == EAGAIN || errno == EWOULDBLOCK)
