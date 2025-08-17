@@ -16,7 +16,7 @@
 ```bash
 make
 valgrind --show-leak-kinds=all --leak-check=fu
-ll --track-fds=yes ./ircserv 8080 pass
+valgrind --show-leak-kinds=all --leak-check=full --track-fds=yes ./ircserv 8080 pass
 ```
 ### Test with NetCat as Client
 ```bash
