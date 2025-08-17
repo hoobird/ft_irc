@@ -7,7 +7,7 @@ INCLUDESDIR = ./includes
 SRCSDIR = ./srcs
 BUILDDIR = ./build
 
-SRC = main.cpp
+SRC = main.cpp Server.cpp Client.cpp NetworkManager.cpp DataStore.cpp Channel.cpp
 DEP = $(OBJ:.o=.d)
 OBJ = $(addprefix $(BUILDDIR)/, $(notdir $(SRC:.cpp=.o)))
 NAME = ircserv
