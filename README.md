@@ -10,6 +10,21 @@
 
 - Recommended client: **irssi**
 
+## Test Serrver
+
+### Run Server
+```bash
+make
+valgrind --show-leak-kinds=all --leak-check=fu
+ll --track-fds=yes ./ircserv 8080 pass
+```
+### Test with NetCat as Client
+```bash
+nc localhost 8080 -C
+```
+
+then start typing random things to send over the connection.
+
 ## Reference Server
 
 - Example: **Dalnet**
