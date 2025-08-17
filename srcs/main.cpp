@@ -9,8 +9,7 @@
 #include <limits>
 #include <fcntl.h>
 
-
-static bool serverRunning = true; // Control epoll loop
+Server* g_server = NULL; // Global pointer to Server instance
 
 // Port must be between 1024 and 65535 as ports below 1024 are reserved
 const int MIN_PORT = 1024;
@@ -19,7 +18,7 @@ const int MAX_PORT = 65535;
 void    signalHandler(int signum) {
     if (signum == SIGINT || signum == SIGQUIT) {
         // Handle Ctrl+C signal and Ctrl+\ signal
-        serverRunning = false;
+        g_server->shutdown();
     }
 }
 
@@ -37,7 +36,7 @@ bool    setupSignalHandlers() {
     return true;
 }
 
-bool checkInputArgs(int argc, char** argv, std::string& port, std::string& password) {
+bool checkInputArgs(int argc, char** argv, std::string &port, int &portNum, std::string &password) {
     if (argc != 3) {
         std::cerr << "Usage: ./ircserv <port> <password>" << std::endl;
         return false;
@@ -55,16 +54,17 @@ bool checkInputArgs(int argc, char** argv, std::string& port, std::string& passw
     errno = 0;
     char *endptr;
     int base = 10; // Base 10 for decimal
-    long portNum = std::strtol(port.c_str(), &endptr, base);
-    if (errno == ERANGE || portNum < 0 || portNum > std::numeric_limits<int>::max() || *endptr != '\0') {
+    long portNumLong = std::strtol(port.c_str(), &endptr, base);
+    if (errno == ERANGE || portNumLong < 0 || portNumLong > std::numeric_limits<int>::max() || *endptr != '\0') {
         std::cerr << "Error: Invalid port number." << std::endl;
         return false;
     }
-    if (portNum <= MIN_PORT || portNum > MAX_PORT) 
+    if (portNumLong <= MIN_PORT || portNumLong > MAX_PORT) 
     {
         std::cerr << "Error: Port number must be between 1024 and 65535." << std::endl;
         return false;
     }
+    portNum = static_cast<int>(portNumLong);
 
     return true;
 }
@@ -72,6 +72,7 @@ bool checkInputArgs(int argc, char** argv, std::string& port, std::string& passw
 int main(int argc, char** argv) {
     
     std::string port;
+    int portNum;
     std::string password;
 
     // Register signal handlers
@@ -79,17 +80,16 @@ int main(int argc, char** argv) {
         return -1;
     }
 
-    // Check input arguments
-    if (!checkInputArgs(argc, argv, port, password)) {
+    // Check input arguments and set portNum to integer value
+    if (!checkInputArgs(argc, argv, port, portNum, password)) {
         return -1;
     }
 
-    // while loop that just runs some waiting logic
-    while (serverRunning) {
-        // Simulate waiting logic
-        std::cout << "Waiting..." << std::endl;
-        sleep(1); // Sleep for 1 second
-    }
+    // Create Server instance
+    Server server(portNum, password);
+    g_server = &server; // Set global pointer to the server instance
+    
+    server.start();
 
 
     return 0;
