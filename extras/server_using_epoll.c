@@ -1,16 +1,12 @@
-#include <sys/socket.h>
-#include <netinet/in.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <errno.h>
-
-#include <errno.h>
 #include <fcntl.h>
-#include <netinet/in.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <netinet/in.h>
 #include <sys/epoll.h>
 #include <sys/socket.h>
 #include <sys/types.h>
@@ -118,7 +114,7 @@ int main()
                         if (errno == EAGAIN || errno == EWOULDBLOCK)
                         {
                             // we processed all of the incoming new connections
-                            break;
+                                break;
                         }
                         perror("accept failed");
                         continue;
