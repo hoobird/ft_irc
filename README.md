@@ -15,7 +15,6 @@
 ### Run Server
 ```bash
 make
-valgrind --show-leak-kinds=all --leak-check=fu
 valgrind --show-leak-kinds=all --leak-check=full --track-fds=yes ./ircserv 8080 pass
 ```
 ### Test with NetCat as Client
