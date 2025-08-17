@@ -10,7 +10,7 @@
 
 - Recommended client: **irssi**
 
-## Test Serrver
+## Test Server
 
 ### Run Server
 ```bash
