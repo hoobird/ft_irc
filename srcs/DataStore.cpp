@@ -42,7 +42,7 @@ void DataStore::addClient(Client* client) {
 
 void DataStore::removeClient(int clientId) {
     // TODO: to remove from client map, but also Channel map if client is in any channel
-    std::cout << "Removing client with ID: " << clientId << "from DataStore" << std::endl;
+    std::cout << "Removing client with ID: " << clientId << " from DataStore" << std::endl;
     ClientMap::iterator it = clients.find(clientId);
     if (it != clients.end()) {
         delete it->second;
