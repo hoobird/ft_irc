@@ -1,6 +1,5 @@
 CC = c++
-CFLAGS = -Wall -Wextra -Werror -MMD -g
-# CFLAGS = -MMD -g
+CFLAGS = -Wall -Wextra -Werror -MMD
 VFLAG = -std=c++98
 
 INCLUDESDIR = ./includes
@@ -30,6 +29,10 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+valgrind: CFLAGS += -g
+valgrind: re
+	valgrind --show-leak-kinds=all --leak-check=full --track-fds=yes ./ircserv 8080 pass
 
 -include $(DEP)
 
