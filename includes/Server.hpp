@@ -4,9 +4,9 @@
 #include "AuthService.hpp"
 #include "DataStore.hpp"
 #include "NetworkManager.hpp"
-// #include "CommandHandler.hpp"
-// #include "MessageParser.hpp"
 #include "NetworkErrors.hpp"
+#include "MessageParser.hpp"
+// #include "CommandHandler.hpp"
 #include <string>
 #include <iostream>
 
@@ -42,6 +42,7 @@ class Server: public AuthService
         std::string password;
         DataStore dataStore;
         NetworkManager networkMan;
+        MessageParser msgParser;
         // CommandHandler cmdHandler;
         // MessageParser cmdParser;
 
