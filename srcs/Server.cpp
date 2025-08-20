@@ -101,6 +101,8 @@ void Server::processClientMessages(int fd, std::string& bufferString)
         std::string messageToProcess = bufferString.substr(0, pos + 2);
         bufferString.erase(0, pos + 2);
         std::cout << "Client " << fd << " -> Server: " << messageToProcess << std::endl;
+        MessageParser::ParsedMessage parsedMessage = msgParser.parse(messageToProcess);
+        msgParser.printParsedMessage(parsedMessage);
         pos = bufferString.find("\r\n");
     }
 }
