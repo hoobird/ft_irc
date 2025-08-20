@@ -7,20 +7,17 @@
 #include <sstream>
 #include <iostream>
 #include <map>
+#include <vector>
 
 class DataStore {
     public:
         // Constructor
-        DataStore(int port, const std::string& password);
-
-        // Getters
-        int getPort() const;
-        std::string getPortString() const;
-        const std::string& getPassword() const;
+        DataStore();
         
         typedef std::map<int, Client*> ClientMap;
         // Clients Management
         void addClient(Client* client);
+        void addClients(const std::vector<Client*>& clients);
         void removeClient(int clientId);
         Client* getClient(int clientId) const; // NULL if not found
         ClientMap::const_iterator getClientsBegin() const;
@@ -40,13 +37,8 @@ class DataStore {
     
 
     private:
-    
-        // Server
-        int port;
-        std::string password;
         
         // Clients and Channels storage
-        DataStore();
         ClientMap clients; // Client ID -> Client object 
         ChannelMap channels; // Channel name -> Channel object
 

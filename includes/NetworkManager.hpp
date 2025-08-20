@@ -3,11 +3,11 @@
 
 #include <string>
 #include <iostream>
+#include <vector>
 #include <NetworkErrors.hpp>
 #include "Client.hpp"
 #include "MessageBuilder.hpp"
 #include "MessageParser.hpp"
-#include "DataStore.hpp"
 #include <arpa/inet.h>
 #include <sys/epoll.h>
 #include <sys/socket.h>
@@ -21,10 +21,10 @@
 
 class NetworkManager {
 	public:
-		NetworkManager(DataStore *dataStore, int *serverSocketFd);
+		NetworkManager();
 		~NetworkManager();
 
-		NetworkError setupServerSocket();
+		NetworkError setupServerSocket(const std::string &portString);
 		int setNonBlocking(int fd);
 		NetworkError createEpollInstance();
 
@@ -33,21 +33,22 @@ class NetworkManager {
 		
 		int addFdToEpoll(int fd);
 
+		std::vector<Client*> addNewClients();
+		std::pair<ssize_t, std::string> readClientData(int fd); // resturns bytes read and buffer from recv()
+		void closeConnection(int fd);
 		void sendResponse(int fd, const std::string& message);
-		void addNewClient();
-		void handleClientData(int fd);
-		void removeClient(int fd);
+
+		// Getters
+		int getListenerFd() const;
 
 	private:
 		static const int MAX_EVENTS = 512;
 		static const int MAX_BUFFER_SIZE = 512; // https://modern.ircdocs.horse/ under Message Format
-		DataStore &dataStore;
-		int &serverSocketFd;
-		struct epoll_event events[MAX_EVENTS];
+		int listenerFd;
 		int epollFd;
+		struct epoll_event events[MAX_EVENTS];
 
 		// OCF
-		NetworkManager();
 		NetworkManager(const NetworkManager& other);
 		NetworkManager& operator=(const NetworkManager& other);
 };

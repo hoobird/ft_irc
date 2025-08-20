@@ -15,7 +15,8 @@ enum NetworkError {
     NET_ERR_FAIL_TO_FIND_ADDR,
     NET_ERR_EPOLL_CREATE,
     NET_ERR_EPOLL_ADD,
-    NET_ERR_EPOLL_EVENT,
+    NET_ERR_EPOLL_EVENT_ADD,
+    NET_ERR_EPOLL_EVENT_DEL,
     NET_ERR_EPOLL_WAIT,
     NET_ERR_ACCEPT,
     NET_ERR_NONBLOCK_CLIENT, 
@@ -37,7 +38,8 @@ inline std::string getNetworkErrorString(NetworkError err) {
         case NET_ERR_FAIL_TO_FIND_ADDR: return "Failed to find address for server socket";
         case NET_ERR_EPOLL_CREATE: return "Failed to create epoll instance";
         case NET_ERR_EPOLL_ADD: return "Failed to add server socket to epoll";
-        case NET_ERR_EPOLL_EVENT: return "Failed to add fd to epoll";
+        case NET_ERR_EPOLL_EVENT_ADD: return "Failed to add fd to epoll";
+        case NET_ERR_EPOLL_EVENT_DEL: return "Failed to remove fd from epoll";
         case NET_ERR_EPOLL_WAIT: return "Failed to wait for epoll events";
         case NET_ERR_ACCEPT: return "Failed to accept new client connection";
         case NET_ERR_NONBLOCK_CLIENT: return "Failed to set client socket to non-blocking mode";

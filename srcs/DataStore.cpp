@@ -1,8 +1,7 @@
 #include "DataStore.hpp"
 
 // Constructor
-DataStore::DataStore(int port, const std::string& password)
-    : port(port), password(password) {}
+DataStore::DataStore() {}
 
 // Destructor
 DataStore::~DataStore() {
@@ -19,25 +18,17 @@ DataStore::~DataStore() {
     channels.clear();
 }
 
-// Getters
-int DataStore::getPort() const {
-    return port;
-}
-
-std::string DataStore::getPortString() const {
-    std::stringstream ss;
-    ss << port;
-    return ss.str();
-}
-
-const std::string& DataStore::getPassword() const {
-    return password;
-}
-
 // Clients Management
 void DataStore::addClient(Client* client) {
     if (client)
         clients[client->getSocketFd()] = client;
+}
+
+void DataStore::addClients(const std::vector<Client *> &clients)
+{
+    for (std::vector<Client *>::const_iterator it = clients.begin(); it != clients.end(); ++it) {
+        addClient(*it);
+    }
 }
 
 void DataStore::removeClient(int clientId) {
