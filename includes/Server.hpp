@@ -6,7 +6,7 @@
 #include "NetworkManager.hpp"
 #include "NetworkErrors.hpp"
 #include "MessageParser.hpp"
-// #include "CommandHandler.hpp"
+#include "MessageBuilder.hpp"
 #include <string>
 #include <iostream>
 
@@ -43,9 +43,7 @@ class Server: public AuthService
         DataStore dataStore;
         NetworkManager networkMan;
         MessageParser msgParser;
-        // CommandHandler cmdHandler;
-        // MessageParser cmdParser;
-
+        MessageBuilder msgBuilder;
 
         // Useless OCF
         Server();
