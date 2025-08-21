@@ -1,7 +1,7 @@
 #ifndef MESSAGEPARSER_HPP
 #define MESSAGEPARSER_HPP
 
-#include "ParsedMessage.hpp"
+#include "types/ParsedMessage.hpp"
 #include <string>
 #include <sstream>
 #include <vector>
