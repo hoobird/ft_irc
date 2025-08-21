@@ -13,7 +13,7 @@ typedef std::vector<singleReponse> responseList;
 // responseList = {
 //     {
 //         "<numeric>": "001",
-//         "<clients>": "12,22,33",  // these are client Fds seperated by commas
+//         "<clientsToSend>": "12,22,33",  // these are client Fds seperated by commas
 //          ** ABOVE IS METADATA WE NEED ** 
 //          ** BELOW IS REPLACEMENT FOR NUMERICS PLACEHOLDER ** 
 //         "<client>": "bob",
