@@ -1,0 +1,33 @@
+name: Update Wiki Index
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  update-wiki:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Wiki
+        uses: actions/checkout@v4
+        with:
+          repository: <username>/<repo>.wiki
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate Home.md
+        run: |
+          echo "# Wiki Index" > Home.md
+          for f in *.md; do
+            if [[ "$f" != "Home.md" && "$f" != "_Sidebar.md" && "$f" != "_Footer.md" ]]; then
+              name="${f%.md}"
+              echo "- [[$name]]" >> Home.md
+            fi
+          done
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add Home.md
+          git commit -m "Auto-update Home.md index" || echo "No changes"
+          git push
