@@ -1,6 +1,7 @@
 #ifndef MESSAGEPARSER_HPP
 #define MESSAGEPARSER_HPP
 
+#include "ParsedMessage.hpp"
 #include <string>
 #include <sstream>
 #include <vector>
@@ -12,14 +13,6 @@
 
 class MessageParser {
 	public:
-		struct ParsedMessage {
-			std::map<std::string, std::string> tags;
-			std::string source;
-			std::string command;
-			std::vector<std::string> parameters;
-			std::string trailing;
-		};
-
 		MessageParser();
 		~MessageParser();
 
