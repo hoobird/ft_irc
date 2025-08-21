@@ -22,6 +22,44 @@ valgrind --show-leak-kinds=all --leak-check=full --track-fds=yes ./ircserv 8080 
 nc localhost 8080 -C
 ```
 
+Takes in Raw Data from Client and parse into 
+
+- Tags
+- Source
+- Command
+- Parameters
+- Trailing
+
+Example testing:
+
+Input: 
+```
+@id=234AB :dan!d@localhost PRIVMSG #chan :Hey what's up!
+```
+
+Output:
+```
+Tags: id=234AB 
+Source: 'dan!d@localhost'
+Command: 'PRIVMSG'
+Parameters: #chan 
+Trailing: Hey  what's up!
+```
+
+Input:
+```
+@time=2025-08-21T12:34:56.789Z;account=hoobird :nick!user@host.com PRIVMSG #channel :Hello @everyone, check out https://github.com/ft_irc!
+```
+
+Output:
+```
+Tags: account=hoobird time=2025-08-21T12:34:56.789Z 
+Source: 'nick!user@host.com'
+Command: 'PRIVMSG'
+Parameters: #channel 
+Trailing: Hello @everyone, check out https://github.com/ft_irc!
+```
+
 then start typing random things to send over the connection.
 
 ## Reference Server
