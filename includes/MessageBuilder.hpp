@@ -1,7 +1,7 @@
 #ifndef MESSAGEBUILDER_HPP
 #define MESSAGEBUILDER_HPP
 
-#include "ResponseType.hpp"
+#include "types/ResponseType.hpp"
 #include <iostream>
 #include <string>
 #include <map>

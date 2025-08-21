@@ -8,7 +8,7 @@ MessageParser::~MessageParser()
 {
 }
 
-MessageParser::ParsedMessage MessageParser::parse(const std::string &input)
+ParsedMessage MessageParser::parse(const std::string &input)
 {
     ParsedMessage parsedMessage;
     std::istringstream iss(input);
