@@ -1,0 +1,22 @@
+// could add default formatter from github if the team decides to do so, and create a system that applies formatter on saves.
+
+{
+	"editor.insertSpaces": true,
+	"editor.tabSize": 4,
+    // "editor.detectIndentation": true, // editor adapters to the file's existing indentation style if its different from the above
+	"editor.minimap.enabled": true,
+	"files.trimTrailingWhitespace": true, // remove any trailing whitespace for formatting
+	"files.autoSave": "afterDelay", // set the file to save after delay_ms of inactivity
+	"files.autoSaveDelay": 2000, // set delay ms
+	"problems.decorations.enabled": true, // highlight with squiggly lines for error
+    // // default formatter for cpp files
+    // "[cpp]": {
+    //     "editor.defaultFormatter": "ms-vscode.cpptools",
+    //     "editor.formatOnSave": true
+    // },
+    // // default formatter for hpp files
+    // "[hpp]": {
+    //     "editor.defaultFormatter": "ms-vscode.cpptools",
+    //     "editor.formatOnSave": true
+    // }
+}
