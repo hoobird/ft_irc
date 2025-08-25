@@ -10,7 +10,8 @@ class QuitCommand : public CommandBase {
 public:
     QuitCommand();
     ~QuitCommand();
-    void execute(Client* client, const std::vector<std::string>& params, const std::string& trailing);
+    responseList execute(Client& client, const ParsedMessage& message);
+	CommandBase* clone() const;
 
 private:
     // OCF

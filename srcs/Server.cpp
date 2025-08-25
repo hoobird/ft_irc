@@ -1,7 +1,7 @@
 #include "Server.hpp"
 
 Server::Server(int port, const std::string &password)
-    : running(true), port(port), password(password), dataStore(), networkMan(), msgParser(), msgBuilder()
+    : serverName("QI-IRC"), running(true), port(port), password(password), dataStore(), networkMan(), msgParser(), cmdFactory(), cmdHandler(cmdFactory), msgBuilder(serverName)
 {}
 
 Server::~Server()
@@ -22,6 +22,7 @@ void Server::start()
         return;
     }
 
+    setupCommandFactory(); // register commands to factory
     runEventLoop();
 }
 
@@ -60,6 +61,24 @@ void Server::sleepCountdown()
     }
 }
 
+void Server::setupCommandFactory()
+{
+    std::cout << "Setting up command factory..." << std::endl;
+    // Register commands here
+    cmdFactory.registerCommand("USER", new CommandUSER(dataStore));
+    cmdFactory.registerCommand("NICK", new CommandNICK(dataStore));
+    cmdFactory.registerCommand("PASS", new CommandPASS(*this)); // Pass reference to AuthService (Server)
+    // cmdFactory.registerCommand("PING", new PingCommand());
+    // cmdFactory.registerCommand("PONG", new PongCommand());
+    // cmdFactory.registerCommand("NICK", new NickCommand());
+    // cmdFactory.registerCommand("USER", new UserCommand());
+    // cmdFactory.registerCommand("JOIN", new JoinCommand());
+    // cmdFactory.registerCommand("PART", new PartCommand());
+    // cmdFactory.registerCommand("PRIVMSG", new PrivMsgCommand());
+    // cmdFactory.registerCommand("QUIT", new QuitCommand());
+    // cmdFactory.registerCommand("PASS", new PassCommand());
+}
+
 void Server::handleNewConnection()
 {
     std::vector<Client *> newClients = networkMan.addNewClients();
@@ -95,15 +114,39 @@ void Server::handleClientEvent(int fd)
     }
 }
 
-void Server::processClientMessages(int fd, std::string& bufferString)
+void Server::processClientMessages(int clientFd, std::string& bufferString)
 {
     size_t pos = bufferString.find("\r\n");
     while (pos != std::string::npos) {
         std::string messageToProcess = bufferString.substr(0, pos + 2);
         bufferString.erase(0, pos + 2);
-        std::cout << "Client " << fd << " -> Server: " << messageToProcess << std::endl;
+        std::cout << "Client " << clientFd << " -> Server: " << messageToProcess << std::endl;
         ParsedMessage parsedMessage = msgParser.parse(messageToProcess);
         msgParser.printParsedMessage(parsedMessage);
+        Client* client = dataStore.getClient(clientFd);
+        if (!client) {
+            // this should not happen
+            std::cerr << "🚨Warning: Client in epoll queue but not Client Datastore???" << std::endl;
+            networkMan.closeConnection(clientFd);
+            return;
+        }
+        responseList rlist = cmdHandler.handleCommand(*client, parsedMessage);
+        // printReponseList(rlist); // for debugging
+        for (responseList::iterator it = rlist.begin(); it != rlist.end(); ++it) {
+            singleResponse response = *it;
+            std::string builtMessage = msgBuilder.buildFromTemplate(response);
+            std::set<int> fdsToSend = parseClientFds(response["<clientsToSend>"]);
+            for (std::set<int>::iterator fdIt = fdsToSend.begin(); fdIt != fdsToSend.end(); ++fdIt) {
+                Client* targetClient = dataStore.getClient(*fdIt);
+                if (targetClient) {
+                    std::cout << "Server -> Client " << *fdIt << ": " << builtMessage << std::endl;
+                    networkMan.sendResponse(*fdIt, builtMessage);
+                } else {
+                    std::cerr << "🚨 Warning: Tried to send message to non-existent client fd " << *fdIt << std::endl;
+                }
+            }
+        }
+        // find pos of next \r\n for next iteration
         pos = bufferString.find("\r\n");
     }
 }

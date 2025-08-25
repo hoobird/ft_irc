@@ -36,7 +36,7 @@ class NetworkManager {
 		std::vector<Client*> addNewClients();
 		std::pair<ssize_t, std::string> readClientData(int fd); // resturns bytes read and buffer from recv()
 		void closeConnection(int fd);
-		void sendResponse(int fd, const std::string& message);
+		int sendResponse(int fd, const std::string& message);
 
 		// Getters
 		int getListenerFd() const;

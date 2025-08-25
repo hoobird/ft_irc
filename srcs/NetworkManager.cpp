@@ -10,6 +10,7 @@ NetworkManager::~NetworkManager() {
     if (listenerFd >= 0) {
         close(listenerFd);
     }
+    
 }
 
 NetworkError NetworkManager::setupServerSocket(const std::string &portString)
@@ -173,6 +174,7 @@ std::vector<Client*> NetworkManager::addNewClients() {
         // By right should be Server's job, but we do it here for simplicity
         // if not we have to return vector of pairs, each pair is clientfd and client address
         Client *newClient = new Client(clientFd, inet_ntoa(clientAddr.sin_addr));
+        newClient->setHostname(inet_ntoa(clientAddr.sin_addr));
         newClients.push_back(newClient);
     }
     return newClients;
@@ -199,9 +201,28 @@ void NetworkManager::closeConnection(int fd)
     }
 }
 
-void NetworkManager::sendResponse(int fd, const std::string& message) {
+// return 0 on success, 1 if the caller should retry later, -1 on error and close the connection
+int NetworkManager::sendResponse(int fd, const std::string& message) {
     std::cout << "Sending response to fd " << fd << ": " << message << std::endl;
-    // TODO: Send message to client
+    // add \r\n to the end of the message
+    std::string response = message + "\r\n";
+    errno = 0; // Reset errno before send
+    ssize_t bytesSent = send(fd, response.c_str(), response.size(), MSG_NOSIGNAL);
+    if (bytesSent < 0) {
+        if (errno == EAGAIN || errno == EWOULDBLOCK) {
+            // Try again later (e.g., when EPOLLOUT is triggered)
+            return 1; // Indicate to caller to retry
+        }
+        if (errno == EPIPE) {
+            std::cerr << "Error: " << getNetworkErrorString(NET_ERR_SEND_EPIPE) << std::endl;
+        } else {
+            std::cerr << "Error: " << getNetworkErrorString(NET_ERR_SEND) << " (Broken pipe or connection reset)" << std::endl;
+        }
+        closeConnection(fd);
+        return -1;
+    }
+    std::cout << "Sent " << bytesSent << " bytes to fd " << fd << std::endl;
+    return 0;
 }
 
 int NetworkManager::getListenerFd() const

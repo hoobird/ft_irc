@@ -10,7 +10,8 @@ class PartCommand : public CommandBase {
 public:
     PartCommand();
     ~PartCommand();
-    void execute(Client* client, const std::vector<std::string>& params, const std::string& trailing);
+    responseList execute(Client& client, const ParsedMessage& message);
+	CommandBase* clone() const;
 
 private:
     // OCF

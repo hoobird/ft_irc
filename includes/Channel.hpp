@@ -11,13 +11,13 @@ public:
 	Channel(const std::string& name);
 	~Channel();
 
-	void broadcast(const std::string& message, Client* exclude);
 	void setMode(const std::string& mode, const std::string& value);
-	void addMember(Client* client);
-	void removeMember(Client* client);
-	void addOperator(Client* client);
-	void removeOperator(Client* client);
-	bool isOperator(Client* client) const;
+	void addMember(Client& client);
+	void removeMember(Client& client);
+	bool isMember(const Client& client) const;
+	void addOperator(Client& client);
+	void removeOperator(Client& client);
+	bool isOperator(const Client& client) const;
 
 	// getters
 	std::string getName() const;
@@ -37,9 +37,9 @@ public:
 private:
 	std::string name;
 	std::string topic;
-	std::set<int> members; // to decide either int or Client*
-	std::set<int> operators; // to decide either int or Client*
-	std::map<std::string, std::string> modes; // eliz to decide on this if u doing MODE
+	std::set<int> members;
+	std::set<int> operators;
+	std::map<std::string, std::string> modes; // eliz and angelly to decide on this if u doing MODE
 	std::string key;
 	int limit; // 0 means no limit
 

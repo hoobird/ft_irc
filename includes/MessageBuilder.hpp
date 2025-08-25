@@ -9,16 +9,18 @@
 
 class MessageBuilder {
 	public:
-		MessageBuilder();
+		MessageBuilder(const std::string &serverName);
 		~MessageBuilder();
-
-		std::string buildFromTemplate(std::string numeric, const singleReponse &replacements);
-
+		
+		std::string buildFromTemplate(const singleResponse &replacements);
+		
 	private:
+		const std::string &serverName;
 		std::map<std::string, std::string> numericTemplates;
 		void initializeNumericTemplates();
-
+		
 		// OCF
+		MessageBuilder();
 		MessageBuilder(const MessageBuilder& other);
 		MessageBuilder& operator=(const MessageBuilder& other);
 };
