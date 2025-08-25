@@ -6,8 +6,8 @@ CommandPING::CommandPING(const std::string& serverName)
 }
 
 CommandPING::CommandPING(const CommandPING& other)
-: serverName(other.serverName) {
-
+: CommandBase(), serverName(other.serverName) {
+    (void)other;
 }
 
 CommandPING::~CommandPING() {
