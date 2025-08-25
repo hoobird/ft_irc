@@ -7,7 +7,7 @@ CommandUSER::CommandUSER(DataStore const & dataStore)
 
 CommandUSER::CommandUSER(const CommandUSER &other): CommandBase(), dataStore(other.dataStore)
 {
-    (void)other; 
+    (void)other;
 }
 
 CommandUSER::~CommandUSER()
@@ -19,7 +19,7 @@ responseList CommandUSER::execute(Client &client, const ParsedMessage &message)
     // Example: USER guest 0 * Bob  (4 paramseters)
     // OR
     // Example: USER guest 0 * :Bob Boulder (3 params + trailing)
-    // ERR_NEEDMOREPARAMS 461 
+    // ERR_NEEDMOREPARAMS 461
     responseList responses;
 
     // is already registered
@@ -54,6 +54,7 @@ responseList CommandUSER::execute(Client &client, const ParsedMessage &message)
     // because of first if check, we know client is not registered yet
     if (!client.isReadyToRegister())
         return responses; // still not ready to register, no response needed (responses is still empty here)
+    client.setRegistered();
     return createWelcomeResponse(client);
 }
 
