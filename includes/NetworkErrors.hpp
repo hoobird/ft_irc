@@ -20,8 +20,9 @@ enum NetworkError {
     NET_ERR_EPOLL_WAIT,
     NET_ERR_ACCEPT,
     NET_ERR_NONBLOCK_CLIENT, 
-    NET_ERR_READ,
-    NET_ERR_WRITE,
+    NET_ERR_RECV,
+    NET_ERR_SEND,
+    NET_ERR_SEND_EPIPE,
     NET_ERR_CLOSE,
 };
 
@@ -43,8 +44,9 @@ inline std::string getNetworkErrorString(NetworkError err) {
         case NET_ERR_EPOLL_WAIT: return "Failed to wait for epoll events";
         case NET_ERR_ACCEPT: return "Failed to accept new client connection";
         case NET_ERR_NONBLOCK_CLIENT: return "Failed to set client socket to non-blocking mode";
-        case NET_ERR_READ: return "Failed to read data from client";
-        case NET_ERR_WRITE: return "Failed to write data to client";
+        case NET_ERR_RECV: return "Failed to receive data from client";
+        case NET_ERR_SEND: return "Failed to send data to client";
+        case NET_ERR_SEND_EPIPE: return "Failed to send data to client as client has closed the connection";
         case NET_ERR_CLOSE: return "Failed to close socket";
     
         default: return "Unknown error";
