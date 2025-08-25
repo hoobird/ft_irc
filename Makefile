@@ -6,8 +6,12 @@ INCLUDESDIR = ./includes
 SRCSDIR = ./srcs
 BUILDDIR = ./build
 
+ALLCMDSHEADER = $(INCLUDESDIR)/AllCommands.hpp
+
 SRC = main.cpp Server.cpp Client.cpp NetworkManager.cpp DataStore.cpp \
-	  Channel.cpp MessageParser.cpp MessageBuilder.cpp 
+	  Channel.cpp MessageParser.cpp MessageBuilder.cpp \
+	  CommandHandler.cpp CommandBase.cpp CommandFactory.cpp \
+	  CommandNICK.cpp CommandUSER.cpp CommandPASS.cpp 
 DEP = $(OBJ:.o=.d)
 OBJ = $(addprefix $(BUILDDIR)/, $(notdir $(SRC:.cpp=.o)))
 NAME = ircserv
@@ -22,6 +26,11 @@ $(BUILDDIR)/%.o: $(SRCSDIR)/%.cpp | $(BUILDDIR)
 
 $(BUILDDIR):
 	mkdir -p $(BUILDDIR)
+
+$(ALLCMDSHEADER):
+	./updateAllCommandsHpp.sh
+
+$(OBJ): $(ALLCMDSHEADER)
 
 clean:
 	rm -rf $(BUILDDIR)

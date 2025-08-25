@@ -78,3 +78,13 @@ Channel* DataStore::getChannel(const std::string& channelName) const {
         return it->second;
     return NULL;
 }
+
+DataStore::ChannelMap::const_iterator DataStore::getChannelsBegin() const
+{
+    return channels.begin();
+}
+
+DataStore::ChannelMap::const_iterator DataStore::getChannelsEnd() const
+{
+    return channels.end();
+}

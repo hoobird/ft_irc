@@ -7,6 +7,9 @@
 #include "NetworkErrors.hpp"
 #include "MessageParser.hpp"
 #include "MessageBuilder.hpp"
+#include "CommandHandler.hpp"
+#include "CommandFactory.hpp"
+#include "AllCommands.hpp"
 #include <string>
 #include <iostream>
 
@@ -29,20 +32,22 @@ class Server: public AuthService
         // AuthService interface (only way to access password)
         virtual bool validatePassword(const std::string& input) const;
 
-
-
     private:
-        void sleepCountdown();
+        void sleepCountdown(); // for testing only, remove later
+        void setupCommandFactory(); // register commands to factory
         void handleNewConnection();
         void handleClientEvent(int fd);
-        void processClientMessages(int fd, std::string& bufferString);
+        void processClientMessages(int clientFd, std::string& bufferString);
 
+        std::string serverName;
         bool running;
         int port;
         std::string password;
         DataStore dataStore;
         NetworkManager networkMan;
         MessageParser msgParser;
+        CommandFactory cmdFactory;
+        CommandHandler cmdHandler;
         MessageBuilder msgBuilder;
 
         // Useless OCF

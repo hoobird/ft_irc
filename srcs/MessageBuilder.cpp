@@ -1,6 +1,6 @@
 #include "MessageBuilder.hpp"
 
-MessageBuilder::MessageBuilder()
+MessageBuilder::MessageBuilder(const std::string &serverName): serverName(serverName)
 {
     initializeNumericTemplates();
 }
@@ -9,12 +9,21 @@ MessageBuilder::~MessageBuilder()
 {
 }
 
-std::string MessageBuilder::buildFromTemplate(std::string numeric, const singleReponse &responseMap)
+std::string MessageBuilder::buildFromTemplate(const singleResponse &responseMap)
 {
+    // printSingleResponse(responseMap); // for debugging
+    std::string numeric;
+    try {
+        numeric = responseMap.at("<numeric>");
+    } catch (const std::out_of_range &e) {
+        // NOTE: this should not happen
+        std::cerr << "🚨 Developer forgot to add numeric key to your response" << std::endl;
+        return "";
+    }
     std::map<std::string, std::string>::const_iterator it = numericTemplates.find(numeric);
     if (it == numericTemplates.end()) {
         // NOTE: this should not happen
-        std::cerr << "🚨 Warning: Numeric template " << numeric << " not found." << std::endl;
+        std::cerr << "🚨 Warning: Numeric template " << numeric << " not found in Numerics Map" << std::endl;
         return "";
     }
 
@@ -36,7 +45,7 @@ std::string MessageBuilder::buildFromTemplate(std::string numeric, const singleR
             break;
         }
 
-        std::string placeholder = templateStr.substr(start + 1, end - start - 1);
+        std::string placeholder = templateStr.substr(start, end - start + 1);
         placeholderSet.insert(placeholder);
         start = end + 1; // move past the '>'
         if (start >= templateStr.size()) {
@@ -47,22 +56,27 @@ std::string MessageBuilder::buildFromTemplate(std::string numeric, const singleR
 
     for (std::set<std::string>::const_iterator it = placeholderSet.begin(); it != placeholderSet.end(); ++it) {
         std::string placeholder = *it;
-        singleReponse::const_iterator replIt = responseMap.find(placeholder);
+        singleResponse::const_iterator replIt = responseMap.find(placeholder);
         if (replIt == responseMap.end()) {
             std::cerr << "🚨 Warning: Placeholder '" << placeholder << "' not found in replacements for numeric " << numeric << "." << std::endl;
             continue; // skip this placeholder if not found
         }
 
         std::string replacement = replIt->second;
-        std::string::size_type pos = templateStr.find("<" + placeholder + ">");
+        std::string::size_type pos = templateStr.find(placeholder);
         if (pos == std::string::npos) {
             std::cerr << "🚨 Warning: Placeholder '" << placeholder << "' not found in template for numeric " << numeric << "." << std::endl;
             continue; // skip if placeholder not found in template
         }
         while (pos != std::string::npos) {
-            templateStr.replace(pos, placeholder.length() + 2, replacement); // +2 for the '<' and '>'
-            pos = templateStr.find("<" + placeholder + ">", pos + replacement.length());
+            templateStr.replace(pos, placeholder.length(), replacement);
+            pos = templateStr.find(placeholder, pos + replacement.length());
         }
+    }
+
+    // prepend prefix for numerics, not command actions
+    if (numeric[0] >= '0' && numeric[0] <= '9') {
+        templateStr = ":" + serverName + " " + numeric + " " + templateStr;
     }
 
     return templateStr;
@@ -73,10 +87,12 @@ void MessageBuilder::initializeNumericTemplates()
 {
     std::cout << "Loading numeric templates..." << std::endl;
 
-    // Customized numeric templates for IRC responses
-    // later add
+    // Command Action response 
+    // for example successfuly NICK, JOIN, PART, QUIT responses are not part of numerics, they are command actions
+    numericTemplates["NICK"] = ":<oldnick>!<user>@<host> NICK :<new_nick>";
 
     // Numeric templates for various IRC responses
+    // prefix = ":<server> <numeric> " 
     numericTemplates["001"] = "<client> :Welcome to the Internet Relay Network <nick>!<user>@<host>"; // RPL_WELCOME
     numericTemplates["002"] = "<client> :Your host is <servername>, running version <version>"; // RPL_YOURHOST
     numericTemplates["003"] = "<client> :This server was created <date>"; // RPL_CREATED
