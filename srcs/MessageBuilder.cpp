@@ -87,12 +87,13 @@ void MessageBuilder::initializeNumericTemplates()
 {
     std::cout << "Loading numeric templates..." << std::endl;
 
-    // Command Action response 
+    // Command Action response
     // for example successfuly NICK, JOIN, PART, QUIT responses are not part of numerics, they are command actions
     numericTemplates["NICK"] = ":<oldnick>!<user>@<host> NICK :<new_nick>";
+    numericTemplates["PONG"] = ":<server> PONG <token> :<nick>";
 
     // Numeric templates for various IRC responses
-    // prefix = ":<server> <numeric> " 
+    // prefix = ":<server> <numeric> "
     numericTemplates["001"] = "<client> :Welcome to the Internet Relay Network <nick>!<user>@<host>"; // RPL_WELCOME
     numericTemplates["002"] = "<client> :Your host is <servername>, running version <version>"; // RPL_YOURHOST
     numericTemplates["003"] = "<client> :This server was created <date>"; // RPL_CREATED
