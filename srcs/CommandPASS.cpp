@@ -45,12 +45,12 @@ responseList CommandPASS::execute(Client &client, const ParsedMessage &message)
         responses.push_back(resp);
         return responses;
     }
-    
+
     // because of first if check, we know client is not registered yet
     client.setPasswordValidated();
     if (!client.isReadyToRegister())
         return responses; // still not ready to register, no response needed (responses is still empty here
-    
+    client.setRegistered();
     return createWelcomeResponse(client);
 }
 
