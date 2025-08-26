@@ -17,10 +17,8 @@ ParsedMessage MessageParser::parse(const std::string &input)
     if (!input.empty() && input[0] == '@') {
         std::string tagPart;
         iss >> tagPart;
-        
         if (!tagPart.empty()) {
             tagPart.erase(0, 1); // Remove the '@' character
-           
             std::istringstream tagStream(tagPart);
             std::string tag;
             while (std::getline(tagStream, tag, ';')) {
@@ -67,6 +65,11 @@ ParsedMessage MessageParser::parse(const std::string &input)
             parsedMessage.trailing = trailingPart + param;
             break;
         }
+    }
+    // remove \r from trailing if its there (\n is removed by getline)
+    if (parsedMessage.trailing.size() >= 1
+        && parsedMessage.trailing.compare(parsedMessage.trailing.length() - 1, 1, "\r") == 0) {
+        parsedMessage.trailing.erase(parsedMessage.trailing.length() - 1, 1);
     }
     return parsedMessage;
 }

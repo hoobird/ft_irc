@@ -5,6 +5,7 @@
 #include "commands/CommandNICK.hpp"
 #include "commands/CommandPASS.hpp"
 #include "commands/CommandPING.hpp"
+#include "commands/CommandPRIVMSG.hpp"
 #include "commands/CommandUSER.hpp"
 
 #endif // ALLCOMMANDS_HPP

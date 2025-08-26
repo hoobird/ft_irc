@@ -8,7 +8,10 @@
 	"files.trimTrailingWhitespace": true, // remove any trailing whitespace for formatting
 	"files.autoSave": "afterDelay", // set the file to save after delay_ms of inactivity
 	"files.autoSaveDelay": 2000, // set delay ms
-	"problems.decorations.enabled": true, // highlight with squiggly lines for error
+    "problems.decorations.enabled": true,
+    "files.associations": {
+        "ostream": "cpp"
+    }, // highlight with squiggly lines for error
     // // default formatter for cpp files
     // "[cpp]": {
     //     "editor.defaultFormatter": "ms-vscode.cpptools",
