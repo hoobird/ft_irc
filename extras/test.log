@@ -1,0 +1,39 @@
+<< CAP LS
+<< NICK anteo
+<< USER anteo anteo irc.dal.net :Angelly Teo
+>> :serenity.fl.us.dal.net NOTICE AUTH :*** Looking up your hostname...
+>> :serenity.fl.us.dal.net NOTICE AUTH :*** Checking Ident
+>> :serenity.fl.us.dal.net NOTICE AUTH :*** Your forward and reverse DNS do not match, ignoring hostname. [203.149.201.182 != 203.149.201.178]
+>> :serenity.fl.us.dal.net NOTICE AUTH :*** Found your hostname
+>> :serenity.fl.us.dal.net NOTICE AUTH :*** No Ident response
+>> :serenity.fl.us.dal.net 001 anteo :Welcome to the DALnet IRC Network anteo!~anteo@203.149.201.178
+<< MODE anteo +i
+>> :serenity.fl.us.dal.net 002 anteo :Your host is serenity.fl.us.dal.net, running version bahamut-2.2.2
+>> :serenity.fl.us.dal.net 003 anteo :This server was created Tue 23 Aug UTC at 2022 04:42:56 AM
+>> :serenity.fl.us.dal.net 004 anteo serenity.fl.us.dal.net bahamut-2.2.2 aAbcCdefFghHiIjkKmnoOPrRsSwxXy AbceiIjklLmMnoOpPrRsStv beIjklov
+>> :serenity.fl.us.dal.net 005 anteo NETWORK=DALnet SAFELIST MAXBANS=200 MAXCHANNELS=50 CHANNELLEN=32 KICKLEN=307 NICKLEN=30 TOPICLEN=307 MODES=6 CHANTYPES=# CHANLIMIT=#:50 PREFIX=(ohv)@%+ STATUSMSG=@%+ :are available on this server
+>> :serenity.fl.us.dal.net 005 anteo CASEMAPPING=ascii WATCH=128 SILENCE=10 ELIST=cmntu EXCEPTS INVEX CHANMODES=beI,k,jl,ciPAmMnOprRsSt MAXLIST=b:200,e:100,I:100 TARGMAX=DCCALLOW:,JOIN:,KICK:4,KILL:20,NOTICE:20,PART:,PRIVMSG:20,WHOIS:,WHOWAS: :are available on this server
+>> :serenity.fl.us.dal.net 251 anteo :There are 86 users and 6330 invisible on 39 servers
+>> :serenity.fl.us.dal.net 252 anteo 84 :IRC Operators online
+>> :serenity.fl.us.dal.net 254 anteo 3480 :channels formed
+>> :serenity.fl.us.dal.net 255 anteo :I have 219 clients and 1 servers
+>> :serenity.fl.us.dal.net 265 anteo :Current local users: 219 Max: 1393
+>> :serenity.fl.us.dal.net 266 anteo :Current global users: 6416 Max: 12060
+>> :serenity.fl.us.dal.net NOTICE anteo :*** Notice -- motd was last changed at 30/11/2020 19:09
+>> :serenity.fl.us.dal.net 375 anteo :- serenity.fl.us.dal.net Message of the Day - 
+>> :serenity.fl.us.dal.net 372 anteo :-30/11/2020 19:09
+>> :serenity.fl.us.dal.net 372 anteo :- serenity.fl.us.dal.net
+>> :serenity.fl.us.dal.net 372 anteo :- sponsored by: Kape, Inc & Datapacket.com
+>> :serenity.fl.us.dal.net 372 anteo :- admin: Mustang
+>> :serenity.fl.us.dal.net 372 anteo :- 
+>> :serenity.fl.us.dal.net 372 anteo :- Please abide by DALnet's Acceptable Use Policy:
+>> :serenity.fl.us.dal.net 372 anteo :- https://www.dal.net/aup
+>> :serenity.fl.us.dal.net 372 anteo :- 
+>> :serenity.fl.us.dal.net 372 anteo :- 
+>> :serenity.fl.us.dal.net 376 anteo :End of /MOTD command.
+>> :anteo MODE anteo :+iH
+<< PING serenity.fl.us.dal.net
+>> :serenity.fl.us.dal.net PONG serenity.fl.us.dal.net :anteo
+--> lag pong
+<< PRIVMSG hi :hi
+<< QUIT :leaving

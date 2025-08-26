@@ -48,6 +48,15 @@ Client* DataStore::getClient(int clientId) const {
     return NULL;
 }
 
+Client *DataStore::getClient(const std::string &nickName) const
+{
+    for (ClientMap::const_iterator it = clients.begin(); it != clients.end(); ++it) {
+        if (it->second->getNickname() == nickName)
+            return it->second;
+    }
+    return NULL;
+}
+
 DataStore::ClientMap::const_iterator DataStore::getClientsBegin() const
 {
     return clients.begin();
