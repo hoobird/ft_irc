@@ -1,7 +1,7 @@
 #include "Server.hpp"
 
 Server::Server(int port, const std::string &password)
-    : serverName("QI-IRC"), running(true), port(port), password(password), dataStore(), networkMan(), msgParser(), cmdFactory(), cmdHandler(cmdFactory), msgBuilder(serverName)
+    : serverName("IRCH"), running(true), port(port), password(password), dataStore(), networkMan(), msgParser(), cmdFactory(), cmdHandler(cmdFactory), msgBuilder(serverName)
 {}
 
 Server::~Server()
