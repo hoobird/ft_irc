@@ -42,5 +42,19 @@ responseList CommandBase::createWelcomeResponse(const Client &client) const
 
     // singleResponse resp5 = createSingleResponse("005", client.getSocketFdString());
 
-    return responses;   
+    return responses;
+}
+
+std::string CommandBase::intSetToCSVString(std::set<int> fdset)
+ {
+    std::string result;
+    for (std::set<int>::const_iterator it = fdset.begin(); it != fdset.end(); ++it) {
+        if (it != fdset.begin()) {
+            result += ",";
+        }
+        std::ostringstream ss;
+        ss << *it;
+        result += ss.str();
+    }
+    return result;
 }

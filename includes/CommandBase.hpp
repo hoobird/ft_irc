@@ -4,6 +4,9 @@
 #include <types/ResponseType.hpp>
 #include "Client.hpp"
 #include "MessageParser.hpp"
+#include <set>
+#include <sstream>
+#include <string>
 
 class CommandBase {
     public:
@@ -15,18 +18,7 @@ class CommandBase {
         CommandBase() {}
         singleResponse createSingleResponse(const std::string& numeric, const std::string& clientsToSend) const;
         responseList createWelcomeResponse(const Client& client) const;
-
-        template<typename T>
-        static std::string clientsToFdsString(const T& clients) {
-            std::string result;
-            for (typename T::const_iterator it = clients.begin(); it != clients.end(); ++it) {
-                if (it != clients.begin()) {
-                    result += ",";
-                }
-                result += it->getSocketFdString();
-            }
-            return result;
-        }
+        std::string intSetToCSVString(std::set<int> fdset);
 
     private:
         CommandBase(const CommandBase&);
