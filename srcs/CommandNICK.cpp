@@ -63,12 +63,22 @@ responseList CommandNICK::execute(Client &client, const ParsedMessage &message)
             return responses; // still not ready to register, no response needed (responses is still empty here)
         // Client is now ready to register
         client.setRegistered();
-        return createWelcomeResponse(client);
+        // lets just send successful nick change first in order to update irssi nickname display
+        singleResponse selfResponse = createSingleResponse("NICK", client.getSocketFdString());
+        selfResponse["<oldnick>"] = newNick;
+        selfResponse["<user>"] = client.getUsername();
+        selfResponse["<host>"] = client.getHostname();
+        selfResponse["<new_nick>"] = newNick;
+        responseList welcome = createWelcomeResponse(client);
+        responses.insert(responses.end(), welcome.begin(), welcome.end());
+        responses.push_back(selfResponse);
+        return responses;
     }
-
+    std::cout << "Client " << client.getSocketFd() << " changed nick from " << oldNick << " to " << newNick << std::endl;
     // Tell User about their own nick change
     // and also tell other users in same channel about the nick change
     std::set<int> clientsToNotify; // channel buddies
+    clientsToNotify.insert(client.getSocketFd()); // include self
     for (DataStore::ChannelMap::const_iterator chanIt = dataStore.getChannelsBegin(); chanIt != dataStore.getChannelsEnd(); ++chanIt)
     {
         Channel& channel = *(chanIt->second);
@@ -78,11 +88,12 @@ responseList CommandNICK::execute(Client &client, const ParsedMessage &message)
             clientsToNotify.insert(members.begin(), members.end());
         }
     }
-    singleResponse selfResponse = createSingleResponse("NICK", client.getSocketFdString());
+    singleResponse selfResponse = createSingleResponse("NICK", intSetToCSVString(clientsToNotify));
     selfResponse["<oldnick>"] = oldNick;
     selfResponse["<user>"] = client.getUsername();
     selfResponse["<host>"] = client.getHostname();
     selfResponse["<new_nick>"] = newNick;
+    responses.push_back(selfResponse);
 
     return responses;
 }
