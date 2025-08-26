@@ -23,7 +23,8 @@ responseList CommandNICK::execute(Client &client, const ParsedMessage &message)
     if (message.parameters.size() < 1)
     {
         singleResponse resp = createSingleResponse("431", client.getSocketFdString());
-        resp["<reason>"] = ":No nickname given";
+        resp["<client>"] = client.getClientPrefix();
+        resp["<reason>"] = "No nickname given";
         responses.push_back(resp);
         return responses;
     }
@@ -31,8 +32,9 @@ responseList CommandNICK::execute(Client &client, const ParsedMessage &message)
     if (!isValidNickname(newNick))
     {
         singleResponse resp = createSingleResponse("432", client.getSocketFdString());
+        resp["<client>"] = client.getClientPrefix();
         resp["<nick>"] = newNick;
-        resp["<reason>"] = ":Erroneous nickname";
+        resp["<reason>"] = "Erroneous nickname";
         responses.push_back(resp);
         return responses;
     }
@@ -42,13 +44,14 @@ responseList CommandNICK::execute(Client &client, const ParsedMessage &message)
         if (exisitingClient.getNickname() == newNick)
         {
             singleResponse resp = createSingleResponse("433", client.getSocketFdString());
+            resp["<client>"] = client.getClientPrefix();
             resp["<nick>"] = newNick;
-            resp["<reason>"] = ":Nickname is already in use";
+            resp["<reason>"] = "Nickname is already in use";
             responses.push_back(resp);
             return responses;
         }
     }
-    std::string oldNick = client.getNickname().empty() ? "" : client.getNickname();
+    std::string oldNick = client.getNickname().empty() ? "*" : client.getNickname();
     client.setNickname(newNick);
 
     // 1) If haventt registered yet
@@ -62,7 +65,7 @@ responseList CommandNICK::execute(Client &client, const ParsedMessage &message)
         client.setRegistered();
         return createWelcomeResponse(client);
     }
-    
+
     // Tell User about their own nick change
     // and also tell other users in same channel about the nick change
     std::set<int> clientsToNotify; // channel buddies
@@ -93,14 +96,15 @@ bool CommandNICK::isValidNickname(std::string nick)
 {
     if (nick.empty())
         return false;
-    if (nick[0] == '#' || nick[0] == ':')
+    if (!isalpha(nick[0]))
         return false; // nicknames cannot start with channel prefix
     if (nick.empty())
         return false;
     for (size_t i = 0; i < nick.size(); ++i)
     {
         char c = nick[i];
-        if (!(std::isalnum(c) || c == '[' || c == ']' || c == '{' || c == '}' || c == '\\' || c == '|'))
+        if (!(std::isalnum(c) || c == '[' || c == ']' || c == '{' || c == '}'
+            || c == '\\' || c == '|' || c == '-' || c == '^' || c == '`' || c == '_'))
             return false; // invalid character found
     }
     return true;

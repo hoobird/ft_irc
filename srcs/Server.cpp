@@ -70,11 +70,11 @@ void Server::setupCommandFactory()
     cmdFactory.registerCommand("PASS", new CommandPASS(*this)); // Pass reference to AuthService (Server)
     cmdFactory.registerCommand("PING", new CommandPING(serverName));
     cmdFactory.registerCommand("MODE", new CommandMODE(dataStore));
+    cmdFactory.registerCommand("PRIVMSG", new CommandPRIVMSG(dataStore));
     // cmdFactory.registerCommand("NICK", new NickCommand());
     // cmdFactory.registerCommand("USER", new UserCommand());
     // cmdFactory.registerCommand("JOIN", new JoinCommand());
     // cmdFactory.registerCommand("PART", new PartCommand());
-    // cmdFactory.registerCommand("PRIVMSG", new PrivMsgCommand());
     // cmdFactory.registerCommand("QUIT", new QuitCommand());
     // cmdFactory.registerCommand("PASS", new PassCommand());
 }
@@ -135,6 +135,8 @@ void Server::processClientMessages(int clientFd, std::string& bufferString)
         for (responseList::iterator it = rlist.begin(); it != rlist.end(); ++it) {
             singleResponse response = *it;
             std::string builtMessage = msgBuilder.buildFromTemplate(response);
+            if (builtMessage.empty())
+                continue;
             std::set<int> fdsToSend = parseClientFds(response["<clientsToSend>"]);
             for (std::set<int>::iterator fdIt = fdsToSend.begin(); fdIt != fdsToSend.end(); ++fdIt) {
                 Client* targetClient = dataStore.getClient(*fdIt);

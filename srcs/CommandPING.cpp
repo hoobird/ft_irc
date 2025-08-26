@@ -1,8 +1,7 @@
 #include "AllCommands.hpp"
 
 CommandPING::CommandPING(const std::string& serverName)
-: serverName(serverName) {
-
+: CommandBase(), serverName(serverName) {
 }
 
 CommandPING::CommandPING(const CommandPING& other)
@@ -11,7 +10,6 @@ CommandPING::CommandPING(const CommandPING& other)
 }
 
 CommandPING::~CommandPING() {
-
 }
 
 responseList CommandPING::execute(Client& client, const ParsedMessage& message) {
@@ -20,7 +18,7 @@ responseList CommandPING::execute(Client& client, const ParsedMessage& message) 
     if (message.parameters.size() < 1) {
         // ERR_NEEDMOREPARAMS (461)
         singleResponse resp = createSingleResponse("461", client.getSocketFdString());
-        resp["<client>"] = client.getNickname();
+        resp["<client>"] = client.getClientPrefix();
         resp["<command>"] = message.command;
         resp["<reason>"] = ":Not enough parameters";
         responses.push_back(resp);

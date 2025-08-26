@@ -1,0 +1,77 @@
+ nc irc.dal.net 6667 -C 
+:bifrost.ca.us.dal.net NOTICE AUTH :*** Looking up your hostname...
+:bifrost.ca.us.dal.net NOTICE AUTH :*** Checking Ident
+:bifrost.ca.us.dal.net NOTICE AUTH :*** Your forward and reverse DNS do not match, ignoring hostname. [203.149.201.182 != 203.149.201.178]
+:bifrost.ca.us.dal.net NOTICE AUTH :*** Found your hostname
+CAP LS
+NICK antep
+USER antep antep ir:bifrost.ca.us.dal.net NOTICE AUTH :*** No Ident response
+c.dal.net :Angelly Teo
+:bifrost.ca.us.dal.net 001 antep :Welcome to the DALnet IRC Network antep!~antep@203.149.201.178
+:bifrost.ca.us.dal.net 002 antep :Your host is bifrost.ca.us.dal.net, running version bahamut-2.2.2
+:bifrost.ca.us.dal.net 003 antep :This server was created Wed Oct 12 2022 at 17:21:47 EDT
+:bifrost.ca.us.dal.net 004 antep bifrost.ca.us.dal.net bahamut-2.2.2 aAbcCdefFghHiIjkKmnoOPrRsSwxXy AbceiIjklLmMnoOpPrRsStv beIjklov
+:bifrost.ca.us.dal.net 005 antep NETWORK=DALnet SAFELIST MAXBANS=200 MAXCHANNELS=30 CHANNELLEN=32 KICKLEN=307 NICKLEN=30 TOPICLEN=307 MODES=6 CHANTYPES=# CHANLIMIT=#:30 PREFIX=(ohv)@%+ STATUSMSG=@%+ :are available on this server
+:bifrost.ca.us.dal.net 005 antep CASEMAPPING=ascii WATCH=128 SILENCE=10 ELIST=cmntu EXCEPTS INVEX CHANMODES=beI,k,jl,ciPAmMnOprRsSt MAXLIST=b:200,e:100,I:100 TARGMAX=DCCALLOW:,JOIN:,KICK:4,KILL:20,NOTICE:20,PART:,PRIVMSG:20,WHOIS:,WHOWAS: :are available on this server
+:bifrost.ca.us.dal.net 251 antep :There are 86 users and 6318 invisible on 39 servers
+:bifrost.ca.us.dal.net 252 antep 84 :IRC Operators online
+:bifrost.ca.us.dal.net 254 antep 3476 :channels formed
+:bifrost.ca.us.dal.net 255 antep :I have 231 clients and 1 servers
+:bifrost.ca.us.dal.net 265 antep :Current local users: 231 Max: 601
+:bifrost.ca.us.dal.net 266 antep :Current global users: 6404 Max: 12060
+:bifrost.ca.us.dal.net NOTICE antep :*** Notice -- motd was last changed at 7/10/2024 22:36
+:bifrost.ca.us.dal.net NOTICE antep :*** Notice -- Please read the motd if you haven't read it
+:bifrost.ca.us.dal.net 375 antep :- bifrost.ca.us.dal.net Message of the Day - 
+:bifrost.ca.us.dal.net 372 antep :-   
+:bifrost.ca.us.dal.net 372 antep :-            *
+:bifrost.ca.us.dal.net 372 antep :- *  /\     The rainbow bridge
+:bifrost.ca.us.dal.net 372 antep :-       (())  leading from Asgard to Midgard.
+:bifrost.ca.us.dal.net 372 antep :-      ((OO))*    
+:bifrost.ca.us.dal.net 372 antep :-       (())  _     _  __               _
+:bifrost.ca.us.dal.net 372 antep :-    00      | |__ (_)/ _|_ __ ___  ___| |_
+:bifrost.ca.us.dal.net 372 antep :-    ||)     | '_ \| | |_| '__/ _ \/ __| __|
+:bifrost.ca.us.dal.net 372 antep :-    |/      | |_) | |  _| | | (_) \__ \ |_
+:bifrost.ca.us.dal.net 372 antep :-   (||      |_.__/|_|_| |_|  \___/|___/\__|
+:bifrost.ca.us.dal.net 372 antep :-    ||                bifrost.ca.us.dal.net
+:bifrost.ca.us.dal.net 372 antep :-    ||)   
+:bifrost.ca.us.dal.net 372 antep :-    |/   .__Administrators___________________.
+:bifrost.ca.us.dal.net 372 antep :-   (||   | * heimdall   [heimdall@dal.net]   |
+:bifrost.ca.us.dal.net 372 antep :-    ||   | * tau        [tau@dal.net]        |
+:bifrost.ca.us.dal.net 372 antep :-    ||)  |                                   |
+:bifrost.ca.us.dal.net 372 antep :-    |/   .__Operators________________________.
+:bifrost.ca.us.dal.net 372 antep :-   (||   | * adam       [adam@dal.net]       |
+:bifrost.ca.us.dal.net 372 antep :-    ||   | * chalcedony [chalcedony@dal.net] |
+:bifrost.ca.us.dal.net 372 antep :-    ||)  | * Estella    [estella@dal.net]    |
+:bifrost.ca.us.dal.net 372 antep :-    |/   | * jeian      [jeian@dal.net]      |
+:bifrost.ca.us.dal.net 372 antep :-   (||   | * knas       [knas@dal.net]       |
+:bifrost.ca.us.dal.net 372 antep :-    ||   | * phil       [phil@dal.net]       |
+:bifrost.ca.us.dal.net 372 antep :-    ||)  | * Mobscene   [mobscene@dal.net]   |
+:bifrost.ca.us.dal.net 372 antep :-    |/   |                                   |
+:bifrost.ca.us.dal.net 372 antep :-   (||   .__Rules____________________________.
+:bifrost.ca.us.dal.net 372 antep :-    ||   | * No malicious bots.              |
+:bifrost.ca.us.dal.net 372 antep :-    ||)  | * No channel fillers of any kind. |
+:bifrost.ca.us.dal.net 372 antep :-    |/   | * No user/operator impersonators. |
+:bifrost.ca.us.dal.net 372 antep :-   (|/   |                                   |
+:bifrost.ca.us.dal.net 372 antep :-    ||   .__Channels_________________________.
+:bifrost.ca.us.dal.net 372 antep :-    ||   | * #OperHelp -> IRC Operator help  |
+:bifrost.ca.us.dal.net 372 antep :-    ||   | * #Help -> IRC/services help      |
+:bifrost.ca.us.dal.net 372 antep :-    ||   | * #Dragonrealm -> Network base    |
+:bifrost.ca.us.dal.net 372 antep :-   (OO)   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+:bifrost.ca.us.dal.net 372 antep :-    ()
+:bifrost.ca.us.dal.net 372 antep :- 
+:bifrost.ca.us.dal.net 372 antep :-        In loving memory of Carlos Anibarro.
+:bifrost.ca.us.dal.net 372 antep :- 
+:bifrost.ca.us.dal.net 372 antep :-    By connecting to this network, you agree to
+:bifrost.ca.us.dal.net 372 antep :-    abide by its acceptable use policy (AUP), 
+:bifrost.ca.us.dal.net 372 antep :-    available on our website: 
+:bifrost.ca.us.dal.net 372 antep :-                      https://www.dal.net/aup 
+:bifrost.ca.us.dal.net 376 antep :End of /MOTD command.
+:antep MODE antep :+iH
+PRIVMSG
+:bifrost.ca.us.dal.net 411 antep :No recipient given (PRIVMSG)
+PRIVMSG cnaincuoawencown :hi testing hi
+:bifrost.ca.us.dal.net 401 antep cnaincuoawencown :No such nick/channel
+PRIVMSG antep :ihni1n ni4n2
+:antep!~antep@5626-2a9c-92a4-503c-675e.149.203.ip PRIVMSG antep :ihni1n ni4n2
+PRIVMSG antep
+:bifrost.ca.us.dal.net 412 antep :No text to send

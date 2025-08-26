@@ -10,7 +10,7 @@ NetworkManager::~NetworkManager() {
     if (listenerFd >= 0) {
         close(listenerFd);
     }
-    
+
 }
 
 NetworkError NetworkManager::setupServerSocket(const std::string &portString)
@@ -59,7 +59,7 @@ NetworkError NetworkManager::setupServerSocket(const std::string &portString)
                 continue;
             }
         }
-        
+
         // Make socket non-blocking
         if (setNonBlocking(socketFd) != 0) {
             std::cerr << "Error: " << getNetworkErrorString(NET_ERR_NONBLOCK_CLIENT) << " (Try: " << count << ")" << std::endl;
