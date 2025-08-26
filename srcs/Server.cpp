@@ -69,6 +69,7 @@ void Server::setupCommandFactory()
     cmdFactory.registerCommand("NICK", new CommandNICK(dataStore));
     cmdFactory.registerCommand("PASS", new CommandPASS(*this)); // Pass reference to AuthService (Server)
     cmdFactory.registerCommand("PING", new CommandPING(serverName));
+    cmdFactory.registerCommand("MODE", new CommandMODE(dataStore));
     // cmdFactory.registerCommand("NICK", new NickCommand());
     // cmdFactory.registerCommand("USER", new UserCommand());
     // cmdFactory.registerCommand("JOIN", new JoinCommand());
