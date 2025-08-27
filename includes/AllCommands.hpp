@@ -7,5 +7,6 @@
 #include "commands/CommandPING.hpp"
 #include "commands/CommandPRIVMSG.hpp"
 #include "commands/CommandUSER.hpp"
+#include "commands/CommandJOIN.hpp"
 
 #endif // ALLCOMMANDS_HPP
