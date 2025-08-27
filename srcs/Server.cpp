@@ -118,8 +118,8 @@ void Server::processClientMessages(int clientFd, std::string& bufferString)
 {
     size_t pos = bufferString.find("\r\n");
     while (pos != std::string::npos) {
-        std::string messageToProcess = bufferString.substr(0, pos + 2);
-        bufferString.erase(0, pos + 2);
+        std::string messageToProcess = bufferString.substr(0, pos); // dont include \r\n
+        bufferString.erase(0, pos + 2); // remove processed message and \r\n from buffer
         std::cout << "Client " << clientFd << " -> Server: " << messageToProcess << std::endl;
         ParsedMessage parsedMessage = msgParser.parse(messageToProcess);
         msgParser.printParsedMessage(parsedMessage);

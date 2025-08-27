@@ -135,7 +135,7 @@ int NetworkManager::addFdToEpoll(int fd)
 }
 
 NetworkManager::EpollResult NetworkManager::monitorEvents() {
-    std::cout << "Monitoring events..." << std::endl;
+    std::cout << "\nMonitoring events...\n" << std::endl;
     int triggerCount = epoll_wait(this->epollFd, this->events, MAX_EVENTS, -1);
     if (triggerCount < 0) {
         return std::make_pair(triggerCount, static_cast<epoll_event*>(NULL));
@@ -203,7 +203,6 @@ void NetworkManager::closeConnection(int fd)
 
 // return 0 on success, 1 if the caller should retry later, -1 on error and close the connection
 int NetworkManager::sendResponse(int fd, const std::string& message) {
-    std::cout << "Sending response to fd " << fd << ": " << message << std::endl;
     // add \r\n to the end of the message
     std::string response = message + "\r\n";
     errno = 0; // Reset errno before send
