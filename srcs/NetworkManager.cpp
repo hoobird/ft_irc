@@ -84,6 +84,7 @@ NetworkError NetworkManager::setupServerSocket(const std::string &portString)
     }
 
     if (p == NULL) {
+        freeaddrinfo(servinfo);
         return NET_ERR_FAIL_TO_FIND_ADDR;
     }
     // Successfully bound to an address
