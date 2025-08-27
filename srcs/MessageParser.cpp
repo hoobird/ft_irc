@@ -59,17 +59,12 @@ ParsedMessage MessageParser::parse(const std::string &input)
             parsedMessage.parameters.push_back(param);
         } else {
             // Trailing starts with : so just join the rest into 1 string
-            std::string trailingPart;
-            trailingPart = param.substr(1);
-            std::getline(iss, param);
-            parsedMessage.trailing = trailingPart + param;
+            std::string trailingPart = param.substr(1);
+            std::string restOfLine;
+            std::getline(iss, restOfLine);
+            parsedMessage.trailing = trailingPart + restOfLine;
             break;
         }
-    }
-    // remove \r from trailing if its there (\n is removed by getline)
-    if (parsedMessage.trailing.size() >= 1
-        && parsedMessage.trailing.compare(parsedMessage.trailing.length() - 1, 1, "\r") == 0) {
-        parsedMessage.trailing.erase(parsedMessage.trailing.length() - 1, 1);
     }
     return parsedMessage;
 }
