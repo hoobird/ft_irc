@@ -1,0 +1,24 @@
+#ifndef COMMANDJOIN_HPP
+#define COMMANDJOIN_HPP
+
+#include "CommandBase.hpp"
+#include "Client.hpp"
+#include "DataStore.hpp"
+
+class CommandJOIN : public CommandBase {
+public:
+    CommandJOIN(const DataStore& dataStore);
+    CommandJOIN(const CommandJOIN& other);
+    ~CommandJOIN();
+    responseList execute(Client& client, const ParsedMessage& message);
+    CommandBase* clone() const;
+
+private:
+    const DataStore& dataStore;
+    std::map<std::string, std::string> mapChannelKey;
+    // OCF
+    CommandJOIN();
+    CommandJOIN& operator=(const CommandJOIN& other);
+};
+
+#endif
