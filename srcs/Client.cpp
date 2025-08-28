@@ -7,7 +7,6 @@ Client::Client(int fd, std::string hostname)
 
 Client::~Client()
 {
-    close(this->socketfd);
 }
 
 void Client::clearBuffer()
