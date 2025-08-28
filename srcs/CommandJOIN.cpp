@@ -1,4 +1,5 @@
 #include "AllCommands.hpp"
+#include "config.hpp" // MARK: TEMP
 
 CommandJOIN::CommandJOIN(DataStore& dataStore, const Channel& channel)
 : CommandBase(), dataStore(dataStore), channel(channel) {
@@ -55,7 +56,15 @@ responseList CommandJOIN::execute(Client& client, const ParsedMessage& message) 
         }
         else
         {
-            if (/* client exceeds channel limit CHANLIMIT RPL_ISUPPORT */) {
+            int channelCount; // MARK: TEMP
+            limits limitsConfig; // MARK: TEMP (relook at scope)
+            // MARK: TEMP (Iterate through channelmap to count the number of times client is found, could refactor and make it into a helper function)
+            for (DataStore::ChannelMap::const_iterator it = dataStore.getChannelsBegin(); it != dataStore.getChannelsEnd(); ++it) {
+                if (it->second->isMember(client))
+                    channelCount++;
+            }
+            // MARK: TEMP
+            if (channelCount >= limitsConfig.CLIENT_MAX_CHANNEL) {
                 resp = createSingleResponse("405", client.getSocketFdString());
                 resp["<client>"] = client.getClientPrefix();
                 resp["<channel>"] = findChannel->getName();
@@ -66,7 +75,7 @@ responseList CommandJOIN::execute(Client& client, const ParsedMessage& message) 
                 // rationale: fd exceed is caught in socket creation, setting CHANLIMIT is optional, not important
                 // how: (1) go through all channels, (2) keep track via count */
             }
-            if (/* channel password does not match */) {
+            if (channelKeys[i] != findChannel->getKey()) {
                 // ERR_BADCHANNELKEY (475)
                 resp = createSingleResponse("475", client.getSocketFdString());
                 resp["<client>"] = client.getClientPrefix();
@@ -74,6 +83,16 @@ responseList CommandJOIN::execute(Client& client, const ParsedMessage& message) 
                 resp["<reason>"] = "Cannot join channel (+k)";
                 responses.push_back(resp);
                 continue ;
+            }
+            if (/* channel is set to invite-only && user is not invited */) {
+                // ERR_INVITEONLYCHAN (473)
+                resp = createSingleResponse("473", client.getSocketFdString());
+                resp["<client>"] = client.getClientPrefix();
+                resp["<channel>"] = findChannel->getName();
+                resp["<reason>"] = "Cannot join channel (+i)";
+                responses.push_back(resp);
+                continue ;
+                // invite overrides bans (if a user is banned from an invite-only channel, if they are given invite, they can join)
             }
             if (/* user is banned */) {
                 // ERR_BANNEDFROMCHAN (474)
@@ -84,7 +103,7 @@ responseList CommandJOIN::execute(Client& client, const ParsedMessage& message) 
                 responses.push_back(resp);
                 continue ;
             }
-            if (/* channel members count has exceeded */)
+            if (findChannel->getMembers().size() > findChannel->getLimit())
                 // ERR_CHANNELISFULL (471)
                 resp = createSingleResponse("471", client.getSocketFdString());
                 resp["<client>"] = client.getClientPrefix();
@@ -94,15 +113,6 @@ responseList CommandJOIN::execute(Client& client, const ParsedMessage& message) 
                 continue ;
                 // suggested: set 'capacity' private attribute to -1 if no limit, else set limit
                 // TODO: set arbitrary max users value; to manage in CommandMODE (both user and server)
-            if (/* channel is set to invite-only && user is not invited */) {
-                // ERR_INVITEONLYCHAN (473)
-                resp = createSingleResponse("473", client.getSocketFdString());
-                resp["<client>"] = client.getClientPrefix();
-                resp["<channel>"] = findChannel->getName();
-                resp["<reason>"] = "Cannot join channel (+i)";
-                responses.push_back(resp);
-                continue ;
-            }
             // client joining existing channel, inform existing channel members of new member.
             std::string memberFds = intSetToCSVString(dataStore.getChannel(channelNames[i])->getMembers());
             resp = createSingleResponse("JOIN", memberFds);
