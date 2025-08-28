@@ -11,6 +11,8 @@ Channel::~Channel() {
 
 void Channel::addMember(Client& client)
 {
+    if (this->members.empty())
+        operators.insert(client.getSocketFd());
     members.insert(client.getSocketFd());
 }
 
