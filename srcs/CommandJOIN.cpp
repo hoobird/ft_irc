@@ -1,7 +1,7 @@
 #include "AllCommands.hpp"
 
-CommandJOIN::CommandJOIN(const DataStore& dataStore)
-: CommandBase(), dataStore(dataStore) {
+CommandJOIN::CommandJOIN(DataStore& dataStore, const Channel& channel)
+: CommandBase(), dataStore(dataStore), channel(channel) {
 }
 
 CommandJOIN::CommandJOIN(const CommandJOIN& other)
@@ -25,14 +25,14 @@ responseList CommandJOIN::execute(Client& client, const ParsedMessage& message) 
         responses.push_back(resp);
         return responses;
     }
-
     // split channel name(s) and key(s) by comma (@elfoo)
     std::vector<std::string> channelNames;
     std::vector<std::string> channelKeys;
 
-    // parse channels (parameter[0]) (@elfoo)
-    // TODO: Implementation to be merged later
-    // NOTE: Use channelNames and channelKeys first for JOIN implementation
+    channelNames = split(message.parameters[0], ",");
+    if (message.parameters.size() > 1) {
+        channelKeys = split(message.parameters[1], ",");
+    }
 
     // parameters have already been split by space ('2d array')
     /// if there are duplicate channel names (within parameters), only the first channel name-password pair is checked
@@ -44,32 +44,81 @@ responseList CommandJOIN::execute(Client& client, const ParsedMessage& message) 
         /// do not overwrite existing [key]
     // if check succeeds, save channel and key respectively into mapChannelKey, ...
 
-    // for each channel in the command (iterate through std::map) {
-    //     if channel name does not exist {
-    //         // server create new channel
-    //         // server adds user to the channel (as operator)
-    //     }
-    //     else if channel name is valid
-    //     {
-    //         /* if client exceeds channel limit CHANLIMIT RPL_ISUPPORT,
-    //             // ERR_TOOMANYCHANNELS (405)
-    //             // rationale: fd exceed is caught in socket creation, setting CHANLIMIT is optional, not important */
-    //             // how: (1) go through all channels, (2) keep track via count */
-    //         if channel password does not match
-    //             // ERR_BADCHANNELKEY (475)
-    //         if user is banned
-    //             // ERR_BANNEDFROMCHAN (474)
-    //         if (channel members) count has exceeded
-    //             // ERR_CHANNELISFULL (471)
-    //             // suggested: set 'capacity' private attribute to -1 if no limit, else set limit
-    //             /* TODO: set arbitrary max users value; to manage in CommandMODE (both user and server) */
-    //         if channel is set to invite-only && user is not invited
-    //             // ERR_INVITEONLYCHAN (473)
-    //         else
-    //             // server returns a JOIN message
-    //             // >> :elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#lobby
-    //     }
-    // }
+    for (int i = 0; i < channelNames.size(); ++i)  {
+        Channel* findChannel = dataStore.getChannel(channelNames[i]);
+        singleResponse resp;
+        if (!findChannel) {
+            Channel channel(channelNames[i]);
+            dataStore.addChannel(&channel);
+            channel.addMember(client);
+            // integrate the success channel message,
+        }
+        else
+        {
+            if (/* client exceeds channel limit CHANLIMIT RPL_ISUPPORT */) {
+                resp = createSingleResponse("405", client.getSocketFdString());
+                resp["<client>"] = client.getClientPrefix();
+                resp["<channel>"] = findChannel->getName();
+                resp["<reason>"] = "You have joined too many \channels";
+                responses.push_back(resp);
+                continue ;
+                // ERR_TOOMANYCHANNELS (405)
+                // rationale: fd exceed is caught in socket creation, setting CHANLIMIT is optional, not important
+                // how: (1) go through all channels, (2) keep track via count */
+            }
+            if (/* channel password does not match */) {
+                // ERR_BADCHANNELKEY (475)
+                resp = createSingleResponse("475", client.getSocketFdString());
+                resp["<client>"] = client.getClientPrefix();
+                resp["<channel>"] = findChannel->getName();
+                resp["<reason>"] = "Cannot join channel (+k)";
+                responses.push_back(resp);
+                continue ;
+            }
+            if (/* user is banned */) {
+                // ERR_BANNEDFROMCHAN (474)
+                resp = createSingleResponse("474", client.getSocketFdString());
+                resp["<client>"] = client.getClientPrefix();
+                resp["<channel>"] = findChannel->getName();
+                resp["<reason>"] = "Cannot join channel (+b)";
+                responses.push_back(resp);
+                continue ;
+            }
+            if (/* channel members count has exceeded */)
+                // ERR_CHANNELISFULL (471)
+                resp = createSingleResponse("471", client.getSocketFdString());
+                resp["<client>"] = client.getClientPrefix();
+                resp["<channel>"] = findChannel->getName();
+                resp["<reason>"] = "Cannot join channel (+l)";
+                responses.push_back(resp);
+                continue ;
+                // suggested: set 'capacity' private attribute to -1 if no limit, else set limit
+                // TODO: set arbitrary max users value; to manage in CommandMODE (both user and server)
+            if (/* channel is set to invite-only && user is not invited */) {
+                // ERR_INVITEONLYCHAN (473)
+                resp = createSingleResponse("473", client.getSocketFdString());
+                resp["<client>"] = client.getClientPrefix();
+                resp["<channel>"] = findChannel->getName();
+                resp["<reason>"] = "Cannot join channel (+i)";
+                responses.push_back(resp);
+                continue ;
+            }
+            // client joining existing channel, inform existing channel members of new member.
+            std::string memberFds = intSetToCSVString(dataStore.getChannel(channelNames[i])->getMembers());
+            resp = createSingleResponse("JOIN", memberFds);
+            resp["<nick_sender>"] = client.getClientPrefix();
+            resp["<user_sender>"] = client.getUsername();
+            resp["<host_sender>"] = client.getHostname();
+            resp["<channel>"] = findChannel->getName();
+        }
+        // server returns a JOIN message
+        // >> :elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#lobby
+        resp = createSingleResponse("JOIN", client.getSocketFdString());
+        resp["<nick_sender>"] = client.getClientPrefix();
+        resp["<user_sender>"] = client.getUsername();
+        resp["<host_sender>"] = client.getHostname();
+        resp["<channel>"] = findChannel->getName();
+    }
 
     // if client’s JOIN command to the server is successful
     // {
