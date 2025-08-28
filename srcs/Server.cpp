@@ -1,7 +1,7 @@
 #include "Server.hpp"
 
 Server::Server(int port, const std::string &password)
-    : serverName("IRCH"), running(true), port(port), password(password), dataStore(), networkMan(), msgParser(), cmdFactory(), cmdHandler(cmdFactory), msgBuilder(serverName)
+    :serverName("IRCH"), running(true), port(port), password(password), dataStore(), networkMan(), msgParser(), cmdFactory(), cmdHandler(cmdFactory), msgBuilder(serverName)
 {}
 
 Server::~Server()
@@ -39,7 +39,7 @@ void Server::runEventLoop()
 
         NetworkManager::EpollResult events = networkMan.monitorEvents();
         if (events.first < 0) {
-            std::cerr << "Error: " << getNetworkErrorString(NET_ERR_EPOLL_WAIT) << std::endl;
+            std::cerr << "Warning: " << getNetworkErrorString(NET_ERR_EPOLL_WAIT) << std::endl;
             break;
         }
         for (int i = 0; i < events.first; ++i) {
@@ -65,9 +65,9 @@ void Server::setupCommandFactory()
 {
     std::cout << "Setting up command factory..." << std::endl;
     // Register commands here
-    cmdFactory.registerCommand("USER", new CommandUSER(dataStore));
-    cmdFactory.registerCommand("NICK", new CommandNICK(dataStore));
-    cmdFactory.registerCommand("PASS", new CommandPASS(*this)); // Pass reference to AuthService (Server)
+    cmdFactory.registerCommand("USER", new CommandUSER(dataStore, serverName));
+    cmdFactory.registerCommand("NICK", new CommandNICK(dataStore, serverName));
+    cmdFactory.registerCommand("PASS", new CommandPASS(*this, serverName)); // Pass reference to AuthService (Server)
     cmdFactory.registerCommand("PING", new CommandPING(serverName));
     cmdFactory.registerCommand("MODE", new CommandMODE(dataStore));
     cmdFactory.registerCommand("PRIVMSG", new CommandPRIVMSG(dataStore));

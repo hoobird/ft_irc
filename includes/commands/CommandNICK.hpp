@@ -9,7 +9,7 @@
 
 class CommandNICK : public CommandBase {
 public:
-	CommandNICK(const DataStore &dataStore);
+	CommandNICK(const DataStore &dataStore, std::string serverName);
 	CommandNICK(const CommandNICK& other);
 	~CommandNICK();
 	responseList execute(Client& client, const ParsedMessage& message);
@@ -17,6 +17,7 @@ public:
 
 private:
 	const DataStore &dataStore;
+	std::string serverName;
 
 	bool isValidNickname(std::string nick);
 	// OCF

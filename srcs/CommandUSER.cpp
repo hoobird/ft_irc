@@ -1,11 +1,12 @@
 #include "AllCommands.hpp"
 
-CommandUSER::CommandUSER(DataStore const & dataStore)
-    : dataStore(dataStore)
+CommandUSER::CommandUSER(DataStore const & dataStore, std::string serverName)
+    : dataStore(dataStore), serverName(serverName)
 {
+    std::cout << "Servername: " << serverName << std::endl;
 }
 
-CommandUSER::CommandUSER(const CommandUSER &other): CommandBase(), dataStore(other.dataStore)
+CommandUSER::CommandUSER(const CommandUSER &other): CommandBase(), dataStore(other.dataStore), serverName(other.serverName)
 {
     (void)other;
 }
@@ -26,7 +27,7 @@ responseList CommandUSER::execute(Client &client, const ParsedMessage &message)
     if (client.isRegistered()) {
         singleResponse resp = createSingleResponse("462", client.getSocketFdString());
         resp["<client>"] = client.getClientPrefix();
-        resp["<reason>"] = ":You may not reregister";
+        resp["<reason>"] = "You may not reregister";
         responses.push_back(resp);
         return responses;
     }
@@ -38,7 +39,7 @@ responseList CommandUSER::execute(Client &client, const ParsedMessage &message)
         singleResponse resp = createSingleResponse("461", client.getSocketFdString());
         resp["<client>"] = client.getClientPrefix();
         resp["<command>"] = "USER";
-        resp["<reason>"] = ":Not enough parameters";
+        resp["<reason>"] = "Not enough parameters";
         responses.push_back(resp);
         return responses;
     }
@@ -55,7 +56,7 @@ responseList CommandUSER::execute(Client &client, const ParsedMessage &message)
     if (!client.isReadyToRegister())
         return responses; // still not ready to register, no response needed (responses is still empty here)
     client.setRegistered();
-    return createWelcomeResponse(client);
+    return createWelcomeResponse(client, serverName);
 }
 
 CommandBase *CommandUSER::clone() const
