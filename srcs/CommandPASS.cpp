@@ -1,11 +1,11 @@
 #include "AllCommands.hpp"
 
-CommandPASS::CommandPASS(const AuthService& authService)
-    : authService(authService)
+CommandPASS::CommandPASS(const AuthService& authService, std::string serverName)
+    : authService(authService), serverName(serverName)
 {
 }
 
-CommandPASS::CommandPASS(const CommandPASS &other): CommandBase(), authService(other.authService)
+CommandPASS::CommandPASS(const CommandPASS &other): CommandBase(), authService(other.authService), serverName(other.serverName)
 {
     (void) other;
 }
@@ -51,7 +51,7 @@ responseList CommandPASS::execute(Client &client, const ParsedMessage &message)
     if (!client.isReadyToRegister())
         return responses; // still not ready to register, no response needed (responses is still empty here
     client.setRegistered();
-    return createWelcomeResponse(client);
+    return createWelcomeResponse(client, serverName);
 }
 
 CommandBase *CommandPASS::clone() const

@@ -10,7 +10,7 @@
 
 class CommandPASS : public CommandBase {
 public:
-	CommandPASS(const AuthService& authService);
+	CommandPASS(const AuthService& authService, std::string serverName);
 	CommandPASS(const CommandPASS& other);
 	~CommandPASS();
 	responseList execute(Client& client, const ParsedMessage& message);
@@ -18,6 +18,7 @@ public:
 
 private:
 	const AuthService& authService;
+	std::string serverName;
 	// OCF
 	CommandPASS& operator=(const CommandPASS& other);
 };

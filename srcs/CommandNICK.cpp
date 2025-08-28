@@ -1,11 +1,11 @@
 #include "AllCommands.hpp"
 
-CommandNICK::CommandNICK(const DataStore &dataStore)
-    : dataStore(dataStore)
+CommandNICK::CommandNICK(const DataStore &dataStore, std::string serverName)
+    : dataStore(dataStore), serverName(serverName)
 {
 }
 
-CommandNICK::CommandNICK(const CommandNICK &other): CommandBase(), dataStore(other.dataStore)
+CommandNICK::CommandNICK(const CommandNICK &other): CommandBase(), dataStore(other.dataStore), serverName(other.serverName)
 {
     (void)other; // nothing to copy
 }
@@ -69,7 +69,7 @@ responseList CommandNICK::execute(Client &client, const ParsedMessage &message)
         selfResponse["<user>"] = client.getUsername();
         selfResponse["<host>"] = client.getHostname();
         selfResponse["<new_nick>"] = newNick;
-        responseList welcome = createWelcomeResponse(client);
+        responseList welcome = createWelcomeResponse(client, serverName);
         responses.insert(responses.end(), welcome.begin(), welcome.end());
         responses.push_back(selfResponse);
         return responses;
