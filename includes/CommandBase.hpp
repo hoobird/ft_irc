@@ -13,6 +13,7 @@ class CommandBase {
         virtual ~CommandBase() {}
         virtual responseList execute(Client& client, const ParsedMessage& message) = 0;
 		virtual CommandBase* clone() const = 0;
+        std::vector<std::string> split(std::string src, std::string delimiter);
 
     protected:
         CommandBase() {}
