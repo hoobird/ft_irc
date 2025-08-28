@@ -58,3 +58,18 @@ std::string CommandBase::intSetToCSVString(std::set<int> fdset)
     }
     return result;
 }
+
+std::vector<std::string> CommandBase::split(std::string src, std::string delimiter) {
+    std::vector<std::string> tokens;
+    std::string token;
+    std::size_t pos_start = 0;
+    std::size_t pos_last;
+    std::size_t delim_len = delimiter.length();
+    while ((pos_last = src.find(delimiter, pos_start)) != std::string::npos) {
+        token = src.substr(pos_start, pos_last - pos_start);
+        tokens.push_back(token);
+        pos_start = pos_last + delim_len;
+    }
+    tokens.push_back(src.substr(pos_start));
+    return tokens;
+}
