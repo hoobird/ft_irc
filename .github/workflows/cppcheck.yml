@@ -4,6 +4,7 @@ on:
   push:
     branches: [ main ]
   pull_request:
+    branches: [ "*" ]
 
 jobs:
   cppcheck:
@@ -42,7 +43,7 @@ jobs:
           # Check for errors using 'error:' pattern
           if grep -q 'error:' cppcheck-report.txt; then
             ISSUE_COUNT=$(grep -c 'error:' cppcheck-report.txt)
-            
+
             # PR Summary - Fix indentation
             echo "### ❌ Cppcheck Found $ISSUE_COUNT Issues" > summary.md
             echo "" >> summary.md
@@ -52,7 +53,7 @@ jobs:
             grep 'error:' cppcheck-report.txt | head -n 10 >> summary.md
             echo "\`\`\`" >> summary.md
             cat summary.md >> $GITHUB_STEP_SUMMARY
-            
+
             # PR Comment with proper multiline formatting - Fix indentation
             echo "### ❌ Cppcheck Found $ISSUE_COUNT Issues" > comment.md
             echo "" >> comment.md
@@ -63,10 +64,10 @@ jobs:
             echo "\`\`\`" >> comment.md
             echo "" >> comment.md
             echo "📊 [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> comment.md
-            
+
             # Post comment to PR
             gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md
-            
+
             echo "::error::Cppcheck found $ISSUE_COUNT issues"
             exit 1
           else
@@ -77,14 +78,14 @@ jobs:
             echo "" >> summary.md
             echo "[Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> summary.md
             cat summary.md >> $GITHUB_STEP_SUMMARY
-            
+
             # PR Comment with proper multiline formatting - Fix indentation
             echo "### ✅ Cppcheck Passed" > comment.md
             echo "" >> comment.md
             echo "🎉 No static analysis issues found!" >> comment.md
             echo "" >> comment.md
             echo "📊 [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> comment.md
-            
+
             # Post comment to PR
             gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md
           fi
