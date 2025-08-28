@@ -1,0 +1,8 @@
+# Everything gets you as reviewer
+* @hoobird
+
+# Command-related source files
+/srcs/Command*.cpp @jellyy-t @sharpeningCode
+
+# Command header files
+/includes/commands/Command*.hpp @jellyy-t @sharpeningCode
