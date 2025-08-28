@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
   pull_request:
-    branches: [ main ]
+    branches: [ "*" ]
 
 jobs:
   build-and-test:
@@ -23,7 +23,7 @@ jobs:
         run: |
           # Remove man-db FIRST to prevent any post-install triggers
           sudo apt-get remove -y --purge man-db
-          
+
           # Block docs from being installed (saves space and time)
           sudo tee /etc/dpkg/dpkg.cfg.d/01_nodoc > /dev/null << 'EOF'
           path-exclude /usr/share/doc/*
@@ -31,13 +31,13 @@ jobs:
           path-exclude /usr/share/info/*
           path-exclude /usr/share/locale/*
           EOF
-          
+
           # Stop recommends/suggests (reduces package count)
           sudo tee /etc/apt/apt.conf.d/99norecommend > /dev/null << 'EOF'
           APT::Install-Recommends "false";
           APT::Install-Suggests "false";
           EOF
-          
+
           # Clean up any leftover man-db cruft (optional but thorough)
           sudo apt-get autoremove -y
 
@@ -76,7 +76,7 @@ jobs:
         id: build_check
         run: |
           echo "::error::Build failed! Cannot proceed with memory and FD checks."
-          
+
           # Create clearer step summary with proper error details
           echo "### ❌ Build Failed" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
@@ -89,7 +89,7 @@ jobs:
             echo "Build log file not found" >> $GITHUB_STEP_SUMMARY
           fi
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          
+
           exit 1
 
       - name: Run Valgrind checks
@@ -107,13 +107,13 @@ jobs:
                         --log-file=logs/valgrind.log \
                         ./ircserv 8080 pass
           EOF
-          
+
           chmod +x run_valgrind.sh
-          
+
           # Run the server in background
           ./run_valgrind.sh &
           SERVER_PID=$!
-          
+
           # Wait for server to initialize (5 seconds max)
           for i in {1..5}; do
             if nc -z localhost 8080; then
@@ -121,7 +121,7 @@ jobs:
             fi
             sleep 1
           done
-          
+
           # Check if server is still running
           if ! kill -0 $SERVER_PID 2>/dev/null; then
             echo "::error::Server failed to start properly"
@@ -130,10 +130,10 @@ jobs:
             touch logs/valgrind.log
             exit 1
           fi
-          
+
           # Send shutdown signal
           kill -INT $SERVER_PID
-          
+
           # Wait for graceful shutdown (10 seconds max)
           if ! timeout 10 bash -c "while kill -0 $SERVER_PID 2>/dev/null; do sleep 0.1; done"; then
             echo "::error::Server did not exit gracefully"
@@ -141,7 +141,7 @@ jobs:
             kill -TERM $SERVER_PID
             exit 1
           fi
-          
+
           # Process valgrind results
           if [ ! -f logs/valgrind.log ]; then
             echo "::error::Valgrind log file not found"
@@ -150,7 +150,7 @@ jobs:
             touch logs/valgrind.log
             exit 1
           fi
-          
+
           # Check for FD leaks
           if grep -q "FILE DESCRIPTORS: " logs/valgrind.log; then
             fd_leak_count=$(awk '
@@ -162,7 +162,7 @@ jobs:
               }
               END { print leaks+0 }
             ' logs/valgrind.log)
-            
+
             if [ "$fd_leak_count" -gt 0 ]; then
               echo "::error::Found $fd_leak_count file descriptor leaks!"
               echo "fd_leaks=true" >> $GITHUB_OUTPUT
@@ -193,7 +193,7 @@ jobs:
               exit 1
             fi
           fi
-          
+
           echo "valgrind_passed=true" >> $GITHUB_OUTPUT
 
       - name: Upload Valgrind log
@@ -215,7 +215,7 @@ jobs:
           if ! command -v gh &> /dev/null; then
             sudo apt-get install -y gh
           fi
-          
+
           # Create summary based on build status
           if [[ "${{ steps.build.outcome }}" == "failure" ]]; then
             # Use echo commands instead of heredoc for better control
@@ -232,12 +232,12 @@ jobs:
             echo "Fix compilation errors before running memory checks." >> comment.md
             echo "" >> comment.md
             echo "📊 [See Build Log](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> comment.md
-            
+
             # Post comment to PR
             gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md
             exit 0
           fi
-          
+
           # Check for server start/shutdown issues
           if [[ "${{ steps.valgrind-test.outputs.server_status }}" == "failed" ]]; then
             # Use echo commands instead of heredoc
@@ -246,12 +246,12 @@ jobs:
             echo "Your IRC server failed to start properly for the memory test." >> comment.md
             echo "" >> comment.md
             echo "📊 [See Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> comment.md
-            
+
             # Post comment to PR
             gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md
             exit 0
           fi
-          
+
           if [[ "${{ steps.valgrind-test.outputs.server_status }}" == "hanging" ]]; then
             # Use echo commands instead of heredoc
             echo "### ❌ Server Did Not Shut Down Gracefully" > comment.md
@@ -259,36 +259,36 @@ jobs:
             echo "Your IRC server did not respond to the shutdown signal within the timeout period." >> comment.md
             echo "" >> comment.md
             echo "📊 [See Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> comment.md
-            
+
             # Post comment to PR
             gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md
             exit 0
           fi
-          
+
           # Create summary for valgrind results
           if [[ "${{ steps.valgrind-test.outputs.valgrind_passed }}" == "true" ]]; then
             # Write to step summary
             echo "### ✅ Memory and FD Checks Passed" >> $GITHUB_STEP_SUMMARY
             echo "🎉 No memory leaks or file descriptor leaks detected!" >> $GITHUB_STEP_SUMMARY
-            
+
             # Use echo commands instead of heredoc
             echo "### ✅ Memory and FD Checks Passed" > comment.md
             echo "" >> comment.md
             echo "🎉 All checks passed successfully!" >> comment.md
             echo "" >> comment.md
             echo "📊 [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> comment.md
-            
+
             # Post comment to PR
             gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md
           else
             # Write to step summary
             echo "### ❌ Memory and FD Checks Failed" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
-            
+
             # Use echo commands instead of heredoc
             echo "### ❌ Memory and FD Checks Failed" > comment.md
             echo "" >> comment.md
-            
+
             if [[ "${{ steps.valgrind-test.outputs.fd_leaks }}" == "true" ]]; then
               # Write to step summary
               echo "⚠️ Found ${{ steps.valgrind-test.outputs.fd_leak_count }} file descriptor leaks:" >> $GITHUB_STEP_SUMMARY
@@ -297,7 +297,7 @@ jobs:
               echo "${{ steps.valgrind-test.outputs.fd_leak_details }}" >> $GITHUB_STEP_SUMMARY
               echo "```" >> $GITHUB_STEP_SUMMARY
               echo "" >> $GITHUB_STEP_SUMMARY
-              
+
               # Write to PR comment
               echo "⚠️ Found ${{ steps.valgrind-test.outputs.fd_leak_count }} file descriptor leaks:" >> comment.md
               echo "" >> comment.md
@@ -306,7 +306,7 @@ jobs:
               echo "\`\`\`" >> comment.md
               echo "" >> comment.md
             fi
-            
+
             if [[ "${{ steps.valgrind-test.outputs.memory_leaks }}" == "true" ]]; then
               # Write to step summary
               echo "⚠️ Found memory leaks:" >> $GITHUB_STEP_SUMMARY
@@ -315,7 +315,7 @@ jobs:
               echo "${{ steps.valgrind-test.outputs.leak_summary }}" >> $GITHUB_STEP_SUMMARY
               echo "```" >> $GITHUB_STEP_SUMMARY
               echo "" >> $GITHUB_STEP_SUMMARY
-              
+
               # Write to PR comment
               echo "⚠️ Found memory leaks:" >> comment.md
               echo "" >> comment.md
@@ -324,10 +324,10 @@ jobs:
               echo "\`\`\`" >> comment.md
               echo "" >> comment.md
             fi
-            
+
             echo "📊 [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> $GITHUB_STEP_SUMMARY
             echo "📊 [Full Report](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID})" >> comment.md
-            
+
             # Post comment to PR
             gh pr comment ${{ github.event.pull_request.number }} --body-file comment.md
           fi
