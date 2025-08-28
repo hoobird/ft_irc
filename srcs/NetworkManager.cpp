@@ -10,7 +10,9 @@ NetworkManager::~NetworkManager() {
     if (listenerFd >= 0) {
         close(listenerFd);
     }
-
+    for (std::set<int>::iterator it = epollClientFds.begin(); it != epollClientFds.end(); ++it) {
+        close(*it);
+    }
 }
 
 NetworkError NetworkManager::setupServerSocket(const std::string &portString)
@@ -175,8 +177,8 @@ std::vector<Client*> NetworkManager::addNewClients() {
         // By right should be Server's job, but we do it here for simplicity
         // if not we have to return vector of pairs, each pair is clientfd and client address
         Client *newClient = new Client(clientFd, inet_ntoa(clientAddr.sin_addr));
-        newClient->setHostname(inet_ntoa(clientAddr.sin_addr));
         newClients.push_back(newClient);
+        epollClientFds.insert(clientFd); // track client fds added to epoll
     }
     return newClients;
 }
@@ -200,6 +202,7 @@ void NetworkManager::closeConnection(int fd)
     } else {
         std::cout << "Closed connection for fd " << fd << std::endl;
     }
+    epollClientFds.erase(fd); // remove from tracked client fds
 }
 
 // return 0 on success, 1 if the caller should retry later, -1 on error and close the connection

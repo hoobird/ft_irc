@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include <set>
 #include <NetworkErrors.hpp>
 #include "Client.hpp"
 #include "MessageBuilder.hpp"
@@ -29,8 +30,8 @@ class NetworkManager {
 		NetworkError createEpollInstance();
 
 		typedef std::pair<int, struct epoll_event*> EpollResult; // trigger count and triggered events
-		EpollResult monitorEvents(); 
-		
+		EpollResult monitorEvents();
+
 		int addFdToEpoll(int fd);
 
 		std::vector<Client*> addNewClients();
@@ -47,6 +48,7 @@ class NetworkManager {
 		int listenerFd;
 		int epollFd;
 		struct epoll_event events[MAX_EVENTS];
+		std::set<int> epollClientFds; // to keep track of  all client fds added to epoll
 
 		// OCF
 		NetworkManager(const NetworkManager& other);
