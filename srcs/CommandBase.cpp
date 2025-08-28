@@ -8,7 +8,7 @@ singleResponse CommandBase::createSingleResponse(const std::string &numeric, con
     return resp;
 }
 
-responseList CommandBase::createWelcomeResponse(const Client &client) const
+responseList CommandBase::createWelcomeResponse(const Client &client, const std::string serverName) const
 {
     responseList responses;
     responses.reserve(5);
@@ -23,7 +23,7 @@ responseList CommandBase::createWelcomeResponse(const Client &client) const
 
     singleResponse resp2 = createSingleResponse("002", client.getSocketFdString());
     resp2["<client>"] = client.getClientPrefix();
-    resp2["<servername>"] = "SomeIrcServer"; // TODO: replace with actual server name
+    resp2["<servername>"] = serverName;
     resp2["<version>"] = "1.0";
     responses.push_back(resp2);
 
@@ -34,7 +34,7 @@ responseList CommandBase::createWelcomeResponse(const Client &client) const
 
     singleResponse resp4 = createSingleResponse("004", client.getSocketFdString());
     resp4["<client>"] = client.getClientPrefix();
-    resp4["<server_name>"] = "SomeIrcServer"; // TODO: replace with actual server name
+    resp4["<server_name>"] = serverName;
     resp4["<version>"] = "1.0";
     resp4["<usermodes>"] = "";
     resp4["<chanmodes>"] = "";

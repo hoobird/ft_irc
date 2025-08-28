@@ -7,7 +7,7 @@
 
 class CommandUSER : public CommandBase {
 public:
-	CommandUSER(DataStore const & dataStore);
+	CommandUSER(DataStore const & dataStore, std::string serverName);
 	CommandUSER(const CommandUSER& other);
 	~CommandUSER();
 	responseList execute(Client& client, const ParsedMessage& message);
@@ -16,6 +16,7 @@ public:
 
 private:
 	const DataStore& dataStore;
+	std::string serverName;
 	// OCF
 	CommandUSER();
 	CommandUSER& operator=(const CommandUSER& other);

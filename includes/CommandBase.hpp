@@ -17,7 +17,7 @@ class CommandBase {
     protected:
         CommandBase() {}
         singleResponse createSingleResponse(const std::string& numeric, const std::string& clientsToSend) const;
-        responseList createWelcomeResponse(const Client& client) const;
+        responseList createWelcomeResponse(const Client& client, const std::string serverName) const;
         std::string intSetToCSVString(std::set<int> fdset);
 
     private:
