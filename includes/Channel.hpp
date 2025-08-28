@@ -6,6 +6,12 @@
 #include <map>
 #include "Client.hpp"
 
+enum Status {
+    NONE = 0,
+    INVITED,
+    BANNED
+} ;
+
 class Channel {
 public:
 	Channel(const std::string& name);
@@ -42,6 +48,7 @@ private:
 	std::map<std::string, std::string> modes; // eliz and angelly to decide on this if u doing MODE
 	std::string key;
 	int limit; // 0 means no limit
+    std::map<int, Status> userStatus; // Key: userID, Value: status(none, invited, banned) (works cause map cannot have duplicate key, overwrites the id's status if I need update)
 
 	// OCF
 	Channel();
