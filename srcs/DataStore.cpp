@@ -97,3 +97,14 @@ DataStore::ChannelMap::const_iterator DataStore::getChannelsEnd() const
 {
     return channels.end();
 }
+
+int DataStore::countChannelsForClient(const Client& client) const
+{
+    int channelCount = 0;
+
+    for (ChannelMap::const_iterator it = getChannelsBegin(); it != getChannelsEnd(); ++it) {
+        if (it->second->isMember(client))
+            channelCount++;
+    }
+    return channelCount;
+}
