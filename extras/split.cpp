@@ -14,9 +14,11 @@ std::vector<std::string> split(std::string src, std::string delimiter) {
         token = src.substr(0, pos);
         tokens.push_back(token);
         src.erase(0, pos + delimiter.length());
-    } */
+        } */
 
     // method (2): input string (src) is not modified
+    if (src.empty())
+        return tokens;
     std::size_t pos_start = 0;
     std::size_t pos_last;
     std::size_t delim_len = delimiter.length();
@@ -30,7 +32,7 @@ std::vector<std::string> split(std::string src, std::string delimiter) {
 }
 
 int main(void) {
-    std::string src = "scott>=tiger>=mushroom";
+    std::string src = "";
     std::cout << "src (before): " << src << std::endl;
     std::string delimiter = ">=";
     std::vector<std::string> dest = split(src, delimiter); // ["scott", "tiger", "mushroom"]
@@ -53,13 +55,10 @@ dest[2]: mushroom
 src (after): mushroom
 c2r5s14% */
 
-/* Output: // method(2)
+/* Output: // method(2), empty string
 c2r5s14% c++ -Wall -Wextra -Werror -std=c++98 split.cpp
 c2r5s14% ./a.out
-src (before): scott>=tiger>=mushroom
+src (before):
 printing dest:
-dest[0]: scott
-dest[1]: tiger
-dest[2]: mushroom
-src (after): scott>=tiger>=mushroom
+src (after):
 c2r5s14% */
