@@ -1,7 +1,7 @@
 #include "Channel.hpp"
 
 Channel::Channel(const std::string &name)
-    : name(name), topic(""), key(""), limit(0)
+    : name(name), topic(""), key(""), limit(0), inviteMode(false), topicRestrict(false)
 {
 }
 
@@ -41,6 +41,11 @@ bool Channel::isOperator(const Client& client) const
     return operators.find(client.getSocketFd()) != operators.end();
 }
 
+bool Channel::isMemberInvited(const Client& client) const
+{
+    return inviteList.find(client.getSocketFd()) != inviteList.end();
+}
+
 std::string Channel::getName() const
 {
     return this->name;
@@ -61,6 +66,11 @@ std::set<int> Channel::getOperators() const
     return this->operators;
 }
 
+std::set<int> Channel::getInviteList() const
+{
+    return this->inviteList;
+}
+
 std::string Channel::getKey() const
 {
     return this->key;
@@ -69,6 +79,16 @@ std::string Channel::getKey() const
 int Channel::getLimit() const
 {
     return this->limit;
+}
+
+bool Channel::getInviteMode() const
+{
+    return this->inviteMode;
+}
+
+bool Channel::getTopicRestrict() const
+{
+    return this->topicRestrict;
 }
 
 void Channel::setName(const std::string &name)
@@ -90,3 +110,15 @@ void Channel::setLimit(int limit)
 {
     this->limit = limit;
 }
+
+
+void Channel::setInviteMode(bool status)
+{
+    this->inviteMode = status;
+}
+
+void Channel::setTopicRestrict(bool status)
+{
+    this->topicRestrict = status;
+}
+

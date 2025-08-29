@@ -1,6 +1,8 @@
 #ifndef ALLCOMMANDS_HPP
 #define ALLCOMMANDS_HPP
 
+#include "config.hpp" // for limits
+
 #include "commands/CommandMODE.hpp"
 #include "commands/CommandNICK.hpp"
 #include "commands/CommandPASS.hpp"
