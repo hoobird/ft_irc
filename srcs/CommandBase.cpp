@@ -62,6 +62,8 @@ std::string CommandBase::intSetToCSVString(std::set<int> fdset)
 std::vector<std::string> CommandBase::split(std::string src, std::string delimiter) {
     std::vector<std::string> tokens;
     std::string token;
+    if (src.empty())
+        return tokens;
     std::size_t pos_start = 0;
     std::size_t pos_last;
     std::size_t delim_len = delimiter.length();
