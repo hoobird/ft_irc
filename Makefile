@@ -18,8 +18,8 @@ SRC = main.cpp Server.cpp Client.cpp NetworkManager.cpp DataStore.cpp \
 	  Channel.cpp MessageParser.cpp MessageBuilder.cpp \
 	  CommandHandler.cpp CommandBase.cpp CommandFactory.cpp \
 	  CommandNICK.cpp CommandUSER.cpp CommandPASS.cpp CommandPING.cpp \
-	  CommandPRIVMSG.cpp CommandMODE.cpp $(LOGGER_SRC)
-
+	  CommandPRIVMSG.cpp CommandMODE.cpp CommandJOIN.cpp \
+	  $(LOGGER_SRC)
 DEP = $(OBJ:.o=.d)
 OBJ = $(addprefix $(BUILDDIR)/, $(notdir $(SRC:.cpp=.o)))
 NAME = ircserv
