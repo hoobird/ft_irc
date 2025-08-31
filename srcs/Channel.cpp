@@ -1,7 +1,7 @@
 #include "Channel.hpp"
 
 Channel::Channel(const std::string &name)
-    : name(name), topic(""), inviteMode(false), topicRestrict(false), key(""), limit(0)
+    : name(name), topic(""), inviteMode(false), topicRestrict(false), key(""), limit(-1)
 {
 }
 
