@@ -79,12 +79,12 @@ void Server::setupCommandFactory()
     cmdFactory.registerCommand("PING", new CommandPING(serverName));
     cmdFactory.registerCommand("MODE", new CommandMODE(dataStore));
     cmdFactory.registerCommand("PRIVMSG", new CommandPRIVMSG(dataStore));
-    // cmdFactory.registerCommand("NICK", new NickCommand());
-    // cmdFactory.registerCommand("USER", new UserCommand());
-    // cmdFactory.registerCommand("JOIN", new JoinCommand());
+    cmdFactory.registerCommand("JOIN", new CommandJOIN(dataStore));
+    // cmdFactory.registerCommand("INVITE", new InviteCommand());
+    // cmdFactory.registerCommand("KICK", new KickCommand());
     // cmdFactory.registerCommand("PART", new PartCommand());
     // cmdFactory.registerCommand("QUIT", new QuitCommand());
-    // cmdFactory.registerCommand("PASS", new PassCommand());
+    // cmdFactory.registerCommand("TOPIC", new TopicCommand());
 }
 
 void Server::handleNewConnection()
