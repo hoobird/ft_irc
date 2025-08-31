@@ -12,7 +12,7 @@ void print(const std::map<std::string, std::string>& map) {
         std::cout << "Map is empty" << std::endl;
         return ;
     }
-    std::map<std::string, std::string>:: const_iterator it;
+    std::map<std::string, std::string>::const_iterator it;
     for (it = map.begin(); it != map.end(); ++it) {
         std::cout << "key: " << it->first << ", value: " << it->second << std::endl;
     }
