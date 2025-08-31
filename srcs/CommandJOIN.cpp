@@ -1,7 +1,7 @@
 #include "AllCommands.hpp"
 
-CommandJOIN::CommandJOIN(DataStore& dataStore, const Channel& channel)
-: CommandBase(), dataStore(dataStore), channel(channel) {
+CommandJOIN::CommandJOIN(DataStore& dataStore)
+: CommandBase(), dataStore(dataStore) {
 }
 
 CommandJOIN::CommandJOIN(const CommandJOIN& other)
@@ -36,35 +36,39 @@ responseList CommandJOIN::execute(Client& client, const ParsedMessage& message) 
     // store channelNames and channelKeys into std::map
     // note: inherent property of std::map to ensure unique keys in key-value pair
     std::map<std::string, std::string> mapChannelKey;
-    for (int i = 0; i < channelNames.size(); ++i) {
+    for (std::vector<std::string>::size_type i = 0; i < channelNames.size(); ++i) {
         if (channelNames.size() <= channelKeys.size())
             mapChannelKey.insert(std::make_pair(channelNames[i], channelKeys[i]));
         else // if channelNames.size() > channelKeys.size()
             mapChannelKey.insert(std::make_pair(channelNames[i], std::string()));
     }
 
-    for (int i = 0; i < channelNames.size(); ++i)  {
+    for (std::vector<std::string>::size_type i = 0; i < channelNames.size(); ++i)  {
         Channel* findChannel = dataStore.getChannel(channelNames[i]);
         singleResponse resp;
+        // fix: do not create local Channel object that gets destroyed
         if (!findChannel) {
-            Channel channel(channelNames[i]);
-            dataStore.addChannel(&channel);
-            channel.addMember(client);
+            std::cout << "Channel does not exist...\n";
+            Channel* channel = new Channel(channelNames[i]); // create on heap
+            dataStore.addChannel(channel); // add pointer to store
+            channel->addMember(client); // use pointer
+            std::cout << "-- I need to return a success response here --\n";
         }
         else
         {
+            std::cout << "Channel exists, proceeding checks...\n";
             int channelCount = dataStore.countChannelsForClient(client);
             limits limitsConfig; // MARK: TEMP (relook at scope)
             if (channelCount >= limitsConfig.CLIENT_MAX_CHANNEL) {
                 resp = createSingleResponse("405", client.getSocketFdString());
                 resp["<client>"] = client.getClientPrefix();
                 resp["<channel>"] = findChannel->getName();
-                resp["<reason>"] = "You have joined too many \channels";
+                resp["<reason>"] = "You have joined too many channels";
                 responses.push_back(resp);
                 continue ;
             }
             // if channel does not need password, but password is provided, return success; password is ignored
-            if (findChannel->getKey() != "" && channelKeys[i] != findChannel->getKey()) {
+            if (findChannel->getKey() != "" && mapChannelKey[channelNames[i]] != findChannel->getKey()) {
                 // if channel is password-protected, and password is wrong, return false
                 resp = createSingleResponse("475", client.getSocketFdString());
                 resp["<client>"] = client.getClientPrefix();
@@ -82,7 +86,7 @@ responseList CommandJOIN::execute(Client& client, const ParsedMessage& message) 
                 continue ;
                 // invite overrides bans (if a user is banned from an invite-only channel, if they are given invite, they can join)
             }
-            if (findChannel->getMembers().size() > findChannel->getLimit()) {
+            if (findChannel->getLimit() != -1 && static_cast<int>(findChannel->getMembers().size()) >= findChannel->getLimit()) {
                 resp = createSingleResponse("471", client.getSocketFdString());
                 resp["<client>"] = client.getClientPrefix();
                 resp["<channel>"] = findChannel->getName();
@@ -91,6 +95,7 @@ responseList CommandJOIN::execute(Client& client, const ParsedMessage& message) 
                 continue ;
                 // TODO: set arbitrary max users value; to manage in CommandMODE (both user and server)
             }
+            std::cout << "Channel exists, continuing...\n";
             // client joining existing channel, inform existing channel members of new member.
             std::string memberFds = intSetToCSVString(dataStore.getChannel(channelNames[i])->getMembers());
             resp = createSingleResponse("JOIN", memberFds);
@@ -98,46 +103,47 @@ responseList CommandJOIN::execute(Client& client, const ParsedMessage& message) 
             resp["<user_sender>"] = client.getUsername();
             resp["<host_sender>"] = client.getHostname();
             resp["<channel>"] = findChannel->getName();
-            continue ;
+
+            // if client’s JOIN command to the server is successful, server returns a JOIN message
+            // >> :elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#lobby
+            resp = createSingleResponse("JOIN", memberFds);
+            resp["<nick_sender>"] = client.getClientPrefix();
+            resp["<user_sender>"] = client.getUsername();
+            resp["<host_sender>"] = client.getHostname();
+            resp["<channel>"] = findChannel->getName();
+            responses.push_back(resp);
+
+            //RPL_TOPIC (332)
+            // >> :halcyon.il.us.dal.net 332 elfoo #lobby :miss you :P
+            resp = createSingleResponse("332", memberFds);
+            resp["<client>"] = client.getClientPrefix();
+            resp["<channel>"] = findChannel->getName();
+            resp["<topic>"] = findChannel->getTopic();
+            responses.push_back(resp);
+
+            // (optional) RPL_TOPICWHOTIME (333)
+            // >> :halcyon.il.us.dal.net 333 elfoo #lobby lilmoe!~lilmoe@fba-bb13-2cb4-6d98-137e.187.94.ip 1747255445
+
+            // RPL_NAMREPLY (353)
+            // >> :halcyon.il.us.dal.net 353 elfoo = #lobby :elfoo LDa224 Guest39645
+            resp = createSingleResponse("353", memberFds);
+            resp["<client>"] = client.getClientPrefix();
+            resp["<channel>"] = findChannel->getName();
+            resp["<nick>"] = client.getClientPrefix();
+            responses.push_back(resp);
+
+            // RPL_ENDOFNAMES (366)
+            // >> :halcyon.il.us.dal.net 366 elfoo #lobby :End of /NAMES list.
+            resp = createSingleResponse("366", memberFds);
+            resp["<client>"] = client.getClientPrefix();
+            resp["<channel>"] = findChannel->getName();
+            resp["<info>"] = "End of /NAMES list.";
+            responses.push_back(resp);
         }
-        // if client’s JOIN command to the server is successful, server returns a JOIN message
-        // >> :elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#lobby
-        resp = createSingleResponse("JOIN", client.getSocketFdString());
-        resp["<nick_sender>"] = client.getClientPrefix();
-        resp["<user_sender>"] = client.getUsername();
-        resp["<host_sender>"] = client.getHostname();
-        resp["<channel>"] = findChannel->getName();
-        responses.push_back(resp);
-
-        //RPL_TOPIC (332)
-        // >> :halcyon.il.us.dal.net 332 elfoo #lobby :miss you :P
-        resp = createSingleResponse("332", client.getSocketFdString());
-        resp["<client>"] = client.getClientPrefix();
-        resp["<channel>"] = findChannel->getName();
-        resp["<topic>"] = findChannel->getTopic();
-        responses.push_back(resp);
-
-        // (optional) RPL_TOPICWHOTIME (333)
-        // >> :halcyon.il.us.dal.net 333 elfoo #lobby lilmoe!~lilmoe@fba-bb13-2cb4-6d98-137e.187.94.ip 1747255445
-
-        // RPL_NAMREPLY (353)
-        // >> :halcyon.il.us.dal.net 353 elfoo = #lobby :elfoo LDa224 Guest39645
-        resp = createSingleResponse("353", client.getSocketFdString());
-        resp["<channel>"] = findChannel->getName();
-        resp["<nick>"] = client.getClientPrefix();
-        responses.push_back(resp);
-
-        // RPL_ENDOFNAMES (366)
-        // >> :halcyon.il.us.dal.net 366 elfoo #lobby :End of /NAMES list.
-        resp = createSingleResponse("366", client.getSocketFdString());
-        resp["<client>"] = client.getClientPrefix();
-        resp["<channel>"] = findChannel->getName();
-        resp["<info>"] = "End of /NAMES list.";
-        responses.push_back(resp);
     }
-    // return responses;
+    return responses;
 }
 
-CommandBase* CommandJOIN::clone() const {
-    return new CommandJOIN(*this);
+    CommandBase* CommandJOIN::clone() const {
+        return new CommandJOIN(*this);
 }
