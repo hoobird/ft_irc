@@ -7,7 +7,7 @@
 
 class CommandJOIN : public CommandBase {
 public:
-    CommandJOIN(DataStore& dataStore, const Channel& channel);
+    CommandJOIN(DataStore& dataStore);
     CommandJOIN(const CommandJOIN& other);
     ~CommandJOIN();
     responseList execute(Client& client, const ParsedMessage& message);
@@ -15,7 +15,6 @@ public:
 
 private:
     DataStore& dataStore;
-    const Channel& channel;
     std::map<std::string, std::string> mapChannelKey;
     // OCF
     CommandJOIN();
