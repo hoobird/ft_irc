@@ -8,11 +8,18 @@ BUILDDIR = ./build
 
 ALLCMDSHEADER = $(INCLUDESDIR)/AllCommands.hpp
 
+ifdef DLOGGER
+LOGGER_SRC = Logger.cpp
+else
+LOGGER_SRC =
+endif
+
 SRC = main.cpp Server.cpp Client.cpp NetworkManager.cpp DataStore.cpp \
 	  Channel.cpp MessageParser.cpp MessageBuilder.cpp \
 	  CommandHandler.cpp CommandBase.cpp CommandFactory.cpp \
 	  CommandNICK.cpp CommandUSER.cpp CommandPASS.cpp CommandPING.cpp \
-	  CommandPRIVMSG.cpp CommandMODE.cpp
+	  CommandPRIVMSG.cpp CommandMODE.cpp $(LOGGER_SRC)
+
 DEP = $(OBJ:.o=.d)
 OBJ = $(addprefix $(BUILDDIR)/, $(notdir $(SRC:.cpp=.o)))
 NAME = ircserv
@@ -41,8 +48,8 @@ fclean: clean
 
 re: fclean all
 
-valgrind: CFLAGS += -g
-valgrind: re
+valgrind:
+	$(MAKE) re DLOGGER=1 CFLAGS="$(CFLAGS) -g -DLOGGER"
 	valgrind --show-leak-kinds=all --leak-check=full --track-fds=yes ./ircserv 8080 pass
 
 -include $(DEP)
