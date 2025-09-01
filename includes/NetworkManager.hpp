@@ -3,6 +3,8 @@
 
 #include <string>
 #include <iostream>
+#include <sstream>
+#include <iomanip>
 #include <vector>
 #include <set>
 #include <NetworkErrors.hpp>
@@ -32,7 +34,9 @@ class NetworkManager {
 		typedef std::pair<int, struct epoll_event*> EpollResult; // trigger count and triggered events
 		EpollResult monitorEvents();
 
-		int addFdToEpoll(int fd);
+        std::string ipv6ToString(const in6_addr &addr);
+
+        int addFdToEpoll(int fd);
 
 		std::vector<Client*> addNewClients();
 		std::pair<ssize_t, std::string> readClientData(int fd); // resturns bytes read and buffer from recv()
