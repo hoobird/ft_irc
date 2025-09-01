@@ -166,7 +166,8 @@ void MessageBuilder::initializeNumericTemplates()
     numericTemplates["349"] = "<client> <channel> :<info>"; // RPL_ENDOFEXCEPTLIST
     numericTemplates["351"] = "<client> <version> <server> :<comments>"; // RPL_VERSION
     numericTemplates["352"] = "<client> <channel> <user> <host> <server> <nick> <H|G>[*][@|+] :<hopcount> <real_name>"; // RPL_WHOREPLY
-    numericTemplates["353"] = "<client> ( '=' / '*' / '@' ) <channel> ' ' : [ '@' / '+' ] <nick> *( ' ' [ '@' / '+' ] <nick> )"; // RPL_NAMREPLY
+    // numericTemplates["353"] = "<client> ( '=' / '*' / '@' ) <channel> ' ' : [ '@' / '+' ] <nick> *( ' ' [ '@' / '+' ] <nick> )"; // RPL_NAMREPLY
+    numericTemplates["353"] = "<client> <channel> :<nicks>"; // RPL_NAMREPLY
     numericTemplates["364"] = "<client> <mask> <server> :<hopcount> <server_info>"; // RPL_LINKS
     numericTemplates["365"] = "<client> <mask> :<info>"; // RPL_ENDOFLINKS
     numericTemplates["366"] = "<client> <channel> :<info>"; // RPL_ENDOFNAMES
