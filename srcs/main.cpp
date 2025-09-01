@@ -9,6 +9,10 @@
 #include <limits>
 #include <fcntl.h>
 
+#ifdef LOGGER // Enable logging if LOGGER is defined
+    #include "Logger.hpp"
+#endif
+
 Server* g_server = NULL; // Global pointer to Server instance
 
 // Port must be between 1024 and 65535 as ports below 1024 are reserved
@@ -28,7 +32,7 @@ bool    setupSignalHandlers() {
     sa.sa_flags = SA_RESTART;
     sigemptyset(&sa.sa_mask);
 
-    if (sigaction(SIGINT, &sa, NULL) != 0 || 
+    if (sigaction(SIGINT, &sa, NULL) != 0 ||
         sigaction(SIGQUIT, &sa, NULL) != 0) {
         std::cerr << "Error: Unable to set-up signal handlers." << std::endl;
         return false;
@@ -41,7 +45,7 @@ bool checkInputArgs(int argc, char** argv, std::string &port, int &portNum, std:
         std::cerr << "Usage: ./ircserv <port> <password>" << std::endl;
         return false;
     }
-    
+
     port = std::string(argv[1]);
     password = std::string(argv[2]);
 
@@ -59,7 +63,7 @@ bool checkInputArgs(int argc, char** argv, std::string &port, int &portNum, std:
         std::cerr << "Error: Invalid port number." << std::endl;
         return false;
     }
-    if (portNumLong <= MIN_PORT || portNumLong > MAX_PORT) 
+    if (portNumLong <= MIN_PORT || portNumLong > MAX_PORT)
     {
         std::cerr << "Error: Port number must be between 1024 and 65535." << std::endl;
         return false;
@@ -70,10 +74,23 @@ bool checkInputArgs(int argc, char** argv, std::string &port, int &portNum, std:
 }
 
 int main(int argc, char** argv) {
-    
+
     std::string port;
     int portNum;
     std::string password;
+
+    #ifdef LOGGER
+        // make logger with try-catch in main
+        // Try to create logger first
+        Logger* logger = NULL;
+        try {
+            logger = new Logger();
+        } catch (const std::exception& e) {
+            std::cerr << "Logger unavailable, rerun again if you need logger" << std::endl;
+            std::cerr << "If problem persists, contact me @hoobird" << std::endl;
+            logger = NULL; // Logger is unavailable
+        }
+    #endif
 
     // Register signal handlers
     if (!setupSignalHandlers()) {
@@ -86,11 +103,22 @@ int main(int argc, char** argv) {
     }
 
     // Create Server instance
+    #ifndef LOGGER
     Server server(portNum, password);
+    #else
+    Server server(portNum, password, *logger);
+    #endif
+
     g_server = &server; // Set global pointer to the server instance
-    
+
     server.start();
 
+    #ifdef LOGGER
+        if (logger) {
+            delete logger;
+            logger = NULL;
+        }
+    #endif
 
     return 0;
 }

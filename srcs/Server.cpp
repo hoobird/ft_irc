@@ -1,8 +1,16 @@
 #include "Server.hpp"
 
+#ifndef LOGGER
 Server::Server(int port, const std::string &password)
-    :serverName("IRCH"), running(true), port(port), password(password), dataStore(), networkMan(), msgParser(), cmdFactory(), cmdHandler(cmdFactory), msgBuilder(serverName)
+    :serverName("IRCH"), running(true), port(port), password(password), dataStore(),
+    networkMan(), msgParser(), cmdFactory(), cmdHandler(cmdFactory), msgBuilder(serverName)
 {}
+#else
+Server::Server(int port, const std::string &password, Logger& logger)
+    :serverName("IRCH"), running(true), port(port), password(password), dataStore(),
+    networkMan(), msgParser(), cmdFactory(), cmdHandler(cmdFactory), msgBuilder(serverName), logger(logger)
+{}
+#endif
 
 Server::~Server()
 {
@@ -120,7 +128,12 @@ void Server::processClientMessages(int clientFd, std::string& bufferString)
     while (pos != std::string::npos) {
         std::string messageToProcess = bufferString.substr(0, pos); // dont include \r\n
         bufferString.erase(0, pos + 2); // remove processed message and \r\n from buffer
-        std::cout << "Client " << clientFd << " -> Server: " << messageToProcess << std::endl;
+        std::cout << "(Client " << clientFd << " ➡️  Server  )\t" << messageToProcess << std::endl;
+
+        #ifdef LOGGER
+        logger << "(Client " << clientFd << " ➡️ Server  )\t" << messageToProcess << std::endl;
+        #endif
+
         ParsedMessage parsedMessage = msgParser.parse(messageToProcess);
         msgParser.printParsedMessage(parsedMessage);
         Client* client = dataStore.getClient(clientFd);
@@ -141,7 +154,12 @@ void Server::processClientMessages(int clientFd, std::string& bufferString)
             for (std::set<int>::iterator fdIt = fdsToSend.begin(); fdIt != fdsToSend.end(); ++fdIt) {
                 Client* targetClient = dataStore.getClient(*fdIt);
                 if (targetClient) {
-                    std::cout << "Server -> Client " << *fdIt << ": " << builtMessage << std::endl;
+                    std::cout << "(Server   ➡️  Client " << *fdIt << ")\t" << builtMessage << std::endl;
+
+                    #ifdef LOGGER
+                    logger << "(Server   ➡️ Client " << *fdIt << ")\t" << builtMessage << std::endl;
+                    #endif
+
                     networkMan.sendResponse(*fdIt, builtMessage);
                 } else {
                     std::cerr << "🚨 Warning: Tried to send message to non-existent client fd " << *fdIt << std::endl;
