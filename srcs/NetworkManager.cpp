@@ -22,7 +22,9 @@ NetworkError NetworkManager::setupServerSocket(const std::string &portString)
     struct addrinfo hints, *servinfo, *p;
     memset(&hints, 0, sizeof hints);
 
-    hints.ai_family = AF_UNSPEC; // IPv4 or IPv6
+    // Can use AF_UNSPEC to support both IPv4 and IPv6, but if it choose IPV4, it won't accept IPv6 connections
+    // Using AF_INET6 with IPV6_V6ONLY option set to 0 allows both
+    hints.ai_family = AF_INET6; // Use IPv6 to support both IPv4 and IPv6 (Dual Stack)
     hints.ai_socktype = SOCK_STREAM; // TCP
     hints.ai_flags = AI_PASSIVE; // Fill in my IP for me
 
@@ -146,11 +148,23 @@ NetworkManager::EpollResult NetworkManager::monitorEvents() {
     return std::make_pair(triggerCount, this->events);
 }
 
+// Converts IPv6 address to string (not RFC-compressed, but readable)
+std::string NetworkManager::ipv6ToString(const struct in6_addr& addr) {
+    std::ostringstream oss;
+    oss << std::hex;
+    for (int i = 0; i < 8; ++i) {
+        if (i > 0) oss << ":";
+        oss << std::setw(4) << std::setfill('0') << ntohs(((uint16_t*)addr.s6_addr)[i]);
+    }
+    return oss.str();
+}
+
+
 std::vector<Client*> NetworkManager::addNewClients() {
     std::vector<Client*> newClients;
     while (true)  {
         std::cout << "Adding new client..." << std::endl;
-        struct sockaddr_in clientAddr;
+        struct sockaddr_storage clientAddr;
         socklen_t clientLen = sizeof(clientAddr);
         int clientFd = accept(this->listenerFd, (struct sockaddr *)&clientAddr, &clientLen);
         if (clientFd < 0) {
@@ -176,7 +190,29 @@ std::vector<Client*> NetworkManager::addNewClients() {
         // Create Client object
         // By right should be Server's job, but we do it here for simplicity
         // if not we have to return vector of pairs, each pair is clientfd and client address
-        Client *newClient = new Client(clientFd, inet_ntoa(clientAddr.sin_addr));
+        std::string clientIp;
+        if (clientAddr.ss_family == AF_INET) {
+            clientIp = inet_ntoa(((struct sockaddr_in*)&clientAddr)->sin_addr);
+            std::cout << "New connection from IPv4 address: " << clientIp << std::endl;
+        } else if (clientAddr.ss_family == AF_INET6) {
+            struct in6_addr* in6 = &((struct sockaddr_in6*)&clientAddr)->sin6_addr;
+            // Check for IPv4-mapped IPv6 address (::ffff:IPv4)
+            if (IN6_IS_ADDR_V4MAPPED(in6)) {
+                struct in_addr ipv4addr;
+                memcpy(&ipv4addr, &in6->s6_addr[12], sizeof(ipv4addr));
+                clientIp = inet_ntoa(ipv4addr);
+                std::cout << "New connection from IPv4-mapped IPv6 address: " << clientIp << std::endl;
+            } else {
+                clientIp = ipv6ToString(*in6);
+                std::cout << "New connection from IPv6 address: " << clientIp << std::endl;
+            }
+        } else {
+            std::cerr << "Error: " << getNetworkErrorString(NET_ERR_FAIL_TO_TRANSLATE_ADDR) << std::endl;
+            epoll_ctl(this->epollFd, EPOLL_CTL_DEL, clientFd, NULL);
+            close(clientFd);
+            continue;
+        }
+        Client *newClient = new Client(clientFd, clientIp);
         newClients.push_back(newClient);
         epollClientFds.insert(clientFd); // track client fds added to epoll
     }
