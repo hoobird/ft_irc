@@ -86,18 +86,15 @@ responseList CommandJOIN::execute(Client& client, const ParsedMessage& message) 
             resp["<client>"] = client.getClientPrefix();
             resp["<channel>"] = message.parameters[0];
             resp["<nicks>"] = ss.str();
-            std::cout << "in ss.str(): "<< ss.str() << std::endl;
             responses.push_back(resp);
 
-            std::cout << "before usleep" << std::endl;
-            usleep(2000000);
-            // // RPL_ENDOFNAMES (366)
-            // // >> :halcyon.il.us.dal.net 366 elfoo #lobby :End of /NAMES list.
-            // resp = createSingleResponse("366", client.getSocketFdString());
-            // resp["<client>"] = client.getClientPrefix();
-            // resp["<channel>"] = findChannel->getName();
-            // resp["<info>"] = "End of /NAMES list.";
-            // responses.push_back(resp);
+            // RPL_ENDOFNAMES (366)
+            // >> :halcyon.il.us.dal.net 366 elfoo #lobby :End of /NAMES list.
+            resp = createSingleResponse("366", client.getSocketFdString());
+            resp["<client>"] = client.getClientPrefix();
+            resp["<channel>"] = message.parameters[0];
+            resp["<info>"] = "End of /NAMES list.";
+            responses.push_back(resp);
         }
         else
         {
