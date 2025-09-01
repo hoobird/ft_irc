@@ -52,7 +52,52 @@ responseList CommandJOIN::execute(Client& client, const ParsedMessage& message) 
             Channel* channel = new Channel(channelNames[i]); // create on heap
             dataStore.addChannel(channel); // add pointer to store
             channel->addMember(client); // use pointer
-            std::cout << "-- I need to return a success response here --\n";
+            channel->addOperator(client); // use pointer
+
+            // // std::cout << "-- I need to return a success response here --\n";
+            std::string memberFds = intSetToCSVString(dataStore.getChannel(channelNames[i])->getMembers());
+            resp = createSingleResponse("JOIN", memberFds);
+            resp["<nick_sender>"] = client.getClientPrefix();
+            resp["<user_sender>"] = client.getUsername();
+            resp["<host_sender>"] = client.getHostname();
+            // resp["<channel>"] = findChannel->getName(); // in the case that channel exist
+            resp["<channel>"] = message.parameters[0];
+            responses.push_back(resp);
+
+            // RPL_NAMREPLY (353)
+            // >> :halcyon.il.us.dal.net 353 elfoo = #lobby :elfoo LDa224 Guest39645
+            std::string memberNick;
+            std::stringstream ss;
+
+            // loop through member list to end(), if the member is also operator, append @
+            std::set<int> membersList = dataStore.getChannel(channelNames[i])->getMembers();
+            for (std::set<int>::const_iterator it = membersList.begin(); it != membersList.end(); ++it) {
+                std::set<int> operatorList = dataStore.getChannel(channelNames[i])->getOperators();
+                memberNick = dataStore.getClient(*it)->getNickname();
+                if (operatorList.find(*it) != operatorList.end()) {
+                    memberNick = "@" + memberNick;
+                }
+                if (it != membersList.begin()) {
+                    ss << " ";
+                }
+                ss << memberNick;
+            }
+            resp = createSingleResponse("353", client.getSocketFdString());
+            resp["<client>"] = client.getClientPrefix();
+            resp["<channel>"] = message.parameters[0];
+            resp["<nicks>"] = ss.str();
+            std::cout << "in ss.str(): "<< ss.str() << std::endl;
+            responses.push_back(resp);
+
+            std::cout << "before usleep" << std::endl;
+            usleep(2000000);
+            // // RPL_ENDOFNAMES (366)
+            // // >> :halcyon.il.us.dal.net 366 elfoo #lobby :End of /NAMES list.
+            // resp = createSingleResponse("366", client.getSocketFdString());
+            // resp["<client>"] = client.getClientPrefix();
+            // resp["<channel>"] = findChannel->getName();
+            // resp["<info>"] = "End of /NAMES list.";
+            // responses.push_back(resp);
         }
         else
         {
@@ -96,16 +141,12 @@ responseList CommandJOIN::execute(Client& client, const ParsedMessage& message) 
                 // TODO: set arbitrary max users value; to manage in CommandMODE (both user and server)
             }
             std::cout << "Channel exists, continuing...\n";
-            // client joining existing channel, inform existing channel members of new member.
-            std::string memberFds = intSetToCSVString(dataStore.getChannel(channelNames[i])->getMembers());
-            resp = createSingleResponse("JOIN", memberFds);
-            resp["<nick_sender>"] = client.getClientPrefix();
-            resp["<user_sender>"] = client.getUsername();
-            resp["<host_sender>"] = client.getHostname();
-            resp["<channel>"] = findChannel->getName();
 
+            findChannel->addMember(client);
+            // client joining existing channel, inform existing channel members of new member.
             // if client’s JOIN command to the server is successful, server returns a JOIN message
             // >> :elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#lobby
+            std::string memberFds = intSetToCSVString(dataStore.getChannel(channelNames[i])->getMembers());
             resp = createSingleResponse("JOIN", memberFds);
             resp["<nick_sender>"] = client.getClientPrefix();
             resp["<user_sender>"] = client.getUsername();
@@ -115,26 +156,41 @@ responseList CommandJOIN::execute(Client& client, const ParsedMessage& message) 
 
             //RPL_TOPIC (332)
             // >> :halcyon.il.us.dal.net 332 elfoo #lobby :miss you :P
-            resp = createSingleResponse("332", memberFds);
+            // TODO: should we always print it, or should we only print it if topic exist?
+            resp = createSingleResponse("332", client.getSocketFdString());
             resp["<client>"] = client.getClientPrefix();
             resp["<channel>"] = findChannel->getName();
             resp["<topic>"] = findChannel->getTopic();
             responses.push_back(resp);
 
-            // (optional) RPL_TOPICWHOTIME (333)
-            // >> :halcyon.il.us.dal.net 333 elfoo #lobby lilmoe!~lilmoe@fba-bb13-2cb4-6d98-137e.187.94.ip 1747255445
-
             // RPL_NAMREPLY (353)
             // >> :halcyon.il.us.dal.net 353 elfoo = #lobby :elfoo LDa224 Guest39645
-            resp = createSingleResponse("353", memberFds);
+            std::string memberNick;
+            std::stringstream ss;
+
+            // loop through member list to end(), if the member is also operator, append @
+            std::set<int> membersList = dataStore.getChannel(channelNames[i])->getMembers();
+            for (std::set<int>::const_iterator it = membersList.begin(); it != membersList.end(); ++it) {
+                std::set<int> operatorList = dataStore.getChannel(channelNames[i])->getOperators();
+                memberNick = dataStore.getClient(*it)->getNickname();
+                if (operatorList.find(*it) != operatorList.end()) {
+                    memberNick = "@" + memberNick;
+                }
+                if (it != membersList.begin()) {
+                    ss << " ";
+                }
+                ss << memberNick;
+            }
+
+            resp = createSingleResponse("353", client.getSocketFdString()); // check to see if it sends to just the singular client or the entire channel members.
             resp["<client>"] = client.getClientPrefix();
             resp["<channel>"] = findChannel->getName();
-            resp["<nick>"] = client.getClientPrefix();
+            resp["<nicks>"] = ss.str();
             responses.push_back(resp);
 
             // RPL_ENDOFNAMES (366)
             // >> :halcyon.il.us.dal.net 366 elfoo #lobby :End of /NAMES list.
-            resp = createSingleResponse("366", memberFds);
+            resp = createSingleResponse("366", client.getSocketFdString());
             resp["<client>"] = client.getClientPrefix();
             resp["<channel>"] = findChannel->getName();
             resp["<info>"] = "End of /NAMES list.";
@@ -144,6 +200,6 @@ responseList CommandJOIN::execute(Client& client, const ParsedMessage& message) 
     return responses;
 }
 
-    CommandBase* CommandJOIN::clone() const {
-        return new CommandJOIN(*this);
+CommandBase* CommandJOIN::clone() const {
+    return new CommandJOIN(*this);
 }
