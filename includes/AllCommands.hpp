@@ -12,5 +12,6 @@
 #include "commands/CommandJOIN.hpp"
 #include "commands/CommandPART.hpp"
 #include "commands/CommandTOPIC.hpp"
+#include "commands/CommandKICK.hpp"
 
 #endif // ALLCOMMANDS_HPP

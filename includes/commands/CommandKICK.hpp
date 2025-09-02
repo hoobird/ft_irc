@@ -6,17 +6,19 @@
 #include <vector>
 #include <string>
 
-class KickCommand : public CommandBase {
+class CommandKICK : public CommandBase {
 public:
-    KickCommand();
-    ~KickCommand();
+    CommandKICK(DataStore& dataStore);
+    CommandKICK(const CommandKICK& other);
+    ~CommandKICK();
     responseList execute(Client& client, const ParsedMessage& message);
 	CommandBase* clone() const;
 
 private:
+    DataStore& dataStore;
     // OCF
-    KickCommand(const KickCommand& other);
-    KickCommand& operator=(const KickCommand& other);
+    CommandKICK();
+    CommandKICK& operator=(const CommandKICK& other);
 };
 
 #endif
