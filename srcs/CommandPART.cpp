@@ -62,11 +62,11 @@ responseList CommandPART::execute(Client& client, const ParsedMessage& message)
         resp["<reason>"] = "";
 
         // if parameter[1] exists, single-word reason provided
-        if (message.parameters.size() > 1) {
+        if (message.parameters.size() >= 2) {
             resp["<reason>"] = message.parameters[1];
         }
         // trailing present = reason provided
-        if (!message.trailing.empty()) {
+        else if (message.parameters.size() == 1 && !message.trailing.empty()) {
             resp["<reason>"] = message.trailing;
         }
         responses.push_back(resp);
