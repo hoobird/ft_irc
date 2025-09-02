@@ -82,8 +82,9 @@ void Server::setupCommandFactory()
     cmdFactory.registerCommand("JOIN", new CommandJOIN(dataStore));
     cmdFactory.registerCommand("PART", new CommandPART(dataStore));
     cmdFactory.registerCommand("TOPIC", new CommandTOPIC(dataStore));
+    cmdFactory.registerCommand("KICK", new CommandKICK(dataStore));
     // cmdFactory.registerCommand("INVITE", new InviteCommand());
-    // cmdFactory.registerCommand("KICK", new KickCommand());
+    // cmdFactory.registerCommand("PART", new PartCommand());
     // cmdFactory.registerCommand("QUIT", new QuitCommand());
 }
 
