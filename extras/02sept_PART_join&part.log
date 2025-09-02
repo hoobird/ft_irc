@@ -1,0 +1,35 @@
+<< CAP LS
+<< PASS pass
+<< NICK anteo
+<< USER anteo anteo 0 :Angelly Teo
+>> :IRCH 001 anteo :Welcome to the Internet Relay Network anteo!anteo@127.0.0.1
+<< MODE anteo +i
+>> :IRCH 002 anteo :Your host is IRCH, running version 1.0
+>> :IRCH 003 anteo :This server was created 2025-08-23
+>> :IRCH 004 anteo IRCH 1.0   [chanmodes_with_a_parameter]
+>> :IRCH 501 anteo :This server does not support user modes
+<< PING IRCH
+>> :IRCH PONG IRCH :anteo
+--> lag pong
+<< JOIN #hello
+>> :anteo!anteo@127.0.0.1 JOIN :#hello
+>> :IRCH 353 anteo = #hello :@anteo
+>> :IRCH 366 anteo #hello :End of /NAMES list.
+<< MODE #hello
+<< PART #hello
+<< PING IRCH
+>> :IRCH PONG IRCH :anteo
+--> lag pong
+<< PING IRCH
+>> :IRCH PONG IRCH :anteo
+--> FAILED mode channel: chanquery abort
+<< MODE #hello
+--> lag pong
+<< PING IRCH
+>> :IRCH PONG IRCH :anteo
+--> lag pong
+<< PART #hello
+>> :IRCH 403 anteo #hello :No such channel
+--> chanquery abort
+<< WHO #hello
+<< QUIT :leaving

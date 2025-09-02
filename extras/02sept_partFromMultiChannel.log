@@ -1,0 +1,128 @@
+<< CAP LS
+<< NICK anteo
+<< USER anteo anteo irc.dal.net :Angelly Teo
+>> :halcyon.il.us.dal.net NOTICE AUTH :*** Looking up your hostname...
+>> :halcyon.il.us.dal.net NOTICE AUTH :*** Your forward and reverse DNS do not match, ignoring hostname. [203.149.201.182 != 203.149.201.178]
+>> :halcyon.il.us.dal.net NOTICE AUTH :*** Found your hostname
+>> :halcyon.il.us.dal.net 433 * anteo :Nickname is already in use.
+<< NICK anteo_
+>> :halcyon.il.us.dal.net 001 anteo_ :Welcome to the DALnet IRC Network anteo_!~anteo@203.149.201.178
+<< MODE anteo_ +i
+<< WHOIS anteo
+>> :halcyon.il.us.dal.net 002 anteo_ :Your host is halcyon.il.us.dal.net, running version bahamut-2.2.4
+>> :halcyon.il.us.dal.net 003 anteo_ :This server was created Fri Nov 22 2024 at 14:35:51 UTC
+>> :halcyon.il.us.dal.net 004 anteo_ halcyon.il.us.dal.net bahamut-2.2.4 aAbcCdefFghHiIjkKmnoOPrRsSwxXy AbceiIjklLmMnoOpPrRsStv beIjklov
+>> :halcyon.il.us.dal.net 005 anteo_ NETWORK=DALnet SAFELIST MAXBANS=200 MAXCHANNELS=50 CHANNELLEN=32 KICKLEN=307 NICKLEN=30 TOPICLEN=307 MODES=6 CHANTYPES=# CHANLIMIT=#:50 PREFIX=(ohv)@%+ STATUSMSG=@%+ :are available on this server
+>> :halcyon.il.us.dal.net 005 anteo_ CASEMAPPING=ascii WATCH=128 SILENCE=10 ELIST=cmntu EXCEPTS INVEX CHANMODES=beI,k,jl,ciPAmMnOprRsSt MAXLIST=b:200,e:100,I:100 TARGMAX=DCCALLOW:,JOIN:,KICK:4,KILL:20,NOTICE:20,PART:,PRIVMSG:20,WHOIS:,WHOWAS: :are available on this server
+>> :halcyon.il.us.dal.net 251 anteo_ :There are 93 users and 6474 invisible on 39 servers
+>> :halcyon.il.us.dal.net 252 anteo_ 84 :IRC Operators online
+>> :halcyon.il.us.dal.net 254 anteo_ 3473 :channels formed
+>> :halcyon.il.us.dal.net 255 anteo_ :I have 1043 clients and 1 servers
+>> :halcyon.il.us.dal.net 265 anteo_ :Current local users: 1043 Max: 1845
+>> :halcyon.il.us.dal.net 266 anteo_ :Current global users: 6567 Max: 8275
+>> :halcyon.il.us.dal.net NOTICE anteo_ :*** Notice -- motd was last changed at 2/9/2024 13:45
+>> :halcyon.il.us.dal.net 375 anteo_ :- halcyon.il.us.dal.net Message of the Day - 
+>> :halcyon.il.us.dal.net 372 anteo_ :-2/9/2024 13:45
+>> :halcyon.il.us.dal.net 372 anteo_ :-              _  _ ____ _    ____ _ _ ____ __ _
+>> :halcyon.il.us.dal.net 372 anteo_ :-              |--| |--| |___ |___  Y  [__] | \|
+>> :halcyon.il.us.dal.net 372 anteo_ :- 
+>> :halcyon.il.us.dal.net 372 anteo_ :-                 [ halcyon.il.us.dal.net    ]
+>> :halcyon.il.us.dal.net 372 anteo_ :- 
+>> :halcyon.il.us.dal.net 372 anteo_ :-                 [ Accessible via...        ]
+>> :halcyon.il.us.dal.net 372 anteo_ :-                 [ ipv4: halcyon.dal.net    ]
+>> :halcyon.il.us.dal.net 372 anteo_ :-                 [ ipv6: halcyon-v6.dal.net ]
+>> :halcyon.il.us.dal.net 372 anteo_ :- 
+>> :halcyon.il.us.dal.net 372 anteo_ :- Welcome to DALnet!  By connecting to this network, you agree to abide
+>> :halcyon.il.us.dal.net 372 anteo_ :- by its acceptable use policy, available here: http://www.dal.net/aup
+>> :halcyon.il.us.dal.net 372 anteo_ :- 
+>> :halcyon.il.us.dal.net 372 anteo_ :- Server Policies:
+>> :halcyon.il.us.dal.net 372 anteo_ :- 
+>> :halcyon.il.us.dal.net 372 anteo_ :-    *   We reserve the right to deny access to this server without
+>> :halcyon.il.us.dal.net 372 anteo_ :-        warning or explanation
+>> :halcyon.il.us.dal.net 372 anteo_ :-    *   No malicious bots, including flood and nick/channel chasers
+>> :halcyon.il.us.dal.net 372 anteo_ :-    *   No channel filler bots/clients/psybncs
+>> :halcyon.il.us.dal.net 372 anteo_ :-          - A channel filler is a client, bnc, or bot which is
+>> :halcyon.il.us.dal.net 372 anteo_ :-            connected just to fill a channel and make it look
+>> :halcyon.il.us.dal.net 372 anteo_ :-            bigger
+>> :halcyon.il.us.dal.net 372 anteo_ :-    *   Operator impersonation, spamming, or any other abuse will
+>> :halcyon.il.us.dal.net 372 anteo_ :-        cause you to be banned from this server
+>> :halcyon.il.us.dal.net 372 anteo_ :-    *   Abide by DALnet's AUP (www.dal.net/aup)
+>> :halcyon.il.us.dal.net 372 anteo_ :-    *   Please have fun and enjoy DALnet!
+>> :halcyon.il.us.dal.net 372 anteo_ :- 
+>> :halcyon.il.us.dal.net 372 anteo_ :-      ///admins////////////////////////////////////////
+>> :halcyon.il.us.dal.net 372 anteo_ :-      //                                             //
+>> :halcyon.il.us.dal.net 372 anteo_ :-      //  [ brandon - administrator             ]    //
+>> :halcyon.il.us.dal.net 372 anteo_ :-      //  [ klb     - assistant administrator   ]    //
+>> :halcyon.il.us.dal.net 372 anteo_ :-      //                                             //
+>> :halcyon.il.us.dal.net 372 anteo_ :-      ///operators/////////////////////////////////////
+>> :halcyon.il.us.dal.net 372 anteo_ :-      //                                             //
+>> :halcyon.il.us.dal.net 372 anteo_ :-      //  [ guppy  ] [ oldcrow  ] [ rasengan ]       //
+>> :halcyon.il.us.dal.net 372 anteo_ :-      //  [ s2pid  ] [ lilmiss  ] [ kiraela  ]       //
+>> :halcyon.il.us.dal.net 372 anteo_ :-      //  [ DTC    ] [ io       ]                    //
+>> :halcyon.il.us.dal.net 372 anteo_ :-      //                                             //
+>> :halcyon.il.us.dal.net 372 anteo_ :-      /////////////////////////////////////////////////
+>> :halcyon.il.us.dal.net 372 anteo_ :- 
+>> :halcyon.il.us.dal.net 372 anteo_ :- 
+>> :halcyon.il.us.dal.net 372 anteo_ :- For IRCop assistance, please /join #operhelp or message one of our
+>> :halcyon.il.us.dal.net 372 anteo_ :- friendly server staff listed above.
+>> :halcyon.il.us.dal.net 372 anteo_ :- 
+>> :halcyon.il.us.dal.net 372 anteo_ :- For multilingual information:  <http://docs.dal.net/>
+>> :halcyon.il.us.dal.net 372 anteo_ :- 
+>> :halcyon.il.us.dal.net 372 anteo_ :- Thank you for using DALnet!  We hope you have a pleasant day.
+>> :halcyon.il.us.dal.net 376 anteo_ :End of /MOTD command.
+>> :anteo_ MODE anteo_ :+iH
+>> :halcyon.il.us.dal.net 311 anteo_ anteo ~anteo 5626-2a9c-92a4-503c-675e.149.203.ip * :Angelly Teo
+--> nickfind event whois
+>> :halcyon.il.us.dal.net 312 anteo_ anteo jingo.ix.us.dal.net :DALnet IX Client Server
+--> event empty
+>> :halcyon.il.us.dal.net 318 anteo_ anteo :End of /WHOIS list.
+--> event empty
+<< PING halcyon.il.us.dal.net
+>> :halcyon.il.us.dal.net PONG halcyon.il.us.dal.net :anteo_
+--> lag pong
+<< JOIN #helloj
+>> :anteo_!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#helloj
+>> :halcyon.il.us.dal.net 353 anteo_ = #helloj :@anteo_ 
+>> :halcyon.il.us.dal.net 366 anteo_ #helloj :End of /NAMES list.
+<< MODE #helloj
+>> :halcyon.il.us.dal.net 324 anteo_ #helloj + 
+--> chanquery mode
+<< WHO #helloj
+>> :halcyon.il.us.dal.net 329 anteo_ #helloj 1756813446
+--> event 329
+>> :halcyon.il.us.dal.net 352 anteo_ #helloj ~anteo 5626-2a9c-92a4-503c-675e.149.203.ip halcyon.il.us.dal.net anteo_ H@ :0 Angelly Teo
+--> silent event who
+>> :halcyon.il.us.dal.net 315 anteo_ #helloj :End of /WHO list.
+--> chanquery who end
+<< MODE #helloj b
+>> :halcyon.il.us.dal.net 368 anteo_ #helloj :End of Channel Ban List
+--> chanquery ban end
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#helloj
+<< JOIN #byej
+>> :anteo_!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#byej
+>> :halcyon.il.us.dal.net 353 anteo_ = #byej :anteo_ @anteo 
+>> :halcyon.il.us.dal.net 366 anteo_ #byej :End of /NAMES list.
+<< MODE #byej
+>> :halcyon.il.us.dal.net 324 anteo_ #byej + 
+--> chanquery mode
+<< WHO #byej
+>> :halcyon.il.us.dal.net 329 anteo_ #byej 1756813456
+--> event 329
+>> :halcyon.il.us.dal.net 352 anteo_ #byej ~anteo 5626-2a9c-92a4-503c-675e.149.203.ip halcyon.il.us.dal.net anteo_ H :0 Angelly Teo
+--> silent event who
+>> :halcyon.il.us.dal.net 352 anteo_ #byej ~anteo 5626-2a9c-92a4-503c-675e.149.203.ip jingo.ix.us.dal.net anteo H@ :2 Angelly Teo
+--> silent event who
+>> :halcyon.il.us.dal.net 315 anteo_ #byej :End of /WHO list.
+--> chanquery who end
+<< MODE #byej b
+>> :halcyon.il.us.dal.net 368 anteo_ #byej :End of Channel Ban List
+--> chanquery ban end
+<< PING halcyon.il.us.dal.net
+>> :halcyon.il.us.dal.net PONG halcyon.il.us.dal.net :anteo_
+--> lag pong
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip PART #helloj
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip PART #byej
+<< PING halcyon.il.us.dal.net
+>> :halcyon.il.us.dal.net PONG halcyon.il.us.dal.net :anteo_
+--> lag pong
+<< QUIT :leaving
