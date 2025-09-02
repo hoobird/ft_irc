@@ -18,6 +18,8 @@ void Channel::addMember(Client& client)
 
 void Channel::removeMember(Client& client)
 {
+    if (isOperator(client))
+        operators.erase(client.getSocketFd());
     members.erase(client.getSocketFd());
 }
 
