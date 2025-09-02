@@ -10,5 +10,6 @@
 #include "commands/CommandPRIVMSG.hpp"
 #include "commands/CommandUSER.hpp"
 #include "commands/CommandJOIN.hpp"
+#include "commands/CommandPART.hpp"
 
 #endif // ALLCOMMANDS_HPP

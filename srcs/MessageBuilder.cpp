@@ -93,6 +93,7 @@ void MessageBuilder::initializeNumericTemplates()
     numericTemplates["PONG"] = ":<server> PONG <token> :<nick>";
     numericTemplates["PRIVMSG"] = ":<nick_sender>!<user_sender>@<host_sender> PRIVMSG <msg_receiver> :<msg>";
     numericTemplates["JOIN"] = ":<nick_sender>!<user_sender>@<host_sender> JOIN :<channel>";
+    numericTemplates["PART"] = ":<nick_sender>!<user_sender>@<host_sender> PART <channel> :<reason>";
 
     // Numeric templates for various IRC responses
     // prefix = ":<server> <numeric> "
