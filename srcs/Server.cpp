@@ -80,9 +80,9 @@ void Server::setupCommandFactory()
     cmdFactory.registerCommand("MODE", new CommandMODE(dataStore));
     cmdFactory.registerCommand("PRIVMSG", new CommandPRIVMSG(dataStore));
     cmdFactory.registerCommand("JOIN", new CommandJOIN(dataStore));
+    cmdFactory.registerCommand("PART", new CommandPART(dataStore));
     // cmdFactory.registerCommand("INVITE", new InviteCommand());
     // cmdFactory.registerCommand("KICK", new KickCommand());
-    // cmdFactory.registerCommand("PART", new PartCommand());
     // cmdFactory.registerCommand("QUIT", new QuitCommand());
     // cmdFactory.registerCommand("TOPIC", new TopicCommand());
 }
