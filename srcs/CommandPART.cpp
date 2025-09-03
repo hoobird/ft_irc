@@ -23,7 +23,7 @@ responseList CommandPART::execute(Client& client, const ParsedMessage& message)
 
     if (message.parameters[0].empty()) {
         singleResponse resp = createSingleResponse("461", clientFdStr);
-        resp["<client>"] = client.getClientPrefix();
+        resp["<client>"] = clientNick;
         resp["<command>"] = "PART";
         resp["<reason>"] = "Not enough parameters";
         responses.push_back(resp);
