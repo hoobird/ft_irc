@@ -37,11 +37,8 @@ responseList CommandKICK::execute(Client& client, const ParsedMessage& message) 
         return responses;
     }
 
-    // use (?) dataStore.getChannel(channelNames[i])->getOperators()
-    // if (client.getNickname() != dataStore.getChannel(message.parameters[0])->getOperators()) {
     std::set<int> operatorList = dataStore.getChannel(targetChannel->getName())->getOperators();
-    std::set<int>::iterator it = operatorList.find(message.parameters[1]);
-    std::string operatorNick = dataStore.getClient(*it)->getNickname();
+    std::set<int>::iterator it = operatorList.find(client.getSocketFd());
     if (it == operatorList.end()) { // client is not channel operator
         // ERR_CHANOPRIVSNEEDED (482)
         singleResponse resp = createSingleResponse("482", client.getSocketFdString());
@@ -52,17 +49,20 @@ responseList CommandKICK::execute(Client& client, const ParsedMessage& message) 
         return responses;
     }
 
-    // // client tries to perform a channel+nick affecting command)
-    // if (?) { // client is not joined to the channel
-    //     // ERR_USERNOTINCHANNEL (441)
-    //     singleResponse resp = createSingleResponse("441", client.getSocketFdString());
-    //     resp["<client>"] = client.getClientPrefix();
-    //     resp["<nick>"] = (?);
-    //     resp["<channel>"] = (?);
-    //     resp["<reason>"] = "They aren't on that channel";
-    //     responses.push_back(resp);
-    //     return responses;
-    // }
+    // TODO: consider scenario where operator kicks multiple members
+    // client tries to perform a channel+nick affecting command)
+    std::set<int> memberList = dataStore.getChannel(targetChannel->getName())->getMembers();
+    std::set<int>::iterator it = memberList.find(client.getSocketFd());
+    if (it == memberList.end()) { // client is not joined to the channel
+        // ERR_USERNOTINCHANNEL (441)
+        singleResponse resp = createSingleResponse("441", client.getSocketFdString());
+        resp["<client>"] = client.getClientPrefix();
+        resp["<nick>"] = *it;
+        resp["<channel>"] = message.parameters[0];
+        resp["<reason>"] = "They aren't on that channel";
+        responses.push_back(resp);
+        return responses;
+    }
 
     // // client tries to perform a channel-affecting command on a channel)
     // if (?) { // client is not on that channel
