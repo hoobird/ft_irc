@@ -33,7 +33,6 @@ responseList CommandTOPIC::execute(Client& client, const ParsedMessage& message)
         responses.push_back(resp);
         return responses;
     }
-    // currently only handles channel, what if there is no "#"?
     if (!message.parameters[0].empty() && message.parameters[0][0] == '#') {
         Channel* findChannel = dataStore.getChannel(message.parameters[0]);
         if (!findChannel) {
@@ -75,7 +74,7 @@ responseList CommandTOPIC::execute(Client& client, const ParsedMessage& message)
         // set topic
         else {
             // need check here if commandMODE restricts topic setting to operator only.
-            if (findChannel->isOperator(client) == false) {
+            if (findChannel->getTopicRestrict() == true && findChannel->isOperator(client) == false) {
                 singleResponse resp = createSingleResponse("482", clientFdsStr);
                 resp["<client>"] = clientNick;
                 resp["<channel>"] = message.parameters[0];
