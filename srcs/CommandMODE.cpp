@@ -20,7 +20,11 @@ CommandMODE::~CommandMODE()
 // 324 RPL_CHANNELMODEIS (sent to a client to inform them of the currently active modes of a channel)
 // 472 ERR_UNKNOWNMODE (Indicates that a mode character used by a client is not recognized by the server. The text used in the last param of this message may vary.)
 // 482 ERR_CHANOPRIVSNEEDED (Indicates that a command failed because the client does not have the appropriate channel privileges. This numeric can apply for different prefixes such as halfop, operator, etc. The text used in the last param of this message may vary.)
+
 // 467 ERR_KEYSET (Implemented for classic RFC compliant server, where if a key is set already, it needs to be removed first, dalnet simply overwrites with +k if pass was set alr)
+// 346 RPL_INVITELIST (under client protocol)
+// 347 RPL_ENDOFINVITELIST (likely paired with 346, check output, under client protocol)
+// 325 RPL_UNIQOPIS (older implement, likely finds all ops in a channel and return nickname with relevant prefix attached. Check output to confirm)
 
 // Channel Mode Parameters: <channel> {[+|-]|o|i|t|k|l} [<limit>] [<user>] [<ban mask>]
 
