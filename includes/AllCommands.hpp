@@ -13,5 +13,6 @@
 #include "commands/CommandPART.hpp"
 #include "commands/CommandTOPIC.hpp"
 #include "commands/CommandKICK.hpp"
+#include "commands/CommandINVITE.hpp"
 
 #endif // ALLCOMMANDS_HPP
