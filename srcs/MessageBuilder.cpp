@@ -96,6 +96,7 @@ void MessageBuilder::initializeNumericTemplates()
     numericTemplates["PART"] = ":<nick_sender>!<user_sender>@<host_sender> PART <channel> :<reason>";
     numericTemplates["TOPIC"] = ":<nick_sender>!<user_sender>@<host_sender> TOPIC <channel> :<new_topic>";
     numericTemplates["KICK"] = ":<nick_sender>!<user_sender>@<host_sender> KICK <channel> <target_member> <comment>";
+    numericTemplates["INVITE"] = ":<nick_sender>!<user_sender>@<host_sender> INVITE <target_member> :<channel>";
 
     // Numeric templates for various IRC responses
     // prefix = ":<server> <numeric> "
@@ -215,7 +216,7 @@ void MessageBuilder::initializeNumericTemplates()
     numericTemplates["437"] = "<client> <nick/channel/service> :<reason>"; // ERR_UNAVAILRESOURCE
     numericTemplates["441"] = "<client> <nick> <channel> :<reason>"; // ERR_USERNOTINCHANNEL
     numericTemplates["442"] = "<client> <channel> :<reason>"; // ERR_NOTONCHANNEL
-    numericTemplates["443"] = "<client> <nick> <channel> [:<reason>]"; // ERR_USERONCHANNEL
+    numericTemplates["443"] = "<client> <nick> <channel> :<reason>"; // ERR_USERONCHANNEL
     numericTemplates["444"] = "<client> <user> :<reason>"; // ERR_NOLOGIN
     numericTemplates["445"] = "<client> :<reason>"; // ERR_SUMMONDISABLED
     numericTemplates["446"] = "<client> :<reason>"; // ERR_USERSDISABLED
