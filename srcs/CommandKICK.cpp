@@ -39,7 +39,7 @@ responseList CommandKICK::execute(Client& client, const ParsedMessage& message) 
 
     // suggestion: check if client exists: (1) in server (401), then (2) in channel (441)
     // split target users by comma
-    std::vector<std::string> targetUsers = split<std::vector<std::string> >(message.parameters[1], ",");
+    std::vector<std::string> targetUsers = split(message.parameters[1], ",");
     std::vector<int> targetUsersInt;
     for (std::vector<std::string>::const_iterator it = targetUsers.begin(); it != targetUsers.end(); ++it) {
         // get current channel members (currClient)
