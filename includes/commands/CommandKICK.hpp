@@ -3,8 +3,7 @@
 
 #include "CommandBase.hpp"
 #include "Client.hpp"
-#include <vector>
-#include <string>
+#include "DataStore.hpp"
 
 class CommandKICK : public CommandBase {
 public:
