@@ -26,6 +26,7 @@ public:
 	void removeOperator(Client& client);
 	bool isOperator(const Client& client) const;
     bool isMemberInvited(const Client& client) const;
+	void addInvitedMember(const Client& client);
 
 	// getters
 	std::string getName() const;

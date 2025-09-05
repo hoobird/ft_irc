@@ -48,6 +48,11 @@ bool Channel::isMemberInvited(const Client& client) const
     return inviteList.find(client.getSocketFd()) != inviteList.end();
 }
 
+void Channel::addInvitedMember(const Client& client)
+{
+    this->inviteList.insert(client.getSocketFd());
+}
+
 std::string Channel::getName() const
 {
     return this->name;
