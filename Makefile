@@ -36,11 +36,6 @@ $(BUILDDIR)/%.o: $(SRCSDIR)/%.cpp | $(BUILDDIR)
 $(BUILDDIR):
 	mkdir -p $(BUILDDIR)
 
-$(ALLCMDSHEADER):
-	./updateAllCommandsHpp.sh
-
-$(OBJ): $(ALLCMDSHEADER)
-
 clean:
 	rm -rf $(BUILDDIR)
 
