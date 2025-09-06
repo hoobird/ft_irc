@@ -98,13 +98,19 @@ DataStore::ChannelMap::const_iterator DataStore::getChannelsEnd() const
     return channels.end();
 }
 
-int DataStore::countChannelsForClient(const Client& client) const
-{
-    int channelCount = 0;
+std::vector<Channel*> DataStore::getChannelsForClient(const Client& client) const {
+    std::vector<Channel*> clientChannels;
 
     for (ChannelMap::const_iterator it = getChannelsBegin(); it != getChannelsEnd(); ++it) {
         if (it->second->isMember(client))
-            channelCount++;
+            clientChannels.push_back(it->second);
     }
-    return channelCount;
+    return clientChannels;
+}
+
+int DataStore::countChannelsForClient(const Client& client) const
+{
+    std::vector<Channel*> channels = getChannelsForClient(client);
+    int count = static_cast<int>(channels.size());
+    return count;
 }
