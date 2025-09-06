@@ -181,7 +181,7 @@ void MessageBuilder::initializeNumericTemplates()
     numericTemplates["371"] = "<client> :<string>"; // RPL_INFO
     numericTemplates["372"] = "<client> :- <string>"; // RPL_MOTD
     numericTemplates["374"] = "<client> :<info>"; // RPL_ENDOFINFO
-    numericTemplates["375"] = "<client> :- <server> Message of the day -"; // RPL_MOTDSTART
+    numericTemplates["375"] = "<client> :- <server> <info>"; // RPL_MOTDSTART
     numericTemplates["376"] = "<client> :<info>"; // RPL_ENDOFMOTD
     numericTemplates["381"] = "<client> :<info>"; // RPL_YOUREOPER
     numericTemplates["382"] = "<client> <config_file> :<info>"; // RPL_REHASHING
