@@ -33,6 +33,7 @@ class DataStore {
         ChannelMap::const_iterator getChannelsEnd() const;
 
         int countChannelsForClient(const Client& client) const;
+        std::vector<Channel*> getChannelsForClient(const Client& client) const;
 
         // Destructor
         ~DataStore();
