@@ -2,12 +2,12 @@
 
 #ifndef LOGGER
 Server::Server(int port, const std::string &password)
-    :serverName("IRCH"), running(true), port(port), password(password), dataStore(),
+    :serverName("IRCh"), running(true), port(port), password(password), dataStore(),
     networkMan(), msgParser(), cmdFactory(), cmdHandler(cmdFactory), msgBuilder(serverName)
 {}
 #else
 Server::Server(int port, const std::string &password, Logger& logger)
-    :serverName("IRCH"), running(true), port(port), password(password), dataStore(),
+    :serverName("IRCh"), running(true), port(port), password(password), dataStore(),
     networkMan(), msgParser(), cmdFactory(), cmdHandler(cmdFactory), msgBuilder(serverName), logger(logger)
 {}
 #endif
