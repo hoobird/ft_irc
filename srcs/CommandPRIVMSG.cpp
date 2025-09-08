@@ -33,59 +33,11 @@ responseList CommandPRIVMSG::execute(Client& client, const ParsedMessage& messag
         std::vector<std::string>::const_iterator it;
         for (it = recipients.begin(); it != recipients.end(); ++it) {
             if (it->at(0) != '#') {
-                // check if client
-                Client* recipient = dataStore.getClient(message.parameters[0]);
-                if (!recipient) {
-                    singleResponse resp = createSingleResponse("401", client.getSocketFdString());
-                    resp["<client>"] = client.getClientPrefix();
-                    resp["<nick>"] = message.parameters[0];
-                    resp["<reason>"] = "No such nick/channel";
-                    responses.push_back(resp);
-                    return responses;
-                }
-                if (message.trailing.empty()) {
-                    singleResponse resp = createSingleResponse("412", client.getSocketFdString());
-                    resp["<client>"] = client.getClientPrefix();
-                    resp["<reason>"] = "No text to send";
-                    responses.push_back(resp);
-                    return responses;
-                }
-                singleResponse resp = createSingleResponse("PRIVMSG", recipient->getSocketFdString());
-                resp["<nick_sender>"] = client.getNickname();
-                resp["<user_sender>"] = client.getUsername();
-                resp["<host_sender>"] = client.getHostname();
-                resp["<msg_receiver>"] = recipient->getNickname();
-                resp["<msg>"] = message.trailing;
-                responses.push_back(resp);
-            }
-            else {
-                // if it's to channel
-                Channel* targetChannel = this->dataStore.getChannel(message.parameters[0]);
-
-                if (!targetChannel) {
-                    singleResponse resp = createSingleResponse("401", client.getSocketFdString());
-                    resp["<client>"] = client.getClientPrefix();
-                    resp["<nick>"] = message.parameters[0];
-                    resp["<reason>"] = "No such nick/channel";
-                    responses.push_back(resp);
-                    return responses;
-                }
-                if (message.trailing.empty()) {
-                    singleResponse resp = createSingleResponse("412", client.getSocketFdString());
-                    resp["<client>"] = client.getClientPrefix();
-                    resp["<reason>"] = "No text to send";
-                    responses.push_back(resp);
-                    return responses;
-                }
-                std::set<int> memberFd = targetChannel->getMembers();
-                std::string memberFdStr = this->intSetToCSVString(memberFd);
-                singleResponse resp = createSingleResponse("PRIVMSG", memberFdStr);
-                resp["<nick_sender>"] = client.getNickname();
-                resp["<user_sender>"] = client.getUsername();
-                resp["<host_sender>"] = client.getHostname();
-                resp["<msg_receiver>"] = targetChannel->getName();
-                resp["<msg>"] = message.trailing;
-                responses.push_back(resp);
+                responseList clientResponses = handleClientRecipient(client, *it, message);
+                responses.insert(responses.end(), clientResponses.begin(), clientResponses.end());
+            } else {
+                responseList channelResponses = handleChannelRecipient(client, *it, message);
+                responses.insert(responses.end(), channelResponses.begin(), channelResponses.end());
             }
         }
     }
@@ -95,4 +47,63 @@ responseList CommandPRIVMSG::execute(Client& client, const ParsedMessage& messag
 CommandBase* CommandPRIVMSG::clone() const
 {
     return new CommandPRIVMSG(*this);
+}
+
+responseList CommandPRIVMSG::handleClientRecipient(Client& sender, const std::string& recipientNick, const ParsedMessage& message) {
+    responseList responses;
+    Client* recipient = dataStore.getClient(recipientNick);
+    if (!recipient) {
+        singleResponse resp = createSingleResponse("401", sender.getSocketFdString());
+        resp["<client>"] = sender.getClientPrefix();
+        resp["<nick>"] = recipientNick;
+        resp["<reason>"] = "No such nick/channel";
+        responses.push_back(resp);
+        return responses;
+    }
+    if (message.trailing.empty()) {
+        singleResponse resp = createSingleResponse("412", sender.getSocketFdString());
+        resp["<client>"] = sender.getClientPrefix();
+        resp["<reason>"] = "No text to send";
+        responses.push_back(resp);
+        return responses;
+    }
+    singleResponse resp = createSingleResponse("PRIVMSG", recipient->getSocketFdString());
+    resp["<nick_sender>"] = sender.getNickname();
+    resp["<user_sender>"] = sender.getUsername();
+    resp["<host_sender>"] = sender.getHostname();
+    resp["<msg_receiver>"] = recipient->getNickname();
+    resp["<msg>"] = message.trailing;
+    responses.push_back(resp);
+    return responses;
+}
+
+// Private helper for channel recipient
+responseList CommandPRIVMSG::handleChannelRecipient(Client& sender, const std::string& channelName, const ParsedMessage& message) {
+    responseList responses;
+    Channel* targetChannel = dataStore.getChannel(channelName);
+    if (!targetChannel) {
+        singleResponse resp = createSingleResponse("401", sender.getSocketFdString());
+        resp["<client>"] = sender.getClientPrefix();
+        resp["<nick>"] = channelName;
+        resp["<reason>"] = "No such nick/channel";
+        responses.push_back(resp);
+        return responses;
+    }
+    if (message.trailing.empty()) {
+        singleResponse resp = createSingleResponse("412", sender.getSocketFdString());
+        resp["<client>"] = sender.getClientPrefix();
+        resp["<reason>"] = "No text to send";
+        responses.push_back(resp);
+        return responses;
+    }
+    std::set<int> memberFd = targetChannel->getMembers();
+    std::string memberFdStr = this->intSetToCSVString(memberFd);
+    singleResponse resp = createSingleResponse("PRIVMSG", memberFdStr);
+    resp["<nick_sender>"] = sender.getNickname();
+    resp["<user_sender>"] = sender.getUsername();
+    resp["<host_sender>"] = sender.getHostname();
+    resp["<msg_receiver>"] = targetChannel->getName();
+    resp["<msg>"] = message.trailing;
+    responses.push_back(resp);
+    return responses;
 }
