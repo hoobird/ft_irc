@@ -12,20 +12,12 @@
 #include "AllCommands.hpp"
 #include <string>
 #include <iostream>
-
-#ifdef LOGGER // Enable logging if LOGGER is defined
-    #include "Logger.hpp"
-#endif
-
+#include "Logger.hpp"
 
 class Server: public AuthService
 {
     public:
-        #ifndef LOGGER
-        Server(int port, const std::string& password);
-        #else
         Server(int port, const std::string& password, Logger& logger);
-        #endif
         ~Server();
 
         void start();
@@ -57,10 +49,7 @@ class Server: public AuthService
         CommandFactory cmdFactory;
         CommandHandler cmdHandler;
         MessageBuilder msgBuilder;
-
-        #ifdef LOGGER
         Logger& logger; // Reference to Logger instance
-        #endif
 
         // Useless OCF
         Server();
