@@ -79,8 +79,7 @@ void Server::setupCommandFactory()
     cmdFactory.registerCommand("TOPIC", new CommandTOPIC(dataStore));
     cmdFactory.registerCommand("KICK", new CommandKICK(dataStore));
     cmdFactory.registerCommand("INVITE", new CommandINVITE(dataStore));
-    // cmdFactory.registerCommand("PART", new PartCommand());
-    // cmdFactory.registerCommand("QUIT", new QuitCommand());
+    cmdFactory.registerCommand("QUIT", new CommandQUIT(dataStore, networkMan));
 }
 
 void Server::handleNewConnection()
