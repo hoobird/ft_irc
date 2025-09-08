@@ -8,10 +8,7 @@
 #include <cerrno>
 #include <limits>
 #include <fcntl.h>
-
-#ifdef LOGGER // Enable logging if LOGGER is defined
-    #include "Logger.hpp"
-#endif
+#include "Logger.hpp"
 
 Server* g_server = NULL; // Global pointer to Server instance
 
@@ -79,18 +76,16 @@ int main(int argc, char** argv) {
     int portNum;
     std::string password;
 
-    #ifdef LOGGER
-        // make logger with try-catch in main
-        // Try to create logger first
-        Logger* logger = NULL;
-        try {
-            logger = new Logger();
-        } catch (const std::exception& e) {
-            std::cerr << "Logger unavailable, rerun again if you need logger" << std::endl;
-            std::cerr << "If problem persists, contact me @hoobird" << std::endl;
-            logger = NULL; // Logger is unavailable
-        }
-    #endif
+    // make logger with try-catch in main
+    // Try to create logger first
+    Logger* logger = NULL;
+    try {
+        logger = new Logger();
+    } catch (const std::exception& e) {
+        std::cerr << "Logger unavailable, rerun again if you need logger" << std::endl;
+        std::cerr << "If problem persists, contact dev @hoobird" << std::endl;
+        logger = NULL; // Logger is unavailable
+    }
 
     // Register signal handlers
     if (!setupSignalHandlers()) {
@@ -103,22 +98,16 @@ int main(int argc, char** argv) {
     }
 
     // Create Server instance
-    #ifndef LOGGER
-    Server server(portNum, password);
-    #else
     Server server(portNum, password, *logger);
-    #endif
 
     g_server = &server; // Set global pointer to the server instance
 
     server.start();
 
-    #ifdef LOGGER
-        if (logger) {
-            delete logger;
-            logger = NULL;
-        }
-    #endif
+    if (logger) {
+        delete logger;
+        logger = NULL;
+    }
 
     return 0;
 }
