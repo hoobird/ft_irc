@@ -95,3 +95,20 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message) 
 CommandBase* CommandMODE::clone() const {
     return new CommandMODE(*this);
 }
+
+
+(1) // +i/-i: doesn't take extra params
+(1) // +t/-t: doesn't take extra params
+(2) // +l/-l: only +l takes next parameter that needs to be a numerical number, if yes, apply flag to channel; if no, it will be consumed. (theory: don't check l flags again after first instance)
+(3) // +o/-o: takes next parameter, check if it's channel member name: if yes, apply flag to member; otherwise the param is consumed. (theory: check all subsequent flags and implement them all if valid)
+(3) // +k/-k: takes next parameter regardless of character type as password, even if they are mode flags (theory: don't check k flags again after first instance)
+
+
+// flag params are the next available message.param[*]: -l -l
+// -l +l +l =  -l (takes first instance of mode flag, delim by space) second priority?
+// ---------+l = +l (takes the closest symbol to the mode flag) top priority?
+
+
+// save last symbol encountered
+// last symbol encountered + valid letters = flag
+//
