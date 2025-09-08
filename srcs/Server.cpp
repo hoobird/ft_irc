@@ -113,6 +113,8 @@ void Server::handleClientEvent(int fd)
         client.clearBuffer();
 
         processClientMessages(fd, bufferString);
+        if (dataStore.getClient(fd) == NULL) // prevent setBuffer when client no longer exists (commandQUIT)
+            break ;
         client.setBuffer(bufferString);
     }
 }
