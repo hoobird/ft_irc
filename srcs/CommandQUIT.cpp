@@ -35,7 +35,9 @@ responseList CommandQUIT::execute(Client& client, const ParsedMessage& message) 
     if (!channelMates.empty()) {
         std::string memberFds = intSetToCSVString(channelMates);
         singleResponse resp = createSingleResponse("QUIT", memberFds);
-        resp["<client>"] = client.getClientPrefix();
+        resp["<nick_sender>"] = client.getClientPrefix();
+        resp["<user_sender>"] = client.getUsername();
+        resp["<host_sender>"] = client.getHostname();
         if (message.trailing.empty())
             resp["<reason>"] = "Client Quit";
         else
@@ -43,9 +45,10 @@ responseList CommandQUIT::execute(Client& client, const ParsedMessage& message) 
         responses.push_back(resp);
     }
 
-    // remove client from dataStore method
     // close client connection using networkmanager method (closeConnection); let the server close connection instead
-    // this->networkManager.closeConnection(clientFd);
+    this->networkManager.closeConnection(client.getSocketFd());
+    // remove client from dataStore method
+    this->dataStore.removeClient(client.getSocketFd());
 
     return responses;
 }

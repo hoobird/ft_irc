@@ -97,7 +97,7 @@ void MessageBuilder::initializeNumericTemplates()
     numericTemplates["TOPIC"] = ":<nick_sender>!<user_sender>@<host_sender> TOPIC <channel> :<new_topic>";
     numericTemplates["KICK"] = ":<nick_sender>!<user_sender>@<host_sender> KICK <channel> <target_member> <comment>";
     numericTemplates["INVITE"] = ":<nick_sender>!<user_sender>@<host_sender> INVITE <target_member> :<channel>";
-    numericTemplates["QUIT"] = ":<client> QUIT :<reason>";
+    numericTemplates["QUIT"] = ":<nick_sender>!<user_sender>@<host_sender> QUIT :<reason>";
 
     // Numeric templates for various IRC responses
     // prefix = ":<server> <numeric> "
