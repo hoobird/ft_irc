@@ -4,6 +4,7 @@
 #include "CommandBase.hpp"
 #include "Client.hpp"
 #include "DataStore.hpp"
+#include "bonus/CTCPHandler.hpp"
 
 class CommandPRIVMSG : public CommandBase {
 public:
@@ -17,7 +18,7 @@ public:
     responseList handleChannelRecipient(Client &sender, const std::string &channelName, const ParsedMessage &message);
 
 private:
-    const  DataStore&   dataStore;
+    const DataStore&  dataStore;
     // OCF
     CommandPRIVMSG();
     CommandPRIVMSG& operator=(const CommandPRIVMSG& other);

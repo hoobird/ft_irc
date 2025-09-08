@@ -67,6 +67,12 @@ responseList CommandPRIVMSG::handleClientRecipient(Client& sender, const std::st
         responses.push_back(resp);
         return responses;
     }
+    if (CTCPHandler::isCTCPCommand(message)) {
+        CTCPHandler ctcpHandler;
+        responseList ctcpResponses = ctcpHandler.handleCTCPCommand(sender, *recipient, message);
+        responses.insert(responses.end(), ctcpResponses.begin(), ctcpResponses.end());
+        return responses;
+    }
     singleResponse resp = createSingleResponse("PRIVMSG", recipient->getSocketFdString());
     resp["<nick_sender>"] = sender.getNickname();
     resp["<user_sender>"] = sender.getUsername();
