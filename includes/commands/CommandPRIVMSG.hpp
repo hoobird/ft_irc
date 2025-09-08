@@ -13,6 +13,9 @@ public:
     responseList execute(Client& client, const ParsedMessage& message);
 	CommandBase* clone() const;
 
+    responseList handleClientRecipient(Client &sender, const std::string &recipientNick, const ParsedMessage &message);
+    responseList handleChannelRecipient(Client &sender, const std::string &channelName, const ParsedMessage &message);
+
 private:
     const  DataStore&   dataStore;
     // OCF
