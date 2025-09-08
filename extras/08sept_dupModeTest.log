@@ -1,0 +1,69 @@
+<< CAP LS
+<< NICK anteo
+<< USER anteo anteo irc.dal.net :Angelly Teo
+>> :jingo.ix.us.dal.net NOTICE AUTH :*** Looking up your hostname...
+>> :jingo.ix.us.dal.net NOTICE AUTH :*** Checking Ident
+>> :jingo.ix.us.dal.net NOTICE AUTH :*** No Ident response
+>> :jingo.ix.us.dal.net NOTICE AUTH :*** Your forward and reverse DNS do not match, ignoring hostname. [203.149.201.182 != 203.149.201.178]
+>> :jingo.ix.us.dal.net NOTICE AUTH :*** Found your hostname
+>> :jingo.ix.us.dal.net 001 anteo :Welcome to the DALnet IRC Network anteo!~anteo@203.149.201.178
+<< MODE anteo +i
+>> :jingo.ix.us.dal.net 002 anteo :Your host is jingo.ix.us.dal.net, running version bahamut-2.2.3
+>> :jingo.ix.us.dal.net 003 anteo :This server was created Wed Dec 6 2023 at 08:18:53 PST
+>> :jingo.ix.us.dal.net 004 anteo jingo.ix.us.dal.net bahamut-2.2.3 aAbcCdefFghHiIjkKmnoOPrRsSwxXy AbceiIjklLmMnoOpPrRsStv beIjklov
+>> :jingo.ix.us.dal.net 005 anteo NETWORK=DALnet SAFELIST MAXBANS=200 MAXCHANNELS=20 CHANNELLEN=32 KICKLEN=307 NICKLEN=30 TOPICLEN=307 MODES=6 CHANTYPES=# CHANLIMIT=#:20 PREFIX=(ohv)@%+ STATUSMSG=@%+ :are available on this server
+>> :jingo.ix.us.dal.net 005 anteo CASEMAPPING=ascii WATCH=128 SILENCE=10 ELIST=cmntu EXCEPTS INVEX CHANMODES=beI,k,jl,ciPAmMnOprRsSt MAXLIST=b:200,e:100,I:100 TARGMAX=DCCALLOW:,JOIN:,KICK:4,KILL:20,NOTICE:20,PART:,PRIVMSG:20,WHOIS:,WHOWAS: :are available on this server
+>> :jingo.ix.us.dal.net 251 anteo :There are 86 users and 6640 invisible on 39 servers
+>> :jingo.ix.us.dal.net 252 anteo 81 :IRC Operators online
+>> :jingo.ix.us.dal.net 254 anteo 3488 :channels formed
+>> :jingo.ix.us.dal.net 255 anteo :I have 17 clients and 1 servers
+>> :jingo.ix.us.dal.net 265 anteo :Current local users: 17 Max: 1269
+>> :jingo.ix.us.dal.net 266 anteo :Current global users: 6726 Max: 67741
+>> :jingo.ix.us.dal.net NOTICE anteo :*** Notice -- motd was last changed at 27/11/2012 18:13
+>> :jingo.ix.us.dal.net NOTICE anteo :*** Notice -- Please read the motd if you haven't read it
+>> :jingo.ix.us.dal.net 375 anteo :- jingo.ix.us.dal.net Message of the Day - 
+>> :jingo.ix.us.dal.net 372 anteo :- ix.dal.net - Seattle, Washington, USA
+>> :jingo.ix.us.dal.net 372 anteo :- 
+>> :jingo.ix.us.dal.net 372 anteo :- By connecting to this server you agree to be bound by the
+>> :jingo.ix.us.dal.net 372 anteo :- terms put forth in DALnet's Acceptable Use Policy at:
+>> :jingo.ix.us.dal.net 372 anteo :- http://www.dal.net/aup/
+>> :jingo.ix.us.dal.net 372 anteo :- 
+>> :jingo.ix.us.dal.net 372 anteo :- For help with IRC or DALnet, please join one of our recommended
+>> :jingo.ix.us.dal.net 372 anteo :- help channels or visit http://docs.dal.net/
+>> :jingo.ix.us.dal.net 372 anteo :-     /join #irchelp
+>> :jingo.ix.us.dal.net 372 anteo :-     /join #dalnethelp
+>> :jingo.ix.us.dal.net 372 anteo :-     /join #help
+>> :jingo.ix.us.dal.net 372 anteo :- 
+>> :jingo.ix.us.dal.net 372 anteo :- To see more information about this server, type /motd
+>> :jingo.ix.us.dal.net 376 anteo :End of /MOTD command.
+>> :jingo.ix.us.dal.net NOTICE anteo :*** Notice -- This server runs an open proxy monitor to prevent abuse.
+>> :jingo.ix.us.dal.net NOTICE anteo :*** Notice -- If you see connections on various ports from irc.dal.net
+>> :jingo.ix.us.dal.net NOTICE anteo :*** Notice -- please disregard them, as they are the monitor in action.
+>> :jingo.ix.us.dal.net NOTICE anteo :*** Notice -- For more information please visit http://kline.dal.net/proxy/
+>> :anteo MODE anteo :+iH
+<< PING jingo.ix.us.dal.net
+>> :jingo.ix.us.dal.net PONG jingo.ix.us.dal.net :anteo
+--> lag pong
+<< JOIN #hellu
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#hellu
+>> :jingo.ix.us.dal.net 353 anteo = #hellu :@anteo 
+>> :jingo.ix.us.dal.net 366 anteo #hellu :End of /NAMES list.
+<< MODE #hellu
+>> :jingo.ix.us.dal.net 324 anteo #hellu + 
+--> chanquery mode
+<< WHO #hellu
+>> :jingo.ix.us.dal.net 329 anteo #hellu 1757333421
+--> event 329
+>> :jingo.ix.us.dal.net 352 anteo #hellu ~anteo 5626-2a9c-92a4-503c-675e.149.203.ip jingo.ix.us.dal.net anteo H@ :0 Angelly Teo
+--> silent event who
+>> :jingo.ix.us.dal.net 315 anteo #hellu :End of /WHO list.
+--> chanquery who end
+<< MODE #hellu b
+>> :jingo.ix.us.dal.net 368 anteo #hellu :End of Channel Ban List
+--> chanquery ban end
+<< MODE #hellu +i-i+i-i+i
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +i 
+<< PING jingo.ix.us.dal.net
+>> :jingo.ix.us.dal.net PONG jingo.ix.us.dal.net :anteo
+--> lag pong
+<< QUIT :leaving
