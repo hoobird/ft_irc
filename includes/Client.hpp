@@ -11,7 +11,6 @@ class Client {
 		Client(int fd, std::string hostname);
 		~Client();
 
-		void send(const std::string& message);
 		void clearBuffer();
 		void setRegistered();
 		bool isRegistered() const;
@@ -27,6 +26,7 @@ class Client {
 		std::string getRealname() const;
 		std::string getUsername() const;
 		std::string getBuffer() const;
+		bool isPrevBufferOverflow() const;
 
 		std::string getClientPrefix() const; // for singleResponse
 
@@ -36,6 +36,7 @@ class Client {
 		void setRealname(const std::string& realname);
 		void setUsername(const std::string& username);
 		void setBuffer(const std::string& buf);
+		void setPrevBufferOverflow(bool status);
 
 	private:
 		int socketfd;
@@ -44,6 +45,7 @@ class Client {
 		std::string realname; // Double check if this is needed
 		std::string username;
 		std::string buffer;
+		bool prevBufferOverflow;
 		bool registered;
 		bool passwordValidated;
 
