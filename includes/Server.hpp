@@ -33,11 +33,11 @@ class Server: public AuthService
         virtual bool validatePassword(const std::string& input) const;
 
     private:
-        void sleepCountdown(); // for testing only, remove later
+        void sleepCountdown(int seconds); // for testing only, remove later
         void setupCommandFactory(); // register commands to factory
         void handleNewConnection();
         void handleClientEvent(int fd);
-        void processClientMessages(int clientFd, std::string& bufferString);
+        void processClientMessages(Client& client, std::string& bufferString);
 
         std::string serverName;
         bool running;
