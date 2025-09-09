@@ -36,7 +36,7 @@ void Server::shutdown()
 void Server::runEventLoop()
 {
     while (this->running) {
-        // sleepCountdown(); // TODO: for testing only, remove later
+        // sleepCountdown(5); // TODO: for testing only, remove later
 
         NetworkManager::EpollResult events = networkMan.monitorEvents();
         if (events.first < 0) {
@@ -56,9 +56,9 @@ void Server::runEventLoop()
     }
 }
 
-void Server::sleepCountdown()
+void Server::sleepCountdown(int seconds)
 {
-    for (int count = 5; count > 0; --count) {
+    for (int count = seconds; count > 0; --count) {
         std::cout << "Sleeping countdown " << count << "..." << std::endl;
         sleep(1);
     }
@@ -110,40 +110,38 @@ void Server::handleClientEvent(int fd)
         }
         Client &client = *dataStore.getClient(fd);
         std::string bufferString = client.getBuffer() + readResult.second;
+        std::cout << "Client Buffer: " << client.getBuffer() << std::endl;
+        std::cout << "Incoming data: " << readResult.second << std::endl;
+
         client.clearBuffer();
 
-        processClientMessages(fd, bufferString);
+        processClientMessages(client, bufferString);
         if (dataStore.getClient(fd) == NULL) // prevent setBuffer when client no longer exists (commandQUIT)
             break ;
         client.setBuffer(bufferString);
     }
 }
 
-void Server::processClientMessages(int clientFd, std::string& bufferString)
+void Server::processClientMessages(Client& client, std::string& bufferString)
 {
     size_t pos = bufferString.find("\r\n");
     while (pos != std::string::npos) {
         std::string messageToProcess = bufferString.substr(0, pos); // dont include \r\n
         bufferString.erase(0, pos + 2); // remove processed message and \r\n from buffer
-        if (messageToProcess.size() > 510) { // to exclude \r\n
+        if (client.isPrevBufferOverflow() || messageToProcess.size() > 510) { // to exclude \r\n
             // how to move on to next batch of string to process?
             pos = bufferString.find("\r\n");
+            client.setPrevBufferOverflow(false);
             continue;
         }
 
-        std::cout << "(Client " << clientFd << " ➡️  Server  )\t" << messageToProcess << std::endl;
-        logger << "(Client " << clientFd << " ➡️ Server  )\t" << messageToProcess << std::endl;
+        std::cout << "(Client " << client.getSocketFdString() << " ➡️  Server  )\t" << messageToProcess << std::endl;
+        logger << "(Client " << client.getSocketFdString() << " ➡️ Server  )\t" << messageToProcess << std::endl;
 
         ParsedMessage parsedMessage = msgParser.parse(messageToProcess);
         msgParser.printParsedMessage(parsedMessage);
-        Client* client = dataStore.getClient(clientFd);
-        if (!client) {
-            // this should not happen
-            std::cerr << "🚨 Warning: Client in epoll queue but not Client Datastore???" << std::endl;
-            networkMan.closeConnection(clientFd);
-            return;
-        }
-        responseList rlist = cmdHandler.handleCommand(*client, parsedMessage);
+
+        responseList rlist = cmdHandler.handleCommand(client, parsedMessage);
         // printReponseList(rlist); // for debugging
         for (responseList::iterator it = rlist.begin(); it != rlist.end(); ++it) {
             singleResponse response = *it;
@@ -164,6 +162,12 @@ void Server::processClientMessages(int clientFd, std::string& bufferString)
         }
         // find pos of next \r\n for next iteration
         pos = bufferString.find("\r\n");
+    }
+    // If cannot find \r\n and string is already > 510,
+    //  not possible for str to be processed into valid command
+    if (bufferString.size() > 510) {
+        client.setPrevBufferOverflow(true);
+        bufferString.clear();
     }
 }
 
