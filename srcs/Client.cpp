@@ -1,7 +1,7 @@
 #include "Client.hpp"
 
 Client::Client(int fd, std::string hostname)
-    : socketfd(fd), hostname(hostname), nickname(""), realname(""), username(""), buffer(""), registered(false), passwordValidated(false)
+    : socketfd(fd), hostname(hostname), nickname(""), realname(""), username(""), buffer(""), prevBufferOverflow(false), registered(false), passwordValidated(false)
 {
 }
 
@@ -78,6 +78,11 @@ std::string Client::getBuffer() const
     return this->buffer;
 }
 
+bool Client::isPrevBufferOverflow() const
+{
+    return this->prevBufferOverflow;
+}
+
 std::string Client::getClientPrefix() const
 {
     return this->isRegistered() ? this->nickname : "*";
@@ -106,4 +111,9 @@ void Client::setUsername(const std::string &username)
 void Client::setBuffer(const std::string& buf)
 {
     this->buffer = buf;
+}
+
+void Client::setPrevBufferOverflow(bool status)
+{
+    this->prevBufferOverflow = status;
 }
