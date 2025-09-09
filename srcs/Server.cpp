@@ -125,6 +125,12 @@ void Server::processClientMessages(int clientFd, std::string& bufferString)
     while (pos != std::string::npos) {
         std::string messageToProcess = bufferString.substr(0, pos); // dont include \r\n
         bufferString.erase(0, pos + 2); // remove processed message and \r\n from buffer
+        if (messageToProcess.size() > 510) { // to exclude \r\n
+            // how to move on to next batch of string to process?
+            pos = bufferString.find("\r\n");
+            continue;
+        }
+
         std::cout << "(Client " << clientFd << " ➡️  Server  )\t" << messageToProcess << std::endl;
         logger << "(Client " << clientFd << " ➡️ Server  )\t" << messageToProcess << std::endl;
 
@@ -133,7 +139,7 @@ void Server::processClientMessages(int clientFd, std::string& bufferString)
         Client* client = dataStore.getClient(clientFd);
         if (!client) {
             // this should not happen
-            std::cerr << "🚨Warning: Client in epoll queue but not Client Datastore???" << std::endl;
+            std::cerr << "🚨 Warning: Client in epoll queue but not Client Datastore???" << std::endl;
             networkMan.closeConnection(clientFd);
             return;
         }
