@@ -1,0 +1,86 @@
+<< CAP LS
+<< NICK anteo
+<< USER anteo anteo irc.dal.net :Angelly Teo
+>> :bitcoin.uk.eu.dal.net NOTICE AUTH :*** Looking up your hostname...
+>> :bitcoin.uk.eu.dal.net NOTICE AUTH :*** Your forward and reverse DNS do not match, ignoring hostname. [203.149.201.182 != 203.149.201.178]
+>> :bitcoin.uk.eu.dal.net NOTICE AUTH :*** Found your hostname
+>> :bitcoin.uk.eu.dal.net 001 anteo :Welcome to the DALnet IRC Network anteo!~anteo@203.149.201.178
+<< MODE anteo +i
+>> :bitcoin.uk.eu.dal.net 002 anteo :Your host is bitcoin.uk.eu.dal.net, running version bahamut-2.2.4
+>> :bitcoin.uk.eu.dal.net 003 anteo :This server was created Fri 22 Nov 2024 at 04:12:23 GMT
+>> :bitcoin.uk.eu.dal.net 004 anteo bitcoin.uk.eu.dal.net bahamut-2.2.4 aAbcCdefFghHiIjkKmnoOPrRsSwxXy AbceiIjklLmMnoOpPrRsStv beIjklov
+>> :bitcoin.uk.eu.dal.net 005 anteo NETWORK=DALnet SAFELIST MAXBANS=200 MAXCHANNELS=50 CHANNELLEN=32 KICKLEN=307 NICKLEN=30 TOPICLEN=307 MODES=6 CHANTYPES=# CHANLIMIT=#:50 PREFIX=(ohv)@%+ STATUSMSG=@%+ :are available on this server
+>> :bitcoin.uk.eu.dal.net 005 anteo CASEMAPPING=ascii WATCH=128 SILENCE=10 ELIST=cmntu EXCEPTS INVEX CHANMODES=beI,k,jl,ciPAmMnOprRsSt MAXLIST=b:200,e:100,I:100 TARGMAX=DCCALLOW:,JOIN:,KICK:4,KILL:20,NOTICE:20,PART:,PRIVMSG:20,WHOIS:,WHOWAS: :are available on this server
+>> :bitcoin.uk.eu.dal.net 251 anteo :There are 82 users and 6363 invisible on 39 servers
+>> :bitcoin.uk.eu.dal.net 252 anteo 81 :IRC Operators online
+>> :bitcoin.uk.eu.dal.net 254 anteo 3477 :channels formed
+>> :bitcoin.uk.eu.dal.net 255 anteo :I have 236 clients and 1 servers
+>> :bitcoin.uk.eu.dal.net 265 anteo :Current local users: 236 Max: 4001
+>> :bitcoin.uk.eu.dal.net 266 anteo :Current global users: 6445 Max: 12809
+>> :bitcoin.uk.eu.dal.net NOTICE anteo :*** Notice -- motd was last changed at 9/11/2017 12:51
+>> :bitcoin.uk.eu.dal.net 375 anteo :- bitcoin.uk.eu.dal.net Message of the Day - 
+>> :bitcoin.uk.eu.dal.net 372 anteo :-9/11/2017 12:51
+>> :bitcoin.uk.eu.dal.net 372 anteo :-                 [ bitcoin.uk.eu.dal.net    ]
+>> :bitcoin.uk.eu.dal.net 372 anteo :- 
+>> :bitcoin.uk.eu.dal.net 372 anteo :-                 [ Accessible via...        ]
+>> :bitcoin.uk.eu.dal.net 372 anteo :-                 [ ipv4: bitcoin.dal.net    ]
+>> :bitcoin.uk.eu.dal.net 372 anteo :- 
+>> :bitcoin.uk.eu.dal.net 372 anteo :- Thank you to Private Internet Access (https://www.privateinternetaccess.com) 
+>> :bitcoin.uk.eu.dal.net 372 anteo :- for sponsoring this server.
+>> :bitcoin.uk.eu.dal.net 372 anteo :- 
+>> :bitcoin.uk.eu.dal.net 372 anteo :- Welcome to DALnet!  By connecting to this network, you agree to abide
+>> :bitcoin.uk.eu.dal.net 372 anteo :- by its acceptable use policy, available here: http://www.dal.net/aup
+>> :bitcoin.uk.eu.dal.net 372 anteo :- 
+>> :bitcoin.uk.eu.dal.net 372 anteo :- Server Policies:
+>> :bitcoin.uk.eu.dal.net 372 anteo :- 
+>> :bitcoin.uk.eu.dal.net 372 anteo :-    *   We reserve the right to deny access to this server without
+>> :bitcoin.uk.eu.dal.net 372 anteo :-        warning or explanation
+>> :bitcoin.uk.eu.dal.net 372 anteo :-    *   No malicious bots, including flood and nick/channel chasers
+>> :bitcoin.uk.eu.dal.net 372 anteo :-    *   No channel filler bots/clients/psybncs
+>> :bitcoin.uk.eu.dal.net 372 anteo :-          - A channel filler is a client, bnc, or bot which is
+>> :bitcoin.uk.eu.dal.net 372 anteo :-            connected just to fill a channel and make it look
+>> :bitcoin.uk.eu.dal.net 372 anteo :-            bigger
+>> :bitcoin.uk.eu.dal.net 372 anteo :-    *   Operator impersonation, spamming, or any other abuse will
+>> :bitcoin.uk.eu.dal.net 372 anteo :-        cause you to be banned from this server
+>> :bitcoin.uk.eu.dal.net 372 anteo :-    *   Abide by DALnet's AUP (www.dal.net/aup)
+>> :bitcoin.uk.eu.dal.net 372 anteo :-    *   Please have fun and enjoy DALnet!
+>> :bitcoin.uk.eu.dal.net 372 anteo :- 
+>> :bitcoin.uk.eu.dal.net 372 anteo :- Server Administrator: tyler
+>> :bitcoin.uk.eu.dal.net 372 anteo :- 
+>> :bitcoin.uk.eu.dal.net 372 anteo :- Thank you to Private Internet Access (https://www.privateinternetaccess.com) for sponsori
+>> :bitcoin.uk.eu.dal.net 372 anteo :- ng this server.
+>> :bitcoin.uk.eu.dal.net 372 anteo :- 
+>> :bitcoin.uk.eu.dal.net 372 anteo :- For IRCop assistance, please /join #operhelp or message one of our
+>> :bitcoin.uk.eu.dal.net 372 anteo :- friendly server staff listed above.
+>> :bitcoin.uk.eu.dal.net 372 anteo :- 
+>> :bitcoin.uk.eu.dal.net 372 anteo :- For multilingual information:  <http://docs.dal.net/>
+>> :bitcoin.uk.eu.dal.net 372 anteo :- 
+>> :bitcoin.uk.eu.dal.net 372 anteo :- Thank you for using DALnet!  We hope you have a pleasant day.
+>> :bitcoin.uk.eu.dal.net 376 anteo :End of /MOTD command.
+>> :anteo MODE anteo :+iH
+<< JOIN #helluu
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#helluu
+>> :bitcoin.uk.eu.dal.net 353 anteo = #helluu :@anteo 
+>> :bitcoin.uk.eu.dal.net 366 anteo #helluu :End of /NAMES list.
+<< MODE #helluu
+>> :bitcoin.uk.eu.dal.net 324 anteo #helluu + 
+--> chanquery mode
+<< WHO #helluu
+>> :bitcoin.uk.eu.dal.net 329 anteo #helluu 1757430371
+--> event 329
+>> :bitcoin.uk.eu.dal.net 352 anteo #helluu ~anteo 5626-2a9c-92a4-503c-675e.149.203.ip bitcoin.uk.eu.dal.net anteo H@ :0 Angelly Teo
+--> silent event who
+>> :bitcoin.uk.eu.dal.net 315 anteo #helluu :End of /WHO list.
+--> chanquery who end
+<< MODE #helluu b
+>> :bitcoin.uk.eu.dal.net 368 anteo #helluu :End of Channel Ban List
+--> chanquery ban end
+<< PING bitcoin.uk.eu.dal.net
+>> :bitcoin.uk.eu.dal.net PONG bitcoin.uk.eu.dal.net :anteo
+--> lag pong
+<< MODE #helluu +ooooo anteo
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #helluu +o anteo
+<< MODE #helluu +oooooo anteo anteo anteo
+<< MODE #helluu +o
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #helluu +ooo anteo anteo anteo
+<< QUIT :leaving
