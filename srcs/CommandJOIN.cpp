@@ -102,8 +102,11 @@ responseList CommandJOIN::execute(Client& client, const ParsedMessage& message) 
         {
             std::cout << "Channel exists, proceeding checks...\n";
             int channelCount = dataStore.countChannelsForClient(client);
-            LIMITS limitsConfig; // MARK: TEMP (relook at scope)
-            if (channelCount >= limitsConfig.CLIENT_MAX_CHANNEL) {
+            std::string clientMaxChannels = getLimitString(LIMITS_CHANLIMIT); // MARK: TEMP (relook at scope)
+            std::istringstream iss(clientMaxChannels);
+            int maxChannels;
+            iss >> maxChannels;
+            if (channelCount >= maxChannels) {
                 resp = createSingleResponse("405", clientFdStr);
                 resp["<client>"] = clientNick;
                 resp["<channel>"] = findChannel->getName();
