@@ -1,0 +1,208 @@
+<< CAP LS
+<< NICK anteo
+<< USER anteo anteo irc.dal.net :Angelly Teo
+>> :jingo.ix.us.dal.net NOTICE AUTH :*** Looking up your hostname...
+>> :jingo.ix.us.dal.net NOTICE AUTH :*** Checking Ident
+>> :jingo.ix.us.dal.net NOTICE AUTH :*** No Ident response
+>> :jingo.ix.us.dal.net NOTICE AUTH :*** Your forward and reverse DNS do not match, ignoring hostname. [203.149.201.182 != 203.149.201.178]
+>> :jingo.ix.us.dal.net NOTICE AUTH :*** Found your hostname
+>> :jingo.ix.us.dal.net 001 anteo :Welcome to the DALnet IRC Network anteo!~anteo@203.149.201.178
+<< MODE anteo +i
+>> :jingo.ix.us.dal.net 002 anteo :Your host is jingo.ix.us.dal.net, running version bahamut-2.2.3
+>> :jingo.ix.us.dal.net 003 anteo :This server was created Wed Dec 6 2023 at 08:18:53 PST
+>> :jingo.ix.us.dal.net 004 anteo jingo.ix.us.dal.net bahamut-2.2.3 aAbcCdefFghHiIjkKmnoOPrRsSwxXy AbceiIjklLmMnoOpPrRsStv beIjklov
+>> :jingo.ix.us.dal.net 005 anteo NETWORK=DALnet SAFELIST MAXBANS=200 MAXCHANNELS=20 CHANNELLEN=32 KICKLEN=307 NICKLEN=30 TOPICLEN=307 MODES=6 CHANTYPES=# CHANLIMIT=#:20 PREFIX=(ohv)@%+ STATUSMSG=@%+ :are available on this server
+>> :jingo.ix.us.dal.net 005 anteo CASEMAPPING=ascii WATCH=128 SILENCE=10 ELIST=cmntu EXCEPTS INVEX CHANMODES=beI,k,jl,ciPAmMnOprRsSt MAXLIST=b:200,e:100,I:100 TARGMAX=DCCALLOW:,JOIN:,KICK:4,KILL:20,NOTICE:20,PART:,PRIVMSG:20,WHOIS:,WHOWAS: :are available on this server
+>> :jingo.ix.us.dal.net 251 anteo :There are 82 users and 6176 invisible on 38 servers
+>> :jingo.ix.us.dal.net 252 anteo 80 :IRC Operators online
+>> :jingo.ix.us.dal.net 254 anteo 3480 :channels formed
+>> :jingo.ix.us.dal.net 255 anteo :I have 17 clients and 1 servers
+>> :jingo.ix.us.dal.net 265 anteo :Current local users: 17 Max: 1269
+>> :jingo.ix.us.dal.net 266 anteo :Current global users: 6258 Max: 67741
+>> :jingo.ix.us.dal.net NOTICE anteo :*** Notice -- motd was last changed at 27/11/2012 18:13
+>> :jingo.ix.us.dal.net NOTICE anteo :*** Notice -- Please read the motd if you haven't read it
+>> :jingo.ix.us.dal.net 375 anteo :- jingo.ix.us.dal.net Message of the Day - 
+>> :jingo.ix.us.dal.net 372 anteo :- ix.dal.net - Seattle, Washington, USA
+>> :jingo.ix.us.dal.net 372 anteo :- 
+>> :jingo.ix.us.dal.net 372 anteo :- By connecting to this server you agree to be bound by the
+>> :jingo.ix.us.dal.net 372 anteo :- terms put forth in DALnet's Acceptable Use Policy at:
+>> :jingo.ix.us.dal.net 372 anteo :- http://www.dal.net/aup/
+>> :jingo.ix.us.dal.net 372 anteo :- 
+>> :jingo.ix.us.dal.net 372 anteo :- For help with IRC or DALnet, please join one of our recommended
+>> :jingo.ix.us.dal.net 372 anteo :- help channels or visit http://docs.dal.net/
+>> :jingo.ix.us.dal.net 372 anteo :-     /join #irchelp
+>> :jingo.ix.us.dal.net 372 anteo :-     /join #dalnethelp
+>> :jingo.ix.us.dal.net 372 anteo :-     /join #help
+>> :jingo.ix.us.dal.net 372 anteo :- 
+>> :jingo.ix.us.dal.net 372 anteo :- To see more information about this server, type /motd
+>> :jingo.ix.us.dal.net 376 anteo :End of /MOTD command.
+>> :jingo.ix.us.dal.net NOTICE anteo :*** Notice -- This server runs an open proxy monitor to prevent abuse.
+>> :jingo.ix.us.dal.net NOTICE anteo :*** Notice -- If you see connections on various ports from irc.dal.net
+>> :jingo.ix.us.dal.net NOTICE anteo :*** Notice -- please disregard them, as they are the monitor in action.
+>> :jingo.ix.us.dal.net NOTICE anteo :*** Notice -- For more information please visit http://kline.dal.net/proxy/
+>> :anteo MODE anteo :+iH
+<< PING jingo.ix.us.dal.net
+<< MODE #123
+>> :jingo.ix.us.dal.net PONG jingo.ix.us.dal.net :anteo
+--> lag pong
+>> :jingo.ix.us.dal.net 324 anteo #123 +spmtin 
+>> :jingo.ix.us.dal.net 329 anteo #123 1757461471
+<< MODE #lobby
+>> :jingo.ix.us.dal.net 324 anteo #lobby +tn 
+>> :jingo.ix.us.dal.net 329 anteo #lobby 1738091841
+<< PING jingo.ix.us.dal.net
+>> :jingo.ix.us.dal.net PONG jingo.ix.us.dal.net :anteo
+--> lag pong
+<< PING jingo.ix.us.dal.net
+>> :jingo.ix.us.dal.net PONG jingo.ix.us.dal.net :anteo
+--> lag pong
+<< PING jingo.ix.us.dal.net
+>> :jingo.ix.us.dal.net PONG jingo.ix.us.dal.net :anteo
+--> lag pong
+<< JOIN #hello123
+>> :jingo.ix.us.dal.net 473 anteo #hello123 :Cannot join channel (+i)
+<< WHOIS anteo
+>> :jingo.ix.us.dal.net 311 anteo anteo ~anteo 5626-2a9c-92a4-503c-675e.149.203.ip * :Angelly Teo
+--> whois event
+>> :jingo.ix.us.dal.net 338 anteo anteo :is actually ~anteo@203.149.201.178 [203.149.201.178]
+--> whois default event
+>> :jingo.ix.us.dal.net 312 anteo anteo jingo.ix.us.dal.net :DALnet IX Client Server
+--> whois default event
+>> :jingo.ix.us.dal.net 317 anteo anteo 244 1757504578 :seconds idle, signon time
+--> whois default event
+>> :jingo.ix.us.dal.net 318 anteo anteo :End of /WHOIS list.
+--> whois end
+>> :elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip INVITE anteo :#hello123
+<< PING jingo.ix.us.dal.net
+>> :jingo.ix.us.dal.net PONG jingo.ix.us.dal.net :anteo
+--> lag pong
+<< JOIN #hello123
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#hello123
+>> :jingo.ix.us.dal.net 353 anteo = #hello123 :anteo elfoo_ @elfoo 
+>> :jingo.ix.us.dal.net 366 anteo #hello123 :End of /NAMES list.
+<< MODE #hello123
+>> :jingo.ix.us.dal.net 324 anteo #hello123 +ik password
+--> chanquery mode
+<< WHO #hello123
+>> :jingo.ix.us.dal.net 329 anteo #hello123 1757499023
+--> event 329
+>> :jingo.ix.us.dal.net 352 anteo #hello123 ~anteo 5626-2a9c-92a4-503c-675e.149.203.ip jingo.ix.us.dal.net anteo H :0 Angelly Teo
+--> silent event who
+>> :jingo.ix.us.dal.net 352 anteo #hello123 ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip halcyon.il.us.dal.net elfoo_ H :2 Elizabeth Foo
+--> silent event who
+>> :jingo.ix.us.dal.net 352 anteo #hello123 ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip serenity.fl.us.dal.net elfoo H@ :2 Elizabeth Foo
+--> silent event who
+>> :jingo.ix.us.dal.net 315 anteo #hello123 :End of /WHO list.
+--> chanquery who end
+<< MODE #hello123 b
+>> :jingo.ix.us.dal.net 367 anteo #hello123 elfoo_!*@* elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip 1757504800
+--> chanquery ban
+>> :jingo.ix.us.dal.net 368 anteo #hello123 :End of Channel Ban List
+--> chanquery ban end
+<< MODE #hello123 +b
+>> :jingo.ix.us.dal.net 367 anteo #hello123 elfoo_!*@* elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip 1757504800
+>> :jingo.ix.us.dal.net 368 anteo #hello123 :End of Channel Ban List
+<< PING jingo.ix.us.dal.net
+>> :jingo.ix.us.dal.net PONG jingo.ix.us.dal.net :anteo
+--> lag pong
+<< MODE #hello123 +I
+>> :jingo.ix.us.dal.net 347 anteo #hello123 :End of Channel Invite List
+<< PING jingo.ix.us.dal.net
+>> :jingo.ix.us.dal.net PONG jingo.ix.us.dal.net :anteo
+--> lag pong
+<< PING jingo.ix.us.dal.net
+>> :jingo.ix.us.dal.net PONG jingo.ix.us.dal.net :anteo
+--> lag pong
+<< PING jingo.ix.us.dal.net
+>> :jingo.ix.us.dal.net PONG jingo.ix.us.dal.net :anteo
+--> lag pong
+<< PART #hello123
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip PART #hello123
+<< JOIN #hello123
+>> :jingo.ix.us.dal.net 473 anteo #hello123 :Cannot join channel (+i)
+<< PING jingo.ix.us.dal.net
+>> :jingo.ix.us.dal.net PONG jingo.ix.us.dal.net :anteo
+--> lag pong
+>> :elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip INVITE anteo :#hello123
+<< PING jingo.ix.us.dal.net
+>> :jingo.ix.us.dal.net PONG jingo.ix.us.dal.net :anteo
+--> lag pong
+<< PING jingo.ix.us.dal.net
+>> :jingo.ix.us.dal.net PONG jingo.ix.us.dal.net :anteo
+--> lag pong
+<< PING jingo.ix.us.dal.net
+>> :jingo.ix.us.dal.net PONG jingo.ix.us.dal.net :anteo
+--> lag pong
+<< PING jingo.ix.us.dal.net
+>> :jingo.ix.us.dal.net PONG jingo.ix.us.dal.net :anteo
+--> lag pong
+<< PING jingo.ix.us.dal.net
+>> :jingo.ix.us.dal.net PONG jingo.ix.us.dal.net :anteo
+--> lag pong
+<< PING jingo.ix.us.dal.net
+>> :jingo.ix.us.dal.net PONG jingo.ix.us.dal.net :anteo
+--> lag pong
+<< PING jingo.ix.us.dal.net
+>> :jingo.ix.us.dal.net PONG jingo.ix.us.dal.net :anteo
+--> lag pong
+<< PING jingo.ix.us.dal.net
+>> :jingo.ix.us.dal.net PONG jingo.ix.us.dal.net :anteo
+--> lag pong
+<< PING jingo.ix.us.dal.net
+>> :jingo.ix.us.dal.net PONG jingo.ix.us.dal.net :anteo
+--> lag pong
+<< PING jingo.ix.us.dal.net
+>> :jingo.ix.us.dal.net PONG jingo.ix.us.dal.net :anteo
+--> lag pong
+<< PING jingo.ix.us.dal.net
+>> :jingo.ix.us.dal.net PONG jingo.ix.us.dal.net :anteo
+--> lag pong
+<< JOIN #hello123
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#hello123
+>> :jingo.ix.us.dal.net 353 anteo = #hello123 :anteo elfoo_ @elfoo 
+>> :jingo.ix.us.dal.net 366 anteo #hello123 :End of /NAMES list.
+<< MODE #hello123
+>> :jingo.ix.us.dal.net 324 anteo #hello123 +ik password
+--> chanquery mode
+<< WHO #hello123
+>> :jingo.ix.us.dal.net 329 anteo #hello123 1757499023
+--> event 329
+>> :jingo.ix.us.dal.net 352 anteo #hello123 ~anteo 5626-2a9c-92a4-503c-675e.149.203.ip jingo.ix.us.dal.net anteo H :0 Angelly Teo
+--> silent event who
+>> :jingo.ix.us.dal.net 352 anteo #hello123 ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip halcyon.il.us.dal.net elfoo_ H :2 Elizabeth Foo
+--> silent event who
+>> :jingo.ix.us.dal.net 352 anteo #hello123 ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip serenity.fl.us.dal.net elfoo H@ :2 Elizabeth Foo
+--> silent event who
+>> :jingo.ix.us.dal.net 315 anteo #hello123 :End of /WHO list.
+--> chanquery who end
+<< MODE #hello123 b
+>> :jingo.ix.us.dal.net 368 anteo #hello123 :End of Channel Ban List
+--> chanquery ban end
+<< MODE #hello123 +oooo anteo anteo
+>> :jingo.ix.us.dal.net 482 anteo #hello123 :You're not channel operator
+<< JOIN #hellu123
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#hellu123
+>> :jingo.ix.us.dal.net 353 anteo = #hellu123 :@anteo 
+>> :jingo.ix.us.dal.net 366 anteo #hellu123 :End of /NAMES list.
+<< MODE #hellu123
+>> :jingo.ix.us.dal.net 324 anteo #hellu123 + 
+--> chanquery mode
+<< WHO #hellu123
+>> :jingo.ix.us.dal.net 329 anteo #hellu123 1757505857
+--> event 329
+>> :jingo.ix.us.dal.net 352 anteo #hellu123 ~anteo 5626-2a9c-92a4-503c-675e.149.203.ip jingo.ix.us.dal.net anteo H@ :0 Angelly Teo
+--> silent event who
+>> :jingo.ix.us.dal.net 315 anteo #hellu123 :End of /WHO list.
+--> chanquery who end
+<< MODE #hellu123 b
+>> :jingo.ix.us.dal.net 368 anteo #hellu123 :End of Channel Ban List
+--> chanquery ban end
+<< PING jingo.ix.us.dal.net
+>> :jingo.ix.us.dal.net PONG jingo.ix.us.dal.net :anteo
+--> lag pong
+<< MODE #hellu123 +oooo anteo anteo anteo anteo
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu123 +oooo anteo anteo anteo anteo
+<< PING jingo.ix.us.dal.net
+>> :jingo.ix.us.dal.net PONG jingo.ix.us.dal.net :anteo
+--> lag pong
+<< QUIT :leaving
