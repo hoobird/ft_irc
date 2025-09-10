@@ -1,6 +1,5 @@
-CC = c++
-CFLAGS = -Wall -Wextra -Werror -MMD
-VFLAG = -std=c++98
+CXX = c++
+CXXFLAGS = -Wall -Wextra -Werror -MMD -std=c++98
 
 INCLUDESDIR = ./includes
 SRCSDIR = ./srcs
@@ -23,10 +22,10 @@ NAME = ircserv
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $(VFLAG) $(OBJ) -o $(NAME)
+	$(CXX) $(CXXFLAGS) $(OBJ) -o $(NAME)
 
 $(BUILDDIR)/%.o: $(SRCSDIR)/%.cpp | $(BUILDDIR)
-	$(CC) $(CFLAGS) $(VFLAG) -I$(INCLUDESDIR) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -I$(INCLUDESDIR) -c $< -o $@
 
 $(BUILDDIR):
 	mkdir -p $(BUILDDIR)
@@ -39,7 +38,7 @@ fclean: clean
 
 re: fclean all
 
-valgrind: CFLAGS += -g
+valgrind: CXXFLAGS += -g
 valgrind: re
 	valgrind --show-leak-kinds=all --leak-check=full --track-fds=yes ./ircserv 8080 pass
 
