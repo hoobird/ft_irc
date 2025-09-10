@@ -1,6 +1,8 @@
 #ifndef CONFIG_HPP
 #define CONFIG_HPP
 
+#include <string>
+
 // rationale: fd exceed is caught in socket creation, setting CHANLIMIT is optional, not important
 
 // note: We follow settings using DALnet as default client application
