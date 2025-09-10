@@ -5,60 +5,66 @@
 
 // rationale: fd exceed is caught in socket creation, setting CHANLIMIT is optional, not important
 
-// note: We follow settings using DALnet as default client application
+// note: we follow settings using DALnet as default client application
 // refer to http://www.irc.org/tech_docs/005.html
 
-struct LIMITS
-{
-    static const int CLIENT_MAX_CHANNEL = 10;
-    static const int CHANNEL_MAX_CLIENT = 50;
-
-    // TODO: Look into server's client limit.
-    static const std::string NETWORK;
-    static const int MAXBANS = 200;
-    static const int MAXCHANNELS = 20;
-    static const int CHANNELLEN = 32;
-    static const int KICKLEN = 307;
-    static const int NICKLEN = 30;
-    static const int TOPICLEN = 307;
-    static const int MODES = 6;
-    static const std::string CHANTYPES;
-    static const std::string CHANLIMIT;
-    static const std::string PREFIX;
-    static const std::string STATUSMSG;
-
-    static const std::string CASEMAPPING;
-
-    // note that no flags are in CAT_A
-    static const std::string CHANMODES;
-
-    // commands INVITE, NICK, USER, MODE and PASS do not require a max allowed target count
-    // limits can be but are not set at startup for the below commands
-    static const std::string TARGMAX;
+enum Limits {
+    LIMITS_NETWORK = 0,
+    LIMITS_MAXBANS,
+    LIMITS_MAXCHANNELS,
+    LIMITS_CHANNELLEN,
+    LIMITS_KICKLEN,
+    LIMITS_NICKLEN,
+    LIMITS_TOPICLEN,
+    LIMITS_MODES,
+    LIMITS_CHANTYPES,
+    LIMITS_CHANLIMIT,
+    LIMITS_PREFIX,
+    LIMITS_STATUSMSG,
+    LIMITS_CASEMAPPING,
+    LIMITS_CHANMODES,
+    LIMITS_TARGMAX,
 } ;
 
-const std::string LIMITS::NETWORK = "SAFELIST";
-const std::string LIMITS::CHANTYPES = "#";
-const std::string LIMITS::CHANLIMIT = "#:20";
-const std::string LIMITS::PREFIX = "(o)@";
-const std::string LIMITS::STATUSMSG = "@";
-const std::string LIMITS::CASEMAPPING = "ascii";
-const std::string LIMITS::CHANMODES = ",ko,l,it";
-const std::string LIMITS::TARGMAX = "DCCALLOW:,JOIN:,KICK:,PART:,PRIVMSG:";
+inline std::string getLimitString(Limits limit) {
+    switch (limit) {
+        case LIMITS_NETWORK: return "SAFELIST";
+        case LIMITS_MAXBANS: return "200";
+        case LIMITS_MAXCHANNELS: return "20";
+        case LIMITS_CHANNELLEN: return "32";
+        case LIMITS_KICKLEN: return "307";
+        case LIMITS_NICKLEN: return "30";
+        case LIMITS_TOPICLEN: return "307";
+        case LIMITS_MODES: return "6";
+        case LIMITS_CHANTYPES: return "#";
+        case LIMITS_CHANLIMIT: return "#:20";
+        case LIMITS_PREFIX: return "(o)@";
+        case LIMITS_STATUSMSG: return "@";
+        case LIMITS_CASEMAPPING: return "ascii";
+        // note that no flags are in CAT_A
+        case LIMITS_CHANMODES: return ",ko,l,it";
+        // commands INVITE, NICK, USER, MODE and PASS do not require a max allowed target count
+        // limits can be but are not set at startup for the below commands
+        case LIMITS_TARGMAX: return "DCCALLOW:,JOIN:,KICK:,PART:,PRIVMSG:";
 
-struct CHANMODES
-{
-    static const std::string CAT_A; // change list/address
-    static const std::string CAT_B; // take params for both "+/-"
-    static const std::string CAT_C; // only take param for "+"
-    static const std::string CAT_D; // does not take params
+        default: return "Unable to retrieve limits";
+    }
+}
+
+enum ChanModes {
+    CHANMODES_CAT_A = 0, // change list/address
+    CHANMODES_CAT_B, // take params for both "+/-"
+    CHANMODES_CAT_C, // only take param for "+"
+    CHANMODES_CAT_D, // does not take params
 } ;
 
-const std::string CHANMODES::CAT_A = "";
-const std::string CHANMODES::CAT_B = "ko";
-const std::string CHANMODES::CAT_C = "l";
-const std::string CHANMODES::CAT_D = "it";
-
-//look into enum for CHANMODES
+inline std::string getChanMode(ChanModes mode) {
+    switch (mode) {
+        case CHANMODES_CAT_A: return "";
+        case CHANMODES_CAT_B: return "ko";
+        case CHANMODES_CAT_C: return "l";
+        case CHANMODES_CAT_D: return "it";
+    }
+}
 
 #endif
