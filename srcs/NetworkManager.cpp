@@ -87,14 +87,14 @@ NetworkError NetworkManager::setupServerSocket(const std::string &portString)
         break;
     }
 
+    freeaddrinfo(servinfo); // Free the linked list
+
     if (p == NULL) {
-        freeaddrinfo(servinfo);
         return NET_ERR_FAIL_TO_FIND_ADDR;
     }
     // Successfully bound to an address
     this->listenerFd = socketFd;
     std::cout << "Server socket successfully set up on port " << portString << std::endl;
-    freeaddrinfo(servinfo); // Free the linked list
     return NET_SUCCESS;
 }
 
