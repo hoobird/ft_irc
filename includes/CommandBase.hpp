@@ -4,6 +4,7 @@
 #include <types/ResponseType.hpp>
 #include "Client.hpp"
 #include "MessageParser.hpp"
+#include "config.hpp"
 #include <set>
 #include <sstream>
 #include <string>

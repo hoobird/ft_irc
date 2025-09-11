@@ -104,8 +104,9 @@ void MessageBuilder::initializeNumericTemplates()
     numericTemplates["001"] = "<client> :Welcome to the Internet Relay Network <nick>!<user>@<host>"; // RPL_WELCOME
     numericTemplates["002"] = "<client> :Your host is <servername>, running version <version>"; // RPL_YOURHOST
     numericTemplates["003"] = "<client> :This server was created <date>"; // RPL_CREATED
-    numericTemplates["004"] = "<client> <server_name> <version> <usermodes> <chanmodes> [chanmodes_with_a_parameter]"; // RPL_MYINFO
-    numericTemplates["005"] = "<client> :Try server <server_name>, port <port_number>"; // RPL_BOUNCE
+    numericTemplates["004"] = "<client> <server_name> <version> <usermodes> <chanmodes>"; // RPL_MYINFO
+    // numericTemplates["005"] = "<client> :Try server <server_name>, port <port_number>"; // RPL_BOUNCE
+    numericTemplates["005"] = "<client> <token> <info>"; // RPL_ISUPPORT
     numericTemplates["200"] = "<client> Link <version>[.<debug_level>] <destination> <next_server> [V<protocol_version> <link_uptime_in_seconds> <backstream_sendq> <upstream_sendq>]"; // RPL_TRACELINK
     numericTemplates["201"] = "<client> Try. <class> <server>"; // RPL_TRACECONNECTING
     numericTemplates["202"] = "<client> H.S. <class> <server>"; // RPL_TRACEHANDSHAKE

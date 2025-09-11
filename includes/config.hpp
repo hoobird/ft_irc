@@ -24,7 +24,7 @@ enum Limits {
     LIMITS_CASEMAPPING,
     LIMITS_CHANMODES,
     LIMITS_TARGMAX,
-} ;
+};
 
 inline std::string getLimitString(Limits limit) {
     switch (limit) {
@@ -56,7 +56,7 @@ enum ChanModes {
     CHANMODES_CAT_B, // take params for both "+/-"
     CHANMODES_CAT_C, // only take param for "+"
     CHANMODES_CAT_D, // does not take params
-} ;
+};
 
 inline std::string getChanMode(ChanModes mode) {
     switch (mode) {
@@ -64,6 +64,8 @@ inline std::string getChanMode(ChanModes mode) {
         case CHANMODES_CAT_B: return "ko";
         case CHANMODES_CAT_C: return "l";
         case CHANMODES_CAT_D: return "it";
+
+        default: return "Unable to retrieve CHANMODES";
     }
 }
 
