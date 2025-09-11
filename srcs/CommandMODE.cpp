@@ -184,21 +184,34 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message) 
 	                        targetChannel->setKey("");
 	                    }
 	                    break ;
-	                case 'o': // this is done in a loop
+	                case 'o': { // this is done in a loop
+                        Client* targetClient = dataStore.getClient(param);
+                        if (!targetClient) {
+                            // ERR_NOSUCHNICK 401
+                            singleResponse resp = createSingleResponse("401", clientFdStr);
+                            resp["<client>"] = clientNick;
+                            resp["<nick>"] = param;
+                            resp["<reason>"] = "No such nick/channel";
+                            responses.push_back(resp);
+                        }
 	                    if (action == '+') {
-	                        targetChannel->addOperator(dataStore.getClient(param)); // initial value of reference to non-const must be an lvalueC/C++(461)
+                            targetChannel->addOperator(*targetClient);
 	                    }
 	                    else if (action == '-') {
-                            targetChannel->removeOperator();
+                            targetChannel->removeOperator(*targetClient);
 	                    }
 	                    break ;
+                    }
 	                case 'l':
 	                    if (action == '+') {
-	                        targetChannel->setLimit(/*convert std::string param to int*/);
+                            std::istringstream iss(param);
+                            int value;
+                            iss >> value;
+                            // feedback: need to check if negative value
+	                        targetChannel->setLimit(value);
 	                    }
 	                    else if (action == '-') {
 	                        targetChannel->setLimit(-1);
-	                        // doesn't remove existing channel members
 	                    }
 	                    break ;
 	                default:
