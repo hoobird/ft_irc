@@ -1,0 +1,167 @@
+<< CAP LS
+<< NICK anteo
+<< USER anteo anteo irc.dal.net :Angelly Teo
+>> :lion.tx.us.dal.net NOTICE AUTH :*** Looking up your hostname...
+>> :lion.tx.us.dal.net NOTICE AUTH :*** Checking Ident
+>> :lion.tx.us.dal.net NOTICE AUTH :*** Your forward and reverse DNS do not match, ignoring hostname. [203.149.201.182 != 203.149.201.178]
+>> :lion.tx.us.dal.net NOTICE AUTH :*** Found your hostname
+>> :lion.tx.us.dal.net NOTICE AUTH :*** No Ident response
+>> :lion.tx.us.dal.net 001 anteo :Welcome to the DALnet IRC Network anteo!~anteo@203.149.201.178
+<< MODE anteo +i
+>> :lion.tx.us.dal.net 002 anteo :Your host is lion.tx.us.dal.net, running version bahamut-2.2.4
+>> :lion.tx.us.dal.net 003 anteo :This server was created Sat Feb 22 2025 at 12:32:54 EST
+>> :lion.tx.us.dal.net 004 anteo lion.tx.us.dal.net bahamut-2.2.4 aAbcCdefFghHiIjkKmnoOPrRsSwxXy AbceiIjklLmMnoOpPrRsStv beIjklov
+>> :lion.tx.us.dal.net 005 anteo NETWORK=DALnet SAFELIST MAXBANS=200 MAXCHANNELS=50 CHANNELLEN=32 KICKLEN=307 NICKLEN=30 TOPICLEN=307 MODES=6 CHANTYPES=# CHANLIMIT=#:50 PREFIX=(ohv)@%+ STATUSMSG=@%+ :are available on this server
+>> :lion.tx.us.dal.net 005 anteo CASEMAPPING=ascii WATCH=128 SILENCE=10 ELIST=cmntu EXCEPTS INVEX CHANMODES=beI,k,jl,ciPAmMnOprRsSt MAXLIST=b:200,e:100,I:100 TARGMAX=DCCALLOW:,JOIN:,KICK:4,KILL:20,NOTICE:20,PART:,PRIVMSG:20,WHOIS:,WHOWAS: :are available on this server
+>> :lion.tx.us.dal.net 251 anteo :There are 84 users and 6219 invisible on 38 servers
+>> :lion.tx.us.dal.net 252 anteo 82 :IRC Operators online
+>> :lion.tx.us.dal.net 254 anteo 3480 :channels formed
+>> :lion.tx.us.dal.net 255 anteo :I have 1205 clients and 1 servers
+>> :lion.tx.us.dal.net 265 anteo :Current local users: 1205 Max: 1812
+>> :lion.tx.us.dal.net 266 anteo :Current global users: 6303 Max: 8222
+>> :lion.tx.us.dal.net NOTICE anteo :*** Notice -- motd was last changed at 21/2/2024 4:48
+>> :lion.tx.us.dal.net 375 anteo :- lion.tx.us.dal.net Message of the Day - 
+>> :lion.tx.us.dal.net 372 anteo :-21/2/2024 4:48
+>> :lion.tx.us.dal.net 372 anteo :-      Welcome to,
+>> :lion.tx.us.dal.net 372 anteo :-       _ _
+>> :lion.tx.us.dal.net 372 anteo :-      | (_)            
+>> :lion.tx.us.dal.net 372 anteo :-      | |_  ___  _ __  
+>> :lion.tx.us.dal.net 372 anteo :-      | | |/ _ \| '_ \ 
+>> :lion.tx.us.dal.net 372 anteo :-      | | | (_) | | | |
+>> :lion.tx.us.dal.net 372 anteo :-      |_|_|\___/|_| |_|.tx.us.dal.net 
+>> :lion.tx.us.dal.net 372 anteo :- 
+>> :lion.tx.us.dal.net 372 anteo :-       * Host..............: lion.dal.net | lion-v6.dal.net
+>> :lion.tx.us.dal.net 372 anteo :-       * Ports.............: 6667 - 6669, 7000 | SSL - 6697
+>> :lion.tx.us.dal.net 372 anteo :- 
+>> :lion.tx.us.dal.net 372 anteo :-    Welcome to DALnet, by connecting to this network you agree to 
+>> :lion.tx.us.dal.net 372 anteo :-    abide by its acceptable use policy, visit : http://www.dal.net/aup
+>> :lion.tx.us.dal.net 372 anteo :- 
+>> :lion.tx.us.dal.net 372 anteo :-      "This server has been sponsored by Psychz Networks"
+>> :lion.tx.us.dal.net 372 anteo :- 
+>> :lion.tx.us.dal.net 372 anteo :-            ---===[https://www.psychz.net/]===---
+>> :lion.tx.us.dal.net 372 anteo :- 
+>> :lion.tx.us.dal.net 372 anteo :-    -------------------------------------------------------------------
+>> :lion.tx.us.dal.net 372 anteo :-    [%] Server Policies  =-
+>> :lion.tx.us.dal.net 372 anteo :- 
+>> :lion.tx.us.dal.net 372 anteo :-    a. No spamming or advertising allowed, if found you will be banned 
+>> :lion.tx.us.dal.net 372 anteo :-       from this server/network.
+>> :lion.tx.us.dal.net 372 anteo :-    b. No malicious bots, including flood and nick/channel chasers
+>> :lion.tx.us.dal.net 372 anteo :-    c. No channel filler bots/clients/psybncs
+>> :lion.tx.us.dal.net 372 anteo :-       #  A channel filler is a client, bnc, or bot which is connected
+>> :lion.tx.us.dal.net 372 anteo :-          just to fill a channel and make it look bigger
+>> :lion.tx.us.dal.net 372 anteo :-    d. Operator impersonation will not be tolerated and cause you to be
+>> :lion.tx.us.dal.net 372 anteo :-       banned from this server/network.
+>> :lion.tx.us.dal.net 372 anteo :- 
+>> :lion.tx.us.dal.net 372 anteo :-            "REMEMBER IRC IS A PRIVILEGE, NOT A RIGHT"
+>> :lion.tx.us.dal.net 372 anteo :- 
+>> :lion.tx.us.dal.net 372 anteo :-    --------------------------------------------------------------------
+>> :lion.tx.us.dal.net 372 anteo :-    For IRC Operator assistance /join #Operhelp
+>> :lion.tx.us.dal.net 372 anteo :- 
+>> :lion.tx.us.dal.net 372 anteo :-    For DALnet and General IRC related help, goto #Help
+>> :lion.tx.us.dal.net 372 anteo :- 
+>> :lion.tx.us.dal.net 372 anteo :-    For multi-lingual documentation - [http://docs.dal.net]
+>> :lion.tx.us.dal.net 372 anteo :- 
+>> :lion.tx.us.dal.net 372 anteo :-    If you have any questions/issues related to this server,           
+>> :lion.tx.us.dal.net 372 anteo :-    contact us using: lion-staff@dal.net
+>> :lion.tx.us.dal.net 372 anteo :- 
+>> :lion.tx.us.dal.net 372 anteo :-    Thank you, hope you enjoy your stay!
+>> :lion.tx.us.dal.net 376 anteo :End of /MOTD command.
+>> :anteo MODE anteo :+iH
+<< JOIN #helluu
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#helluu
+>> :lion.tx.us.dal.net 353 anteo = #helluu :@anteo 
+>> :lion.tx.us.dal.net 366 anteo #helluu :End of /NAMES list.
+<< MODE #helluu
+>> :lion.tx.us.dal.net 324 anteo #helluu + 
+--> chanquery mode
+<< WHO #helluu
+>> :lion.tx.us.dal.net 329 anteo #helluu 1757596566
+--> event 329
+>> :lion.tx.us.dal.net 352 anteo #helluu ~anteo 5626-2a9c-92a4-503c-675e.149.203.ip lion.tx.us.dal.net anteo H@ :0 Angelly Teo
+--> silent event who
+>> :lion.tx.us.dal.net 315 anteo #helluu :End of /WHO list.
+--> chanquery who end
+<< MODE #helluu b
+>> :lion.tx.us.dal.net 368 anteo #helluu :End of Channel Ban List
+--> chanquery ban end
+<< PING lion.tx.us.dal.net
+>> :lion.tx.us.dal.net PONG lion.tx.us.dal.net :anteo
+--> lag pong
+<< MODE #helluu +ito anteo
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #helluu +ito anteo
+<< MODE #helluu
+>> :lion.tx.us.dal.net 324 anteo #helluu +ti 
+>> :lion.tx.us.dal.net 329 anteo #helluu 1757596566
+<< PING lion.tx.us.dal.net
+>> :lion.tx.us.dal.net PONG lion.tx.us.dal.net :anteo
+--> lag pong
+<< PING lion.tx.us.dal.net
+>> :lion.tx.us.dal.net PONG lion.tx.us.dal.net :anteo
+--> lag pong
+<< PING lion.tx.us.dal.net
+>> :lion.tx.us.dal.net PONG lion.tx.us.dal.net :anteo
+--> lag pong
+<< MODE #helluu -it
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #helluu -it 
+<< MODE #helluu
+>> :lion.tx.us.dal.net 324 anteo #helluu + 
+>> :lion.tx.us.dal.net 329 anteo #helluu 1757596566
+<< MODE #helluu +ti
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #helluu +ti 
+<< MODE #helluu
+>> :lion.tx.us.dal.net 324 anteo #helluu +ti 
+>> :lion.tx.us.dal.net 329 anteo #helluu 1757596566
+<< PING lion.tx.us.dal.net
+>> :lion.tx.us.dal.net PONG lion.tx.us.dal.net :anteo
+--> lag pong
+<< MODE #helluu
+>> :lion.tx.us.dal.net 324 anteo #helluu +ti 
+>> :lion.tx.us.dal.net 329 anteo #helluu 1757596566
+<< MODE #helluu +k pass
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #helluu +k pass
+<< MODE #helluu +kolit pass anteo 50
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #helluu +kolit pass anteo 50
+<< MODE #helluu
+>> :lion.tx.us.dal.net 324 anteo #helluu +tilk 50 pass
+>> :lion.tx.us.dal.net 329 anteo #helluu 1757596566
+<< PING lion.tx.us.dal.net
+>> :lion.tx.us.dal.net PONG lion.tx.us.dal.net :anteo
+--> lag pong
+<< PING lion.tx.us.dal.net
+>> :lion.tx.us.dal.net PONG lion.tx.us.dal.net :anteo
+--> lag pong
+<< PING lion.tx.us.dal.net
+>> :lion.tx.us.dal.net PONG lion.tx.us.dal.net :anteo
+--> lag pong
+<< PING lion.tx.us.dal.net
+>> :lion.tx.us.dal.net PONG lion.tx.us.dal.net :anteo
+--> lag pong
+<< MODE #helluu +oooo anteo anteo anteo
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #helluu +ooo anteo anteo anteo
+<< PING lion.tx.us.dal.net
+>> :lion.tx.us.dal.net PONG lion.tx.us.dal.net :anteo
+--> lag pong
+<< PING lion.tx.us.dal.net
+>> :lion.tx.us.dal.net PONG lion.tx.us.dal.net :anteo
+--> lag pong
+<< PING lion.tx.us.dal.net
+>> :lion.tx.us.dal.net PONG lion.tx.us.dal.net :anteo
+--> lag pong
+<< MODE #helluu
+>> :lion.tx.us.dal.net 324 anteo #helluu +tilk 50 pass
+>> :lion.tx.us.dal.net 329 anteo #helluu 1757596566
+<< PING lion.tx.us.dal.net
+>> :lion.tx.us.dal.net PONG lion.tx.us.dal.net :anteo
+--> lag pong
+<< PING lion.tx.us.dal.net
+>> :lion.tx.us.dal.net PONG lion.tx.us.dal.net :anteo
+--> lag pong
+<< PING lion.tx.us.dal.net
+>> :lion.tx.us.dal.net PONG lion.tx.us.dal.net :anteo
+--> lag pong
+<< PING lion.tx.us.dal.net
+>> :lion.tx.us.dal.net PONG lion.tx.us.dal.net :anteo
+--> lag pong
+<< PING lion.tx.us.dal.net
+>> :lion.tx.us.dal.net PONG lion.tx.us.dal.net :anteo
+--> lag pong
