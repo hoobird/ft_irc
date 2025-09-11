@@ -1,6 +1,5 @@
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -MMD
-LDFLAGS =
 
 BASEEDIR = ./base
 BOTSDIR = ./bots
@@ -13,8 +12,9 @@ BOTBASE_HEADER = $(BASEEDIR)/BotBase.hpp
 BOTBASE_DEP = $(BOTBASE_OBJ:.o=.d)
 
 # List of available bots (Update here once new bots are added)
-BOTS = echobot anotherbot
-BOT_SRCS = $(addprefix $(BOTSDIR)/, $(addsuffix .cpp, $(BOTS)))
+BOT_SRC_NAMES = BotHuhCat.cpp
+BOTS = $(BOT_SRC_NAMES:.cpp=)
+BOT_SRCS = $(addprefix $(BOTSDIR)/, $(BOT_SRC_NAMES))
 BOT_OBJS = $(addprefix $(BUILDDIR)/, $(addsuffix .o, $(BOTS)))
 BOT_DEPS = $(BOT_OBJS:.o=.d)
 BOT_BINS = $(addprefix $(BINDIR)/, $(BOTS))
@@ -27,20 +27,25 @@ $(BUILDDIR) $(BINDIR):
 
 # Pattern rule for building bot executables
 $(BINDIR)/%: $(BUILDDIR)/%.o $(BOTBASE_OBJ) | $(BINDIR)
-	$(CXX) $(CXXFLAGS) -o $@ $< $(BOTBASE_OBJ) $(LDFLAGS)
+	$(CXX) $(CXXFLAGS) -I$(BASEEDIR) -o $@ $< $(BOTBASE_OBJ)
 
 # Pattern rule for building bot object files
 $(BUILDDIR)/%.o: $(BOTSDIR)/%.cpp $(BOTBASE_HEADER) | $(BUILDDIR)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -I$(BASEEDIR) -c $< -o $@
 
 # Build IRC bot base class object file
 $(BOTBASE_OBJ): $(BOTBASE_SRC) $(BOTBASE_HEADER) | $(BUILDDIR)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -I$(BASEEDIR) -c $< -o $@
 
 -include $(BOTBASE_DEP) $(BOT_DEPS)
 
 clean:
-	rm -rf $(BUILDDIR) $(BINDIR)
+	rm -rf $(BUILDDIR)
+
+fclean: clean
+	rm -rf $(BINDIR)
+
+re : fclean all
 
 list-bots:
 	@echo "Available bots:"
