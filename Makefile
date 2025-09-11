@@ -13,7 +13,7 @@ SRC = main.cpp Server.cpp Client.cpp NetworkManager.cpp DataStore.cpp \
 	  CommandNICK.cpp CommandUSER.cpp CommandPASS.cpp CommandPING.cpp \
 	  CommandPRIVMSG.cpp CommandMODE.cpp CommandJOIN.cpp CommandPART.cpp \
 	  CommandTOPIC.cpp CommandKICK.cpp CommandINVITE.cpp CommandQUIT.cpp \
-	  CTCPHandler.cpp \
+	  CommandNOTICE.cpp CTCPHandler.cpp \
 	  Logger.cpp
 DEP = $(OBJ:.o=.d)
 OBJ = $(addprefix $(BUILDDIR)/, $(notdir $(SRC:.cpp=.o)))

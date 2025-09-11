@@ -80,6 +80,7 @@ void Server::setupCommandFactory()
     cmdFactory.registerCommand("KICK", new CommandKICK(dataStore));
     cmdFactory.registerCommand("INVITE", new CommandINVITE(dataStore));
     cmdFactory.registerCommand("QUIT", new CommandQUIT(dataStore, networkMan));
+    cmdFactory.registerCommand("NOTICE", new CommandNOTICE(dataStore));
 }
 
 void Server::handleNewConnection()
