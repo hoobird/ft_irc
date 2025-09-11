@@ -70,13 +70,6 @@ responseList CommandBase::createWelcomeResponse(const Client &client, const std:
     resp["<info>"] = "are supported by this server";
     responses.push_back(resp);
 
-    // NOTICE
-    // >> :halcyon.il.us.dal.net NOTICE anteo_ :*** Notice -- motd was last changed at 2/9/2024 13:45
-    resp = createSingleResponse("NOTICE", client.getSocketFdString());
-    resp["<msg_receiver>"] = client.getClientPrefix();
-    resp["<msg>"] = "-- motd was last changed at 2/9/2025 13:45";
-    responses.push_back(resp);
-
     // RPL_MOTDSTART
     resp = createSingleResponse("375", client.getSocketFdString());
     resp["<client>"] = client.getClientPrefix();
