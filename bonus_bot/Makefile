@@ -12,7 +12,7 @@ BOTBASE_HEADER = $(BASEEDIR)/BotBase.hpp
 BOTBASE_DEP = $(BOTBASE_OBJ:.o=.d)
 
 # List of available bots (Update here once new bots are added)
-BOT_SRC_NAMES = BotHuhCat.cpp
+BOT_SRC_NAMES = BotHuhCat.cpp BotParrot.cpp
 BOTS = $(BOT_SRC_NAMES:.cpp=)
 BOT_SRCS = $(addprefix $(BOTSDIR)/, $(BOT_SRC_NAMES))
 BOT_OBJS = $(addprefix $(BUILDDIR)/, $(addsuffix .o, $(BOTS)))
