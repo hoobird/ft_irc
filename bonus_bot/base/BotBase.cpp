@@ -1,25 +1,43 @@
 #include "BotBase.hpp"
 #include <csignal>
 #include <iostream>
-    
+
+BotBase *BotBase::instance = NULL; // initialize static member
+
 BotBase::BotBase(): botsocket(-1), running(false)
-{}
+{
+    instance = this;
+    setupSignalHandler(BotBase::internalSignalHandler);
+}
 
 BotBase::~BotBase()
 {
-    std::cout << "BotBase destructor called" << std::endl;
     disconnect_from_server();
 }
-
+#include <cstdio>
 BotBase::MessageIN BotBase::validateMessage(const std::string &rawMessage)
 {
     // ":<nick_sender>!<user_sender>@<host_sender> PRIVMSG <msg_receiver> :<msg>";
-    if (rawMessage.empty()) {
+    if (rawMessage.empty() || rawMessage.size() < 2) {
         throw BotException("Empty message received");
     }
+    // Debug: print raw message and hex values
+    std::cout << "Raw message: '" << rawMessage << "'" << std::endl;
+    std::cout << "Hex: ";
+    for (size_t i = 0; i < rawMessage.size(); ++i) {
+        printf("%02X ", static_cast<unsigned char>(rawMessage[i]));
+    }
+    printf("\n");
     // we only need nick_sender and msg
     // only repond to PRIVMSG
-    std::stringstream ss(rawMessage);
+    // remove trailing \r\n if present in rawMessage
+    std::string trimmedMessage = rawMessage;
+    if (rawMessage[rawMessage.length() - 1] == '\n' && rawMessage[rawMessage.length() - 2] == '\r') {
+        trimmedMessage = rawMessage.substr(0, rawMessage.length() - 2);
+    } else {
+        throw BotException("Invalid message format: missing CRLF");
+    }
+    std::stringstream ss(trimmedMessage);
     std::string prefix, command, msg_receiver, msg;
     ss >> prefix >> command >> msg_receiver;
     if (ss.peek() == ' ')
@@ -53,23 +71,27 @@ BotBase::MessageIN BotBase::validateMessage(const std::string &rawMessage)
 
 std::string BotBase::prepareOutgoingMessage(const std::string &msg_receiver, const std::string &msg)
 {
-    // :<botnic>!<botname>@<bothost> NOTICE <msg_receiver> :<msg>";
     // first change all \n in msg to \r\n
+    //
     std::string prefix = ":" + name + "!" + name + "@" + hostname + " NOTICE " + msg_receiver + " :";
-    
-    std::string finalmessage;
-    size_t start = 0, end;
-    while ((end = msg.find('\n', start)) != std::string::npos) {
-        finalmessage += prefix + msg.substr(start, end - start) + "\r\n";
-        start = end + 1;
-    }
-    finalmessage += prefix + msg.substr(start) + "\r\n";
 
-    return finalmessage;
+    std::stringstream msgstream(msg);
+    // Split by newline and prepare each line
+    std::string line;
+    std::stringstream finalmessage;
+    while (std::getline(msgstream, line)) {
+        if (!line.empty()) {
+            finalmessage << prefix << line << "\r\n";
+        }
+    }
+    return finalmessage.str();
 }
 
-void BotBase::connect_to_server(const std::string &ip, const std::string &port, const std::string &pass)
+void BotBase::connect_to_server(std::vector<std::string> args)
 {
+    const std::string ip = args[0];
+    const std::string port = args[1];
+    const std::string pass = args[2];
     // setup socket
     struct addrinfo hints;
     memset(&hints, 0, sizeof hints);
@@ -100,7 +122,7 @@ void BotBase::connect_to_server(const std::string &ip, const std::string &port, 
     if (botsocket == -1) {
         throw BotException("Failed to connect to server");
     }
-    
+
     struct sockaddr_in local_addr;
     socklen_t addr_len = sizeof(local_addr);
     if (getsockname(botsocket, (struct sockaddr*)&local_addr, &addr_len) != 0) {
@@ -139,15 +161,18 @@ void BotBase::run()
         int max_fd = (botsocket > STDIN_FILENO) ? botsocket : STDIN_FILENO;
         int activity = select(max_fd + 1, &readfds, NULL, NULL, NULL);
 
+        if (running == false) {
+            break; // Exit loop if shutdown was called
+        }
         if (activity < 0) {
             throw BotException("select error");
         }
         if (FD_ISSET(botsocket, &readfds)) {
             char buffer[512];
-            ssize_t bytesRead = recv(botsocket, buffer, sizeof(buffer) - 1, 0);
+            memset(buffer, 0, sizeof(buffer));
+            ssize_t bytesRead = recv(botsocket, buffer, sizeof(buffer), 0);
             if (bytesRead > 0) {
-                buffer[bytesRead] = '\0';
-                std::string message(buffer);
+                std::string message = std::string(buffer, bytesRead > 0 ? bytesRead : 0);
                 BotBase::MessageIN messageIN;
                 try {
                     messageIN = validateMessage(message);
@@ -216,6 +241,14 @@ bool BotBase::setupSignalHandler(void (*handler)(int)) {
     return true;
 }
 
+void BotBase::internalSignalHandler(int signum) {
+    if (signum == SIGINT || signum == SIGQUIT) {
+        if (BotBase::instance) {
+            BotBase::instance->shutdown();
+        }
+    }
+}
+
 std::string BotBase::generateAuthMessage(const std::string &pass)
 {
     std::string fullstring;
@@ -223,4 +256,13 @@ std::string BotBase::generateAuthMessage(const std::string &pass)
     fullstring += "NICK " + name + "\r\n";
     fullstring += "USER " + name + " 0 * :" + name + "\r\n";
     return fullstring;
+}
+
+std::vector<std::string> parseArgs(int argc, char **argv)
+{
+    std::vector<std::string> args;
+    for (int i = 1; i < argc; ++i) {
+        args.push_back(std::string(argv[i]));
+    }
+    return args;
 }

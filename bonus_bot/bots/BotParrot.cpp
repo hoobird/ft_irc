@@ -1,5 +1,5 @@
-#ifndef BOTHUHCAT_CPP
-#define BOTHUHCAT_CPP
+#ifndef BOTPARROT_CPP
+#define BOTPARROT_CPP
 #include "BotBase.hpp"
 
 class BotParrot : public BotBase {
@@ -30,21 +30,14 @@ int main(int argc, char** argv) {
 }
 
 BotParrot::BotParrot(): BotBase() {
-    name = "HuhCat";
+    name = "Parrot";
 }
 
 BotParrot::~BotParrot(){}
 
 std::string BotParrot::handle_server_message(BotBase::MessageIN messageIN)
 {
-    (void) messageIN;
     std::string response;
-    response += " : ?    ?      \n";
-    response += " :  ／l、       \n";
-    response += " : (ﾟ､ ｡ ７ ?   \n";
-    response += " : l、ﾞ ~ヽ     \n";
-    response += " :  じしf_, )ノ \n";
-    response += " :  MIAU?      \n";
-
+    response += messageIN.message;
     return response;
 }
