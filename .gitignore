@@ -1,7 +1,8 @@
-/build
-/.vscode
+**/build
+**/.vscode
 /logs
 ircserv
+**/bin
 
 
 # Prerequisites
