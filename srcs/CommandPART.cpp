@@ -21,7 +21,7 @@ responseList CommandPART::execute(Client& client, const ParsedMessage& message)
     const std::string clientFdStr = client.getSocketFdString();
     const std::string clientNick = client.getClientPrefix();
 
-    if (message.parameters[0].empty()) {
+    if (message.parameters.empty() || message.parameters[0].empty()) {
         singleResponse resp = createSingleResponse("461", clientFdStr);
         resp["<client>"] = clientNick;
         resp["<command>"] = "PART";
