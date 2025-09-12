@@ -32,20 +32,21 @@ class BotBase {
         MessageIN validateMessage(const std::string& rawMessage);
         std::string prepareOutgoingMessage(const std::string& msg_receiver, const std::string& msg);
 
-        void connect_to_server(const std::string& ip, const std::string& port, const std::string &pass);
+        void connect_to_server(std::vector<std::string> args);
         void disconnect_from_server();
         void run();
 
         // Getters
         int getBotFd() const;
         void shutdown();
-        
-        bool setupSignalHandler(void (*handler)(int));
+
+
+        static void internalSignalHandler(int signum);
 
         class BotException : public std::exception {
             private:
                 std::string fullMessage;
-            public:
+                public:
                 BotException(const std::string& msg) : fullMessage("[BotBase] " + msg) {}
                 ~BotException() throw() {}
                 virtual const char* what() const throw() {
@@ -59,11 +60,15 @@ class BotBase {
         std::string hostname;
         bool running;
         fd_set readfds;
-        
+        static BotBase *instance;
+
     private:
+        bool setupSignalHandler(void (*handler)(int));
         std::string generateAuthMessage(const std::string &pass);
         BotBase(const BotBase &);
         BotBase& operator=(const BotBase&);
     };
-    
+
+    std::vector<std::string> parseArgs(int argc, char** argv);
+
 #endif
