@@ -146,13 +146,12 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message) 
         }
         mapModeFlags parsedFlags = parse(message);
 		for (mapModeFlags::const_iterator mapIt = parsedFlags.begin(); mapIt != parsedFlags.end(); ++mapIt) {
-			for (size_t i = 0; i < (mapIt->second).size(); ++i) { // not parsedFlags but mapIt
-                std::cout << "modeType Char: " << mapIt->first << ", mapIt->first" << std::endl; // "kolit"
-                char action = (mapIt->second)[i].first; // iterator i may not be the correct value
-                const std::string param = (mapIt->second)[i].second; // iterator i may not be the correct value
-                std::cout << "modeAction Char: " << action << ", (mapIt->second)[" << i << "]" << std::endl; // "+/-"
-                // std::cout << "modeType Char: " << mapIt->first << std::endl;
-	            switch (mapIt->first) {
+            char modeChar = mapIt->first;
+            size_t maxIter = (modeChar == 'o') ? std::min((size_t)3, mapIt->second.size()) : 1;
+			for (size_t i = 0; i < maxIter; ++i) {
+                char action = (mapIt->second)[i].first;
+                const std::string param = (mapIt->second)[i].second;
+	            switch (modeChar) {
                     case 'i':
                         if (action == '+') {
 	                        targetChannel->setInviteMode(true);
@@ -181,12 +180,12 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message) 
 	                    }
 	                    else if (action == '-') {
 	                        if (param == targetChannel->getKey()) // does the param need to have the same key to trigger remove? NC seems yes, IRSSI seems no
-	                        targetChannel->setKey("");
+	                            targetChannel->setKey("");
 	                    }
 	                    break ;
 	                case 'o': { // this is done in a loop
                         Client* targetClient = dataStore.getClient(param);
-                        if (!targetClient) {
+                        if (!targetClient) { // check behaviour, this may get silently ignored.
                             // ERR_NOSUCHNICK 401
                             singleResponse resp = createSingleResponse("401", clientFdStr);
                             resp["<client>"] = clientNick;
@@ -200,15 +199,14 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message) 
 	                    else if (action == '-') {
                             targetChannel->removeOperator(*targetClient);
 	                    }
-	                    break ;
+	                    continue ;
                     }
 	                case 'l':
 	                    if (action == '+') {
                             std::istringstream iss(param);
                             int value;
-                            iss >> value;
-                            // feedback: need to check if negative value
-	                        targetChannel->setLimit(value);
+                            if (iss >> value && value > 0) // only set if value is negative
+	                            targetChannel->setLimit(value);
 	                    }
 	                    else if (action == '-') {
 	                        targetChannel->setLimit(-1);
