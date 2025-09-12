@@ -15,6 +15,7 @@
 #include <stdexcept>
 #include <iostream>
 #include <sstream>
+#include <signal.h>
 
 
 class BotBase {
@@ -37,7 +38,9 @@ class BotBase {
 
         // Getters
         int getBotFd() const;
-        bool isConnected() const;
+        void shutdown();
+        
+        bool setupSignalHandler(void (*handler)(int));
 
         class BotException : public std::exception {
             private:
@@ -54,14 +57,13 @@ class BotBase {
         int botsocket;
         std::string name;
         std::string hostname;
-        bool connected;
+        bool running;
         fd_set readfds;
-
+        
     private:
         std::string generateAuthMessage(const std::string &pass);
-        BotBase(const BotBase&);
+        BotBase(const BotBase &);
         BotBase& operator=(const BotBase&);
-
-};
-
+    };
+    
 #endif

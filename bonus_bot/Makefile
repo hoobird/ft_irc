@@ -47,6 +47,11 @@ fclean: clean
 
 re : fclean all
 
+debug: CXXFLAGS += -g
+debug: re
+	@echo "Run test with: "
+	@echo "valgrind --show-leak-kinds=all --leak-check=full --track-fds=yes ./bin/<bot> <server> <port> <pass>"
+
 list-bots:
 	@echo "Available bots:"
 	@for bot in $(BOTS); do \

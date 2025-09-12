@@ -1,13 +1,14 @@
 #include "BotBase.hpp"
-
-BotBase::BotBase(): botsocket(-1), connected(false)
+#include <csignal>
+#include <iostream>
+    
+BotBase::BotBase(): botsocket(-1), running(false)
 {}
 
 BotBase::~BotBase()
 {
-    if (connected) {
-        disconnect_from_server();
-    }
+    std::cout << "BotBase destructor called" << std::endl;
+    disconnect_from_server();
 }
 
 BotBase::MessageIN BotBase::validateMessage(const std::string &rawMessage)
@@ -28,6 +29,11 @@ BotBase::MessageIN BotBase::validateMessage(const std::string &rawMessage)
     std::cout << "Debug: prefix='" << prefix << "', command='" << command << "', msg_receiver='" << msg_receiver << "', msg='" << msg << "'" << std::endl;
 
     // check if command is PRIVMSG first
+    if (command == "433") // Nickname already used, meaing bot already connected
+    {
+        running = false;
+        throw BotException("Nickname already in use, bot might already be connected");
+    }
     if (command != "PRIVMSG") {
         throw BotException("Only handling PRIVMSG");
     }
@@ -111,26 +117,21 @@ void BotBase::connect_to_server(const std::string &ip, const std::string &port, 
         botsocket = -1;
         throw BotException("Failed to send authentication message");
     }
-    connected = true;
+    running = true;
 
 }
 
 void BotBase::disconnect_from_server()
 {
-    if (connected)
-    {
-        if (botsocket != -1) {
-            close(botsocket);
-        }
-        botsocket = -1;
-        connected = false;
+    if (botsocket != -1) {
+        close(botsocket);
     }
+    botsocket = -1;
 }
 
 void BotBase::run()
 {
-
-    while (connected)
+    while (running)
     {
         FD_ZERO(&readfds);
         FD_SET(STDIN_FILENO, &readfds); // Monitor standard input as well
@@ -138,7 +139,7 @@ void BotBase::run()
         int max_fd = (botsocket > STDIN_FILENO) ? botsocket : STDIN_FILENO;
         int activity = select(max_fd + 1, &readfds, NULL, NULL, NULL);
 
-        if (activity < 0 && errno != EINTR) {
+        if (activity < 0) {
             throw BotException("select error");
         }
         if (FD_ISSET(botsocket, &readfds)) {
@@ -165,6 +166,7 @@ void BotBase::run()
             } else if (bytesRead == 0) {
                 // Connection closed by server
                 disconnect_from_server();
+                break;
             } else {
                 throw BotException("recv error");
             }
@@ -181,6 +183,7 @@ void BotBase::run()
             } else {
                 // EOF or error on stdin
                 disconnect_from_server();
+                break;
             }
         }
     }
@@ -192,9 +195,25 @@ int BotBase::getBotFd() const
     return botsocket;
 }
 
-bool BotBase::isConnected() const
+void BotBase::shutdown()
 {
-    return connected;
+    running = false;
+    write(STDOUT_FILENO, "\r\n", 2);
+    std::cout << "Shutdown signal received, disconnecting..." << std::endl;
+}
+
+bool BotBase::setupSignalHandler(void (*handler)(int)) {
+    struct sigaction sa;
+    sa.sa_handler = handler;
+    sa.sa_flags = 0;
+    sigemptyset(&sa.sa_mask);
+
+    if (sigaction(SIGINT, &sa, NULL) != 0 ||
+        sigaction(SIGQUIT, &sa, NULL) != 0) {
+        std::cerr << "Error: Unable to set-up signal handlers." << std::endl;
+        return false;
+    }
+    return true;
 }
 
 std::string BotBase::generateAuthMessage(const std::string &pass)
