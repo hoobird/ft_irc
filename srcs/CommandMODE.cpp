@@ -12,26 +12,6 @@ CommandMODE::~CommandMODE()
 {
 }
 
-// 461 ERR_NEEDMOREPARAMS (done)
-// 501 ERR_UMODEUNKNOWNFLAG (done)
-// 403 ERR_NOSUCHCHANNEL (done)
-// 482 ERR_CHANOPRIVSNEEDED (done)
-// 442 ERR_NOTONCHANNEL (Returned when a client tries to perform a channel-affecting command on a channel which the client isn’t a part of.)
-// 401 ERR_NOSUCHNICK (Indicates that no client can be found for the supplied nickname. The text used in the last param of this message may vary.)
-// 324 RPL_CHANNELMODEIS (sent to a client to inform them of the currently active modes of a channel)
-// 329 RPL_CREATIONTIME (maybe cannot replicate cause of illegal function)
-// 329 RPL_CREATIONTIME (maybe cannot replicate cause of illegal function)
-// 472 ERR_UNKNOWNMODE (Indicates that a mode character used by a client is not recognized by the server. The text used in the last param of this message may vary.)
-
-// 467 ERR_KEYSET (Implemented for classic RFC compliant server, where if a key is set already, it needs to be removed first, dalnet simply overwrites with +k if pass was set alr)
-// 346 RPL_INVITELIST (under client protocol)
-// 347 RPL_ENDOFINVITELIST (likely paired with 346, check output, under client protocol)
-// 325 RPL_UNIQOPIS (older implement, likely finds all ops in a channel and return nickname with relevant prefix attached. Check output to confirm)
-
-// Channel Mode Parameters: <channel> {[+|-]|o|i|t|k|l} [<limit>] [<user>] [<ban mask>]
-
-// need to do basic parsing (if + or -, then followed by whatever mode)
-
 responseList CommandMODE::errorHandle(const ParsedMessage& message, const std::string clientFdStr, const std::string clientNick) {
     responseList responses;
 
@@ -56,7 +36,7 @@ responseList CommandMODE::errorHandle(const ParsedMessage& message, const std::s
     return responses;
 }
 
-bool needParameter(char commandType, char operation)
+bool CommandMODE::needParameter(char commandType, char operation)
 {
     switch (commandType) {
         case 'k':
@@ -78,32 +58,60 @@ CommandMODE::mapModeFlags CommandMODE::parse(const ParsedMessage& message)
 {
     // typedef std::map<char, std::vector<std::pair<char, std::string> > >
     // map = parsedFlags; map[key] = char flags[i]; map[value] = actionList<action>; action.first(char) = "+"/"-"/'0'; action.second(string) = modeParams (i.e "password", limit value, UserNick)
-    mapModeFlags   parsedFlags;
+    mapModeFlags   parsedFlags; //std::map
 	const std::string flags = message.parameters[1];
     char commandType;
     char operation = '\0'; // default behaviour
 
     // loop through commandType, if no command type to loop, there should be no valid modeParam.
-	for (size_t i = 0; i < flags.size(); ++i) {
-        char c = flags[i];
-        if (c == '+' || c == '-')
-            operation = c;
+    size_t multiParamFlagCount = 1;
+    for (std::string::const_iterator flagIt = flags.begin(); flagIt != flags.end(); ++flagIt) {
+        char c = *flagIt;
+        if (c == '+' || c == '-') {
+            operation = c; // +/-
+        }
         else {
+            commandType = c; // tilko
             std::pair<char, std::string> action;
             action.first = operation;
-            commandType = c;
             if (commandType != '\0') {
                 parsedFlags[commandType];
             }
-            if (needParameter(commandType, operation) == true && i < message.parameters.size())
-                action.second = message.parameters[i];
-            action.second = "";
-            parsedFlags[commandType].push_back(action);
+            if (needParameter(commandType, operation) == true && multiParamFlagCount <= message.parameters.size()) {
+                multiParamFlagCount++;
+                action.second = message.parameters[multiParamFlagCount];
+            }
+            else {
+                action.second = "";
+            }
+            if (commandType != '\0') {
+                parsedFlags[commandType].push_back(action);
+            }
         }
     }
     return parsedFlags;
 }
 
+
+// 461 ERR_NEEDMOREPARAMS (done)
+// 501 ERR_UMODEUNKNOWNFLAG (done)
+// 403 ERR_NOSUCHCHANNEL (done)
+// 482 ERR_CHANOPRIVSNEEDED (done)
+// 442 ERR_NOTONCHANNEL (Returned when a client tries to perform a channel-affecting command on a channel which the client isn’t a part of.)
+// 401 ERR_NOSUCHNICK (Indicates that no client can be found for the supplied nickname. The text used in the last param of this message may vary.)
+// 324 RPL_CHANNELMODEIS (sent to a client to inform them of the currently active modes of a channel)
+// 329 RPL_CREATIONTIME (maybe cannot replicate cause of illegal function)
+// 329 RPL_CREATIONTIME (maybe cannot replicate cause of illegal function)
+// 472 ERR_UNKNOWNMODE (Indicates that a mode character used by a client is not recognized by the server. The text used in the last param of this message may vary.)
+
+// 467 ERR_KEYSET (Implemented for classic RFC compliant server, where if a key is set already, it needs to be removed first, dalnet simply overwrites with +k if pass was set alr)
+// 346 RPL_INVITELIST (under client protocol)
+// 347 RPL_ENDOFINVITELIST (likely paired with 346, check output, under client protocol)
+// 325 RPL_UNIQOPIS (older implement, likely finds all ops in a channel and return nickname with relevant prefix attached. Check output to confirm)
+
+// Channel Mode Parameters: <channel> {[+|-]|o|i|t|k|l} [<limit>] [<user>] [<ban mask>]
+
+// need to do basic parsing (if + or -, then followed by whatever mode)
 responseList CommandMODE::execute(Client& client, const ParsedMessage& message) {
     responseList responses;
     const std::string clientNick = client.getClientPrefix();
@@ -123,7 +131,6 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message) 
         return responses;
     }
 
-    // Is query (client doesn't have to be in channel or operator)
     // Is query (client doesn't have to be in channel or operator)
     if (message.parameters.size() == 1) {
         singleResponse resp = createSingleResponse("324", clientFdStr);
@@ -147,86 +154,135 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message) 
             return responses ;
         }
         mapModeFlags parsedFlags = parse(message);
+        std::string flagCollector;
+        std::string paramCollector;
+        // std::map<char, std::vector<std::pair<char, std::string>>>
 		for (mapModeFlags::const_iterator mapIt = parsedFlags.begin(); mapIt != parsedFlags.end(); ++mapIt) {
             char modeChar = mapIt->first;
-            size_t maxIter = (modeChar == 'o') ? std::min((size_t)3, mapIt->second.size()) : 1;
-			for (size_t i = 0; i < maxIter; ++i) {
-                char action = (mapIt->second)[i].first;
-                const std::string param = (mapIt->second)[i].second;
-	            switch (modeChar) {
-                    case 'i':
-                        if (action == '+') {
-	                        targetChannel->setInviteMode(true);
-                            std::cout << "+i" << std::endl;
-	                    }
-	                    else if (action == '-') {
-	                        targetChannel->setInviteMode(false);
-                            targetChannel->emptyInviteList();
-                            std::cout << "-i" << std::endl;
-	                    }
-	                    break ;
-	                case 't':
-	                    if (action == '+') {
-	                        targetChannel->setTopicRestrict(true);
-                            std::cout << "+t" << std::endl;
-	                    }
-	                    else if (action == '-') {
-	                        targetChannel->setTopicRestrict(false);
-	                        targetChannel->setTopic("");
-                            std::cout << "-t" << std::endl;
-	                    }
-	                    break ;
-	                case 'k':
-	                    if (action == '+') {
-	                        targetChannel->setKey(param);
-	                    }
-	                    else if (action == '-') {
-	                        if (param == targetChannel->getKey()) // does the param need to have the same key to trigger remove? NC seems yes, IRSSI seems no
-	                            targetChannel->setKey("");
-	                    }
-	                    break ;
-	                case 'o': { // this is done in a loop
-                        Client* targetClient = dataStore.getClient(param);
-                        if (!targetClient) { // check behaviour, this may get silently ignored.
+            std::vector<std::pair<char, std::string> > action = mapIt->second;
+            // std::cout << "[DEBUG] action[0].first: " << action[0].first << std::endl; // debug
+            // std::cout << "[DEBUG] action[0].second: " << action[0].second << std::endl; // debug
+            if (action[0].second.empty()) {
+                if (modeChar == 'i') {
+                    if (action[0].first == '+') {
+                        targetChannel->setInviteMode(true);
+                        flagCollector += "+i";
+                    }
+                    else if (action[0].first == '-') {
+                        targetChannel->setInviteMode(false);
+                        targetChannel->emptyInviteList();
+                        flagCollector += "-i";
+                    }
+                }
+                else if (modeChar == 't') {
+                    if (action[0].first == '+') {
+                        targetChannel->setTopicRestrict(true);
+                        flagCollector += "+t";
+                    }
+                    else if (action[0].first == '-') {
+                        targetChannel->setTopicRestrict(false);
+                        targetChannel->setTopic("");
+                        flagCollector += "-t";
+                    }
+                }
+                else {
+                    std::ostringstream oss;
+                    oss << "MODE ISSUE" << action[0].first << modeChar;
+                    singleResponse resp = createSingleResponse("461", clientFdStr);
+                    resp["<client>"] = clientNick;
+                    resp["<command>"] = oss.str();
+                    resp["<reason>"] = "Not enough parameters";
+                    responses.push_back(resp);
+                    return responses;
+                }
+
+            }
+            else {
+                std::string singleCallParam = action[0].second;
+                if (modeChar == 'k') {
+                    if (action[0].first == '+') {
+                        targetChannel->setKey(singleCallParam);
+                        flagCollector += "+k";
+                        paramCollector += singleCallParam;
+                    }
+                    else if (action[0].first == '-') {
+                        if (singleCallParam == targetChannel->getKey()) { // does the param need to have the same key to trigger remove? NC seems yes, IRSSI seems no
+                            targetChannel->setKey("");
+                            flagCollector += "-k";
+                            paramCollector += singleCallParam;
+                        }
+                    }
+                }
+                else if (modeChar == 'l') {
+                    if (action[0].first == '+') {
+                        std::istringstream iss(singleCallParam);
+                        int value;
+                        if (iss >> value && value > 0) { // only set if value is negative
+                            targetChannel->setLimit(value);
+                            flagCollector += "+l";
+                            paramCollector += singleCallParam;
+                        }
+                    }
+                    else if (action[0].first == '-') {
+                        targetChannel->setLimit(-1);
+                        flagCollector += "-l";
+                        paramCollector += singleCallParam;
+                    }
+                }
+                else if (modeChar == 'o') {
+                    std::vector<std::pair<char, std::string> >::const_iterator it;
+                    for (it = action.begin(); it != action.end(); ++it) {
+                        std::string multiCallParam = it->second;
+                        Client* targetClient = dataStore.getClient(multiCallParam);
+                        if (!targetClient) {
                             // ERR_NOSUCHNICK 401
                             singleResponse resp = createSingleResponse("401", clientFdStr);
                             resp["<client>"] = clientNick;
-                            resp["<nick>"] = param;
+                            resp["<nick>"] = multiCallParam;
                             resp["<reason>"] = "No such nick/channel";
                             responses.push_back(resp);
                         }
-	                    if (action == '+') {
+                        if (it->first == '+') {
                             targetChannel->addOperator(*targetClient);
-	                    }
-	                    else if (action == '-') {
-                            targetChannel->removeOperator(*targetClient);
-	                    }
-	                    continue ;
+                            flagCollector += "+o";
+                            paramCollector += multiCallParam;
                     }
-	                case 'l':
-	                    if (action == '+') {
-                            std::istringstream iss(param);
-                            int value;
-                            if (iss >> value && value > 0) // only set if value is negative
-	                            targetChannel->setLimit(value);
-	                    }
-	                    else if (action == '-') {
-	                        targetChannel->setLimit(-1);
-	                    }
-	                    break ;
-	                default:
-                        // 472 ERR_UNKNOWNMODE
-	                    singleResponse resp = createSingleResponse("472", clientFdStr);
-	                    resp["<client>"] = clientNick;
-	                    resp["<char>"] = mapIt->first;
-	                    resp["<reason>"] = "is unknown mode char to me";
-	                    responses.push_back(resp);
-	                    break ;
-	            }
-			}
-		}
-	}
-	return responses;
+                        else if (it->first == '-') {
+                            targetChannel->removeOperator(*targetClient);
+                            flagCollector += "-o";
+                            paramCollector += multiCallParam;
+                        }
+                    }
+                }
+                else {
+                    std::ostringstream oss;
+                    oss << "Unknown mode character " << modeChar;
+                    singleResponse resp = createSingleResponse("472", clientFdStr);
+                    resp["<client>"] = clientNick;
+                    resp["<char>"] = mapIt->first;
+                    resp["<reason>"] = oss.str(); // following dalnet behaviour
+                    responses.push_back(resp);
+                }
+            }
+            if (paramCollector.size() > 1)
+                paramCollector += " ";
+        }
+
+        if (!flagCollector.empty())
+        {
+            // return MODE acknowledgement response
+            // >> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #helluu +i+k pass
+            singleResponse resp = createSingleResponse("MODE", clientFdStr);
+            resp["<nick_sender>"] = clientNick;
+            resp["<user_sender>"] = client.getUsername();
+            resp["<host_sender>"] = client.getHostname();
+            resp["<channel>"] = message.parameters[0];
+            resp["<flag>"] = flagCollector;
+            resp["<param>"] = paramCollector;
+            responses.push_back(resp);
+        }
+    }
+    return responses;
 }
 
 CommandBase* CommandMODE::clone() const {

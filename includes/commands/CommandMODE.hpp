@@ -61,8 +61,12 @@ public:
     CommandMODE(const CommandMODE& other);
     ~CommandMODE();
     responseList errorHandle(const ParsedMessage& message, const std::string clientFdStr, const std::string clientNick);
-    responseList execute(Client& client, const ParsedMessage& message);
+    bool needParameter(char commandType, char operation);
     mapModeFlags parse(const ParsedMessage& message);
+    void handleSingleCallModes(); // reconsider refactoring
+    void handleMultiCallModes(); // reconsider refactoring
+
+    responseList execute(Client& client, const ParsedMessage& message);
 	CommandBase* clone() const;
 
 private:

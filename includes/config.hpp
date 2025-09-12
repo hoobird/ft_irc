@@ -64,9 +64,9 @@ enum ChanModes {
 inline std::string getChanMode(ChanModes mode) {
     switch (mode) {
         case CHANMODES_CAT_A: return "";
-        case CHANMODES_CAT_B: return "ko";
-        case CHANMODES_CAT_C: return "l";
-        case CHANMODES_CAT_D: return "it";
+        case CHANMODES_CAT_B: return "ko"; // needs param for both
+        case CHANMODES_CAT_C: return "l"; // need param for only +l
+        case CHANMODES_CAT_D: return "it"; // no params needed
 
         default: return "Unable to retrieve CHANMODES";
     }
