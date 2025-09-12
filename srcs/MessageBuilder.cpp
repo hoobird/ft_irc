@@ -99,6 +99,9 @@ void MessageBuilder::initializeNumericTemplates()
     numericTemplates["INVITE"] = ":<nick_sender>!<user_sender>@<host_sender> INVITE <target_member> :<channel>";
     numericTemplates["QUIT"] = ":<nick_sender>!<user_sender>@<host_sender> QUIT :<reason>";
     numericTemplates["NOTICE"] = ":<nick_sender>!<user_sender>@<host_sender> NOTICE <msg_receiver> :<msg>";
+    // << MODE #helluu +k-k+k pass1 pass2
+    // anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #helluu +k pass1
+    numericTemplates["MODE"] = ":<nick_sender>!<user_sender>@<host_sender> MODE <channel> <flag> <param>";
 
     // Numeric templates for various IRC responses
     // prefix = ":<server> <numeric> "
