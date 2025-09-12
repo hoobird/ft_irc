@@ -102,7 +102,7 @@ responseList CommandJOIN::execute(Client& client, const ParsedMessage& message) 
         {
             std::cout << "Channel exists, proceeding checks...\n";
             int channelCount = dataStore.countChannelsForClient(client);
-            std::string clientMaxChannels = getLimitString(LIMITS_CHANLIMIT); // MARK: TEMP (relook at scope)
+            std::string clientMaxChannels = getLimitString(LIMITS_MAXCHANNELS);
             std::istringstream iss(clientMaxChannels);
             int maxChannels;
             iss >> maxChannels;
