@@ -20,6 +20,7 @@ CommandMODE::~CommandMODE()
 // 401 ERR_NOSUCHNICK (Indicates that no client can be found for the supplied nickname. The text used in the last param of this message may vary.)
 // 324 RPL_CHANNELMODEIS (sent to a client to inform them of the currently active modes of a channel)
 // 329 RPL_CREATIONTIME (maybe cannot replicate cause of illegal function)
+// 329 RPL_CREATIONTIME (maybe cannot replicate cause of illegal function)
 // 472 ERR_UNKNOWNMODE (Indicates that a mode character used by a client is not recognized by the server. The text used in the last param of this message may vary.)
 
 // 467 ERR_KEYSET (Implemented for classic RFC compliant server, where if a key is set already, it needs to be removed first, dalnet simply overwrites with +k if pass was set alr)
@@ -122,6 +123,7 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message) 
         return responses;
     }
 
+    // Is query (client doesn't have to be in channel or operator)
     // Is query (client doesn't have to be in channel or operator)
     if (message.parameters.size() == 1) {
         singleResponse resp = createSingleResponse("324", clientFdStr);

@@ -10,7 +10,7 @@
 class CommandMODE : public CommandBase {
 public:
     // typedef std::vector<std::pair<std::string, std::string> > vecModeFlags; // vector base struct that stores the mode flags
-	// i.e. 
+	// i.e.
 		// '-i', "";
 		// '-i', "";
 		// '+i', "";
@@ -30,24 +30,24 @@ public:
 		// '+l', "1";
 		// '+l', "5";
 		// '+l', "10";
-    typedef std::map<char, std::vector<std::pair<char, std::string> > > mapModeFlags; // map base struct that stores the mode flags 
-	// i.e. 
-		// i: 
+    typedef std::map<char, std::vector<std::pair<char, std::string> > > mapModeFlags; // map base struct that stores the mode flags
+	// i.e.
+		// i:
 			// '-', "";
 			// '-', "";
 			// '+', "";
 			// '-', "";
-		// t: 
+		// t:
 			// '-', "";
 			// '+', "";
 			// '+', "";
 			// '+', "";
-		// k: 
+		// k:
 			// '-', "pass";
 			// '+', "pass";
 			// '+', "pass";
 			// '+', "pass";
-		// o: 
+		// o:
 			// '-', "userNick";
 			// '+', "userNick";
 			// '+', "userNick";
