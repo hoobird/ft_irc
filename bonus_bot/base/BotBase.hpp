@@ -29,8 +29,11 @@ class BotBase {
         };
 
         virtual std::string handle_server_message(BotBase::MessageIN messageIN) = 0;
-        MessageIN validateMessage(const std::string& rawMessage);
+        std::vector<std::string> parseMessages(const std::string& rawMessage);
+        MessageIN processMessage(const std::string &message);
         std::string prepareOutgoingMessage(const std::string& msg_receiver, const std::string& msg);
+
+        std::string processUserInput(const std::string &input);
 
         void connect_to_server(std::vector<std::string> args);
         void disconnect_from_server();
@@ -56,9 +59,10 @@ class BotBase {
 
     protected:
         int botsocket;
+        bool running;
         std::string name;
         std::string hostname;
-        bool running;
+        std::string messagebuffer;
         fd_set readfds;
         static BotBase *instance;
 
