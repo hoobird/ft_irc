@@ -69,7 +69,7 @@ BotBase::MessageIN BotBase::processMessage(const std::string &message){
     messageIN.receiver = msg_receiver;
     messageIN.message = actual_msg;
 
-    std::cout << "Debug: prefix='" << prefix << "', command='" << command << "', msg_receiver='" << msg_receiver << "', msg='" << actual_msg << "'" << std::endl;
+    // std::cout << "Debug: prefix='" << prefix << "', command='" << command << "', msg_receiver='" << msg_receiver << "', msg='" << actual_msg << "'" << std::endl;
 
     return messageIN;
 }
