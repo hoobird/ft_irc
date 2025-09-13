@@ -45,7 +45,6 @@ BotBase::MessageIN BotBase::processMessage(const std::string &message){
         ss.get(); // consume the space
     std::getline(ss, msg);
 
-    // std::cout << "Debug: prefix='" << prefix << "', command='" << command << "', msg_receiver='" << msg_receiver << "', msg='" << msg << "'" << std::endl;
 
     // check if command is PRIVMSG first
     if (command == "433") // Nickname already used, meaing bot already connected
@@ -66,8 +65,12 @@ BotBase::MessageIN BotBase::processMessage(const std::string &message){
     }
     std::string actual_msg = msg.substr(1); // Remove leading ':'
     MessageIN messageIN;
-    messageIN.from = nick_sender;
+    messageIN.source = nick_sender;
+    messageIN.receiver = msg_receiver;
     messageIN.message = actual_msg;
+
+    std::cout << "Debug: prefix='" << prefix << "', command='" << command << "', msg_receiver='" << msg_receiver << "', msg='" << actual_msg << "'" << std::endl;
+
     return messageIN;
 }
 
@@ -230,10 +233,11 @@ void BotBase::run()
                     std::vector<std::string> parsedMessages = parseMessages(message);
                     for (std::vector<std::string>::iterator it = parsedMessages.begin(); it != parsedMessages.end(); ++it) {
                         BotBase::MessageIN messageIN = processMessage(*it);
-                        std::string botresponse = handle_server_message(messageIN);
-                        botresponse = prepareOutgoingMessage(messageIN.from, botresponse);
-                        if (!botresponse.empty()) {
-                            ssize_t bytesSent = send(botsocket, botresponse.c_str(), botresponse.length(), 0);
+                        std::pair<std::string,std::string> botresponse = handle_server_message(messageIN);
+                        std::string finalresponse = prepareOutgoingMessage(botresponse.first, botresponse.second);
+                        std::cout << "Bot -> Server: " << finalresponse << std::endl;
+                        if (!finalresponse.empty()) {
+                            ssize_t bytesSent = send(botsocket, finalresponse.c_str(), finalresponse.length(), 0);
                             if (bytesSent == -1) {
                                 running = false;
                                 throw BotException("Failed to send message to server");
