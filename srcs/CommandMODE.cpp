@@ -278,7 +278,7 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message)
                             resp["<channel>"] = channelName;
                             resp["<reason>"] = "They're not on that channel";
                             responses.push_back(resp);
-                            return responses;
+                            continue ;
                         }
                         if (it->first == '+') {
                             targetChannel->addOperator(*targetClient);
