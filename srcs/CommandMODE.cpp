@@ -226,7 +226,7 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message)
                 if (modeChar == 'k') {
                     std::string passLimitStr = getLimitString(LIMITS_MODEPASSMAX);
                     std::istringstream iss(passLimitStr);
-                    int passLimit;
+                    size_t passLimit;
                     iss >> passLimit;
                     if (singleCallParam.size() > passLimit) {
                         singleCallParam.resize(passLimit);
