@@ -99,7 +99,7 @@ responseList CommandKICK::execute(Client& client, const ParsedMessage& message) 
         resp["<user_sender>"] = client.getUsername();
         resp["<host_sender>"] = client.getHostname();
         resp["<channel>"] = message.parameters[0];
-        resp["<target_member>"] = message.parameters[1];
+        resp["<target_member>"] = currMember->getNickname();
         resp["<comment>"] = "";
         targetChannel->removeMember(*currMember); // automatically removes operator if operator removes himself
 
