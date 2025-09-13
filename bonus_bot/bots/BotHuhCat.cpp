@@ -6,7 +6,7 @@ class BotParrot : public BotBase {
     public:
         BotParrot();
         virtual ~BotParrot();
-        virtual std::string handle_server_message(BotBase::MessageIN messageIN);
+        virtual std::pair<std::string,std::string> handle_server_message(BotBase::MessageIN messageIN);
 
     private:
         BotParrot(const BotParrot&);
@@ -35,7 +35,7 @@ BotParrot::BotParrot(): BotBase() {
 
 BotParrot::~BotParrot(){}
 
-std::string BotParrot::handle_server_message(BotBase::MessageIN messageIN)
+std::pair<std::string,std::string> BotParrot::handle_server_message(BotBase::MessageIN messageIN)
 {
     (void) messageIN;
     std::string response;
@@ -46,5 +46,9 @@ std::string BotParrot::handle_server_message(BotBase::MessageIN messageIN)
     response += " :  じしf_, )ノ \n";
     response += " :  MIAU?      \n";
 
-    return response;
+    if (messageIN.receiver[0] == '#') {
+        return std::make_pair(messageIN.receiver, response); // respond in channel
+    } else {
+        return std::make_pair(messageIN.source, response); // respond in private message
+    }
 }
