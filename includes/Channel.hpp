@@ -19,6 +19,7 @@ public:
 	~Channel();
 
 	void setMode(const std::string& mode, const std::string& value);
+	void removeMode(const std::string& mode, const std::string& value);
 	void addMember(Client& client);
 	void removeMember(Client& client);
 	bool isMember(const Client& client) const;
