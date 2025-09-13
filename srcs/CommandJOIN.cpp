@@ -123,6 +123,8 @@ responseList CommandJOIN::execute(Client& client, const ParsedMessage& message) 
             // all checks passed
             // then add client to channel
             findChannel->addMember(client);
+            // removal of client, who has channel invite, from channel invitelist after their successful channel join.
+            findChannel->removeInvitedUser(client);
         }
 
         // notify new and existing members about new joiner by sending JOIN response

@@ -56,10 +56,53 @@ bool Channel::isMemberInvited(const Client& client) const
     return inviteList.find(client.getSocketFd()) != inviteList.end();
 }
 
-void Channel::addInvitedMember(const Client& client)
+void Channel::addInvitedUser(const Client& client)
 {
     this->inviteList.insert(client.getSocketFd());
 }
+
+void Channel::removeInvitedUser(const Client& client)
+{
+    if (!this->inviteList.empty()) {
+        int clientFd = client.getSocketFd();
+        std::set<int>::const_iterator it = inviteList.find(clientFd);
+        if (it != inviteList.end())
+            inviteList.erase(it);
+    }
+}
+
+
+void Channel::emptyInviteList()
+{
+    if (!this->inviteList.empty()) {
+        for (std::set<int>::const_iterator it = inviteList.begin(); it != inviteList.end(); ++it) {
+            inviteList.erase(it);
+        }
+    }
+}
+
+std::string Channel::displayModes() const {
+    std::string modeFlag = "+"; // default is "+"
+    std::string modeValue = "";
+
+    // +tilk 50 pass
+    if (topicRestrict == true)
+        modeFlag += 't';
+    if (inviteMode == true)
+        modeFlag += 'i';
+    if (limit != -1) {
+        modeFlag += 'l';
+        std::ostringstream oss;
+        oss << limit;
+        modeValue += oss.str() + " ";
+    }
+    if (key != "") {
+        modeFlag += 'k';
+        modeValue += key;
+    }
+    return modeFlag + " " + modeValue;
+}
+
 
 std::string Channel::getName() const
 {
