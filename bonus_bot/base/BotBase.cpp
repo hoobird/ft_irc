@@ -325,5 +325,8 @@ std::vector<std::string> parseArgs(int argc, char **argv)
     for (int i = 1; i < argc; ++i) {
         args.push_back(std::string(argv[i]));
     }
+    if (args.size() != 3) {
+        std::cerr << "Usage: ./bin/<Bot> <server> <port> <password>\n";
+    }
     return args;
 }

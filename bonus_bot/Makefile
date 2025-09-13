@@ -12,7 +12,7 @@ BOTBASE_HEADER = $(BASEEDIR)/BotBase.hpp
 BOTBASE_DEP = $(BOTBASE_OBJ:.o=.d)
 
 # List of available bots (Update here once new bots are added)
-BOT_SRC_NAMES = BotHuhCat.cpp BotParrot.cpp
+BOT_SRC_NAMES = BotHuhCat.cpp BotParrot.cpp BotSloth.cpp
 BOTS = $(BOT_SRC_NAMES:.cpp=)
 BOT_SRCS = $(addprefix $(BOTSDIR)/, $(BOT_SRC_NAMES))
 BOT_OBJS = $(addprefix $(BUILDDIR)/, $(addsuffix .o, $(BOTS)))
@@ -20,6 +20,10 @@ BOT_DEPS = $(BOT_OBJS:.o=.d)
 BOT_BINS = $(addprefix $(BINDIR)/, $(BOTS))
 
 all: $(BOT_BINS)
+
+huhcat: $(BINDIR)/BotHuhCat
+parrot: $(BINDIR)/BotParrot
+sloth: $(BINDIR)/BotSloth
 
 # Create build and bin directory
 $(BUILDDIR) $(BINDIR):
@@ -77,5 +81,3 @@ help:
 	@echo "  Binaries:   $(BINDIR)/"
 
 .PHONY: all clean help list-bots
-
-huhcat: $(BINDIR)/BotHuhCat

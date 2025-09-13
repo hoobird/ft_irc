@@ -1,16 +1,16 @@
-#ifndef BOTPARROT_CPP
-#define BOTPARROT_CPP
+#ifndef BOTSLOTH_CPP
+#define BOTSLOTH_CPP
 #include "BotBase.hpp"
 
-class BotHuhCat : public BotBase {
+class BotSloth : public BotBase {
     public:
-        BotHuhCat();
-        virtual ~BotHuhCat();
+        BotSloth();
+        virtual ~BotSloth();
         virtual std::pair<std::string,std::string> handle_server_message(BotBase::MessageIN messageIN);
 
     private:
-        BotHuhCat(const BotHuhCat&);
-        BotHuhCat& operator=(const BotHuhCat&);
+        BotSloth(const BotSloth&);
+        BotSloth& operator=(const BotSloth&);
 };
 #endif
 
@@ -19,7 +19,7 @@ int main(int argc, char** argv) {
     if (args.size() != 3) {
         return 1;
     }
-    BotHuhCat bot;
+    BotSloth bot;
     try {
         bot.connect_to_server(args);
         bot.run();
@@ -29,16 +29,24 @@ int main(int argc, char** argv) {
     return 0;
 }
 
-BotHuhCat::BotHuhCat(): BotBase() {
-    name = "Parrot";
+BotSloth::BotSloth(): BotBase() {
+    name = "Sloth";
 }
 
-BotHuhCat::~BotHuhCat(){}
+BotSloth::~BotSloth(){}
 
-std::pair<std::string,std::string> BotHuhCat::handle_server_message(BotBase::MessageIN messageIN)
+std::pair<std::string,std::string> BotSloth::handle_server_message(BotBase::MessageIN messageIN)
 {
+    std::string message = messageIN.message;
     std::string response;
-    response += messageIN.message;
+    std::string::const_iterator it = message.begin();
+    usleep(20000000);
+    while (it != message.end()) {
+        response += *it;
+        response += "   ";
+        ++it;
+    }
+
     if (messageIN.receiver[0] == '#') {
         return std::make_pair(messageIN.receiver, response); // respond in channel
     } else {
