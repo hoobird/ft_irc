@@ -29,6 +29,8 @@ enum Limits {
     LIMITS_TARGMAX,
     LIMITS_MODEPASSMAX,
     LIMITS_MODELIMITMAX,
+    LIMITS_NICKNAMELENGTH,
+    LIMITS_CHANNELNAMELENGTH,
 };
 
 inline std::string getLimitString(Limits limit) {
@@ -53,6 +55,8 @@ inline std::string getLimitString(Limits limit) {
         case LIMITS_TARGMAX: return "DCCALLOW:,JOIN:,KICK:,PART:,PRIVMSG:";
         case LIMITS_MODEPASSMAX: return "23";
         case LIMITS_MODELIMITMAX: return "100";
+        case LIMITS_NICKNAMELENGTH: return "9";
+        case LIMITS_CHANNELNAMELENGTH: return "50";
 
         default: return "Unable to retrieve limits";
     }

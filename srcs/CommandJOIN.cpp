@@ -34,11 +34,21 @@ responseList CommandJOIN::execute(Client& client, const ParsedMessage& message) 
         channelKeys = split(message.parameters[1], ",");
     }
 
+    std::string channelNameMaxSize = getLimitString(LIMITS_CHANNELNAMELENGTH);
+    std::istringstream iss(channelNameMaxSize);
+    size_t channelNameMaxLength;
+    iss >> channelNameMaxLength;
+    std::string channelKeyMaxSize = getLimitString(LIMITS_MODEPASSMAX);
+    std::istringstream iss2(channelKeyMaxSize);
+    size_t channelKeyMaxLength;
+    iss2 >> channelKeyMaxLength;
     std::map<std::string, std::string> mapChannelKey;
     std::vector<std::string>::iterator itn = channelNames.begin();
     std::vector<std::string>::iterator itk = channelKeys.begin();
     while (itn != channelNames.end()) {
-        std::cout << "name: " << *itn << std::endl;
+        if ((*itn).length() > static_cast<size_t>(channelNameMaxLength)) {
+            *itn = (*itn).substr(0, channelNameMaxLength);
+        }
         if ((*itn).size() > 1 && (*itn)[0] != '#') {
             // ERR_NOSUCHCHANNEL (403)
             singleResponse resp = createSingleResponse("403", clientFdStr);
@@ -49,6 +59,9 @@ responseList CommandJOIN::execute(Client& client, const ParsedMessage& message) 
         } else {
             std::string key = "";
             if (itk != channelKeys.end()) {
+                if ((*itk).length() > static_cast<size_t>(channelKeyMaxLength)) {
+                    *itk = (*itk).substr(0, channelKeyMaxLength);
+                }
                 key = *itk;
                 ++itk;
             }
