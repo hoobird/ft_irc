@@ -24,11 +24,13 @@ class BotBase {
         BotBase();
         virtual ~BotBase();
         struct MessageIN {
-            std::string from;
+            std::string source;     // nick who sent the meesage
+            std::string receiver;  // the channel that bot is in or bot
             std::string message;
         };
 
-        virtual std::string handle_server_message(BotBase::MessageIN messageIN) = 0;
+        // pair< receiver, message >  , where receiver can be a channel or some user, get data from MessageIN
+        virtual std::pair<std::string,std::string> handle_server_message(BotBase::MessageIN messageIN) = 0;
         std::vector<std::string> parseMessages(const std::string& rawMessage);
         MessageIN processMessage(const std::string &message);
         std::string prepareOutgoingMessage(const std::string& msg_receiver, const std::string& msg);
