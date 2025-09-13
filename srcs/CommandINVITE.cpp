@@ -95,7 +95,7 @@ responseList CommandINVITE::execute(Client& client, const ParsedMessage& message
     resp["<channel>"] = targetChannel->getName();
     responses.push_back(resp);
     // add targetClient to invite list; use Channel class' inviteList
-	targetChannel->addInvitedMember(*targetClient);
+	targetChannel->addInvitedUser(*targetClient);
     return responses;
 }
 
