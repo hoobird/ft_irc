@@ -103,6 +103,7 @@ responseList CommandPRIVMSG::handleChannelRecipient(Client& sender, const std::s
         return responses;
     }
     std::set<int> memberFd = targetChannel->getMembers();
+    memberFd.erase(sender.getSocketFd());
     std::string memberFdStr = this->intSetToCSVString(memberFd);
     singleResponse resp = createSingleResponse("PRIVMSG", memberFdStr);
     resp["<nick_sender>"] = sender.getNickname();
