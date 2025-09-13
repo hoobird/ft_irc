@@ -55,24 +55,51 @@ responseList CommandMODE::errorHandle(const ParsedMessage& message, const std::s
     return responses;
 }
 
+bool needParameter(char commandType, char operation)
+{
+    switch (commandType) {
+        case 'k':
+            return true;
+        case 'o':
+            return true;
+        case 'l':
+            return (operation == '+');
+        case 'i':
+            return false;
+        case 't':
+            return false;
+        default:
+            return false;
+    }
+}
+
 CommandMODE::mapModeFlags CommandMODE::parse(const ParsedMessage& message)
 {
+    // typedef std::map<char, std::vector<std::pair<char, std::string> > >
+    // map = parsedFlags; map[key] = char flags[i]; map[value] = actionList<action>; action.first(char) = "+"/"-"/'0'; action.second(string) = modeParams (i.e "password", limit value, UserNick)
     mapModeFlags   parsedFlags;
 	const std::string flags = message.parameters[1];
+    char commandType;
+    char operation = '\0'; // default behaviour
 
-	// iterate through the flags std::string first;
-	for (int i = 0; i < flags.size(); ++i) {
-		if (flags[i] == '+')
-		 // set a bool value to store current state of operation as +
-		if (flags[i] == '-')
-		 // set a bool value to store current state of operation as -
-	}
-	for (size_t i = 1; i < message.parameters.size(); ++i) {
-		// message.parameters[i]
-	}
-    //only return the exact params that will be used, clear out any redundancy:
-    // e.g. keep all instances of +o, but only keep first instance of +k/-k, +l/-l, +i/-i, +t/-t
-
+    // loop through commandType, if no command type to loop, there should be no valid modeParam.
+	for (size_t i = 0; i < flags.size(); ++i) {
+        char c = flags[i];
+        if (c == '+' || c == '-')
+            operation = c;
+        else {
+            std::pair<char, std::string> action;
+            action.first = operation;
+            commandType = c;
+            if (commandType != '\0') {
+                parsedFlags[commandType];
+            }
+            if (needParameter(commandType, operation) == true && i < message.parameters.size())
+                action.second = message.parameters[i];
+            action.second = "";
+            parsedFlags[commandType].push_back(action);
+        }
+    }
     return parsedFlags;
 }
 
@@ -100,7 +127,7 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message) 
         singleResponse resp = createSingleResponse("324", clientFdStr);
         resp["<client>"] = clientNick;
         resp["<channel>"] = channelName;
-        resp["<mode>"] = "+"; // default seems to just display + if is query
+        resp["<mode>"] = targetChannel->displayModes(); // default seems to just display + if is query
         resp["<mode_params>"] = "";
         responses.push_back(resp);
         return responses; // rethink if I should return responses.
@@ -119,60 +146,70 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message) 
         }
         mapModeFlags parsedFlags = parse(message);
 		for (mapModeFlags::const_iterator mapIt = parsedFlags.begin(); mapIt != parsedFlags.end(); ++mapIt) {
-			for (size_t i = 0; i < parsedFlags.size(); ++i) {
-	//             switch () {
-	//                 case 'i':
-	//                     if (action == '+') {
-	//                         targetChannel->setInviteMode(true);
-	//                     }
-	//                     else {
-	//                         targetChannel->setInviteMode(false);
-	//                         // erase invitelist to reset invitees?
-	//                     }
-	//                     break ;
-	//                 case 't':
-	//                     if (action == '+') {
-	//                         targetChannel->setTopicRestrict(true);
-	//                     }
-	//                     else {
-	//                         targetChannel->setTopicRestrict(false);
-	//                         targetChannel->setTopic("");
-	//                     }
-	//                     break ;
-	//                 case 'k':
-	//                     if (action == '+') {
-	//                         targetChannel->setKey(param);
-	//                     }
-	//                     else {
-	//                         if (param == targetChannel->getKey()) // does the param need to have the same key to trigger remove? NC seems yes, IRSSI seems no
-	//                         targetChannel->setKey("");
-	//                     }
-	//                     break ;
-	//                 case 'o': // this is done in a loop
-	//                     if (action == '+') {
-	//                         targetChannel->addOperator(dataStore.getClient(param)); // initial value of reference to non-const must be an lvalueC/C++(461)
-	//                     }
-	//                     else {
-	
-	//                     }
-	//                     break ;
-	//                 case 'l':
-	//                     if (action == '+') {
-	//                         targetChannel->setLimit(/*convert std::string param to int*/);
-	//                     }
-	//                     else {
-	//                         targetChannel->setLimit(-1);
-	//                         // doesn't remove existing channel members
-	//                     }
-	//                     break ;
-	//                 default: // 472 ERR_UNKNOWNMODE
-	//                     singleResponse resp = createSingleResponse("472", clientFdStr);
-	//                     resp["<client>"] = clientNick;
-	//                     resp["<char>"] = mapIt->first;
-	//                     resp["<reason>"] = "is unknown mode char to me";
-	//                     responses.push_back(resp);
-	//                     break ;
-	//             }
+			for (size_t i = 0; i < (mapIt->second).size(); ++i) { // not parsedFlags but mapIt
+                std::cout << "modeType Char: " << mapIt->first << ", mapIt->first" << std::endl; // "kolit"
+                char action = (mapIt->second)[i].first; // iterator i may not be the correct value
+                const std::string param = (mapIt->second)[i].second; // iterator i may not be the correct value
+                std::cout << "modeAction Char: " << action << ", (mapIt->second)[" << i << "]" << std::endl; // "+/-"
+                // std::cout << "modeType Char: " << mapIt->first << std::endl;
+	            switch (mapIt->first) {
+                    case 'i':
+                        if (action == '+') {
+	                        targetChannel->setInviteMode(true);
+                            std::cout << "+i" << std::endl;
+	                    }
+	                    else if (action == '-') {
+	                        targetChannel->setInviteMode(false);
+                            targetChannel->emptyInviteList();
+                            std::cout << "-i" << std::endl;
+	                    }
+	                    break ;
+	                case 't':
+	                    if (action == '+') {
+	                        targetChannel->setTopicRestrict(true);
+                            std::cout << "+t" << std::endl;
+	                    }
+	                    else if (action == '-') {
+	                        targetChannel->setTopicRestrict(false);
+	                        targetChannel->setTopic("");
+                            std::cout << "-t" << std::endl;
+	                    }
+	                    break ;
+	                case 'k':
+	                    if (action == '+') {
+	                        targetChannel->setKey(param);
+	                    }
+	                    else if (action == '-') {
+	                        if (param == targetChannel->getKey()) // does the param need to have the same key to trigger remove? NC seems yes, IRSSI seems no
+	                        targetChannel->setKey("");
+	                    }
+	                    break ;
+	                case 'o': // this is done in a loop
+	                    if (action == '+') {
+	                        targetChannel->addOperator(dataStore.getClient(param)); // initial value of reference to non-const must be an lvalueC/C++(461)
+	                    }
+	                    else if (action == '-') {
+                            targetChannel->removeOperator();
+	                    }
+	                    break ;
+	                case 'l':
+	                    if (action == '+') {
+	                        targetChannel->setLimit(/*convert std::string param to int*/);
+	                    }
+	                    else if (action == '-') {
+	                        targetChannel->setLimit(-1);
+	                        // doesn't remove existing channel members
+	                    }
+	                    break ;
+	                default:
+                        // 472 ERR_UNKNOWNMODE
+	                    singleResponse resp = createSingleResponse("472", clientFdStr);
+	                    resp["<client>"] = clientNick;
+	                    resp["<char>"] = mapIt->first;
+	                    resp["<reason>"] = "is unknown mode char to me";
+	                    responses.push_back(resp);
+	                    break ;
+	            }
 			}
 		}
 	}

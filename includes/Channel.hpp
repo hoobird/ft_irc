@@ -27,7 +27,11 @@ public:
 	void removeOperator(Client& client);
 	bool isOperator(const Client& client) const;
     bool isMemberInvited(const Client& client) const;
-	void addInvitedMember(const Client& client);
+	void addInvitedUser(const Client& client); // for commandINVITE not commandMODE +i
+    void removeInvitedUser(const Client& client); // for commandJOIN, to remove invited user upon successful channel join
+    // commandMODE i: inviteList always exists, just whether there are invited users called through commandINVITE
+    void emptyInviteList(); // -i
+	std::string displayModes() const;
 
 	// getters
 	std::string getName() const;
@@ -54,7 +58,7 @@ private:
 	std::string topic;
 	std::set<int> members;
 	std::set<int> operators;
-    std::set<int> inviteList; // turn off inviteList when bool value is false
+    std::set<int> inviteList; // tracks which client has been invited but yet to join the channel
 	bool inviteMode;
     bool topicRestrict;
     std::string key; // empty string means no password
