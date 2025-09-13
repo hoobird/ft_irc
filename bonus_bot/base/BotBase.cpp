@@ -38,6 +38,7 @@ std::vector<std::string> BotBase::parseMessages(const std::string& rawMessage) {
 }
 
 BotBase::MessageIN BotBase::processMessage(const std::string &message){
+    MessageIN messageIN;
     std::stringstream ss(message);
     std::string prefix, command, msg_receiver, msg;
     ss >> prefix >> command >> msg_receiver;
@@ -53,18 +54,21 @@ BotBase::MessageIN BotBase::processMessage(const std::string &message){
         throw BotException("Nickname already in use, bot might already be connected");
     }
     if (command != "PRIVMSG") {
-        std::string err = "Server -> Bot: " + message;
-        throw BotException(err.c_str());
+        messageIN.message = "";
+        return messageIN;
     }
     if (prefix.empty() || prefix[0] != ':' || prefix.find('!') == std::string::npos) {
-        throw BotException("Invalid message prefix format");
+       std::cerr << "Invalid message prefix format" << std::endl;
+       messageIN.message = "";
+       return messageIN;
     }
     std::string nick_sender = prefix.substr(1, prefix.find('!') - 1);
     if (msg.empty() || msg[0] != ':' || msg.length() < 2) {
-        throw BotException("Invalid message format");
+        std::cerr << "Invalid PRIVMSG format" << std::endl;
+        messageIN.message = "";
+        return messageIN;
     }
     std::string actual_msg = msg.substr(1); // Remove leading ':'
-    MessageIN messageIN;
     messageIN.source = nick_sender;
     messageIN.receiver = msg_receiver;
     messageIN.message = actual_msg;
@@ -215,6 +219,7 @@ void BotBase::run()
         FD_SET(STDIN_FILENO, &readfds); // Monitor standard input as well
         FD_SET(botsocket, &readfds);
         int max_fd = (botsocket > STDIN_FILENO) ? botsocket : STDIN_FILENO;
+        std::cout << "Select blocked, waiting for activity..." << std::endl;
         int activity = select(max_fd + 1, &readfds, NULL, NULL, NULL);
 
         if (running == false) {
@@ -232,7 +237,11 @@ void BotBase::run()
                 try {
                     std::vector<std::string> parsedMessages = parseMessages(message);
                     for (std::vector<std::string>::iterator it = parsedMessages.begin(); it != parsedMessages.end(); ++it) {
+                        std::cout << "Server -> Bot: " << *it << std::endl;
                         BotBase::MessageIN messageIN = processMessage(*it);
+                        if (messageIN.message.empty()) {
+                            continue; // Not a PRIVMSG or invalid format, skip
+                        }
                         std::pair<std::string,std::string> botresponse = handle_server_message(messageIN);
                         std::string finalresponse = prepareOutgoingMessage(botresponse.first, botresponse.second);
                         std::cout << "Bot -> Server: " << finalresponse << std::endl;
