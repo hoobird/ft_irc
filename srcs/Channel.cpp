@@ -9,6 +9,14 @@ Channel::~Channel() {
     // Destructor logic if needed
 }
 
+// void Channel::setMode(const std::string& mode, const std::string& value)
+// {
+
+
+// void Channel::removeMode(const std::string& mode, const std::string& value)
+// {
+
+
 void Channel::addMember(Client& client)
 {
     if (this->members.empty())

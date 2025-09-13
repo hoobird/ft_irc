@@ -163,6 +163,7 @@ void MessageBuilder::initializeNumericTemplates()
     numericTemplates["323"] = "<client> :<info>"; // RPL_LISTEND
     numericTemplates["324"] = "<client> <channel> <mode> <mode_params>"; // RPL_CHANNELMODEIS
     numericTemplates["325"] = "<client> <channel> <nickname>"; // RPL_UNIQOPIS
+    numericTemplates["329"] = "<client> <channel> <creation_time>"; //RPL_CREATIONTIME (cannot use cause creation time needs time)
     numericTemplates["331"] = "<client> <channel> :<info>"; // RPL_NOTOPIC
     numericTemplates["332"] = "<client> <channel> :<topic>"; // RPL_TOPIC
     numericTemplates["341"] = "<client> <nick> <channel>"; // RPL_INVITING
