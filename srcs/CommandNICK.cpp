@@ -28,7 +28,15 @@ responseList CommandNICK::execute(Client &client, const ParsedMessage &message)
         responses.push_back(resp);
         return responses;
     }
-    const std::string &newNick = message.parameters[0];
+    std::string newNick = message.parameters[0];
+    std::string nickLimitStr = getLimitString(LIMITS_NICKNAMELENGTH);
+    std::istringstream iss(nickLimitStr);
+    size_t nickMaxLength;
+    iss >> nickMaxLength;
+    if (newNick.length() > static_cast<size_t>(nickMaxLength))
+    {
+       newNick = newNick.substr(0, nickMaxLength);
+    }
     if (!isValidNickname(newNick))
     {
         singleResponse resp = createSingleResponse("432", client.getSocketFdString());
