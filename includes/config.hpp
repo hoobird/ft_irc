@@ -5,6 +5,9 @@
 
 // rationale: fd exceed is caught in socket creation, setting CHANLIMIT is optional, not important
 
+// note: We follow settings using DALnet as default client application
+// refer to http://www.irc.org/tech_docs/005.html
+
 // note: we follow settings using DALnet as default client application
 // refer to http://www.irc.org/tech_docs/005.html
 
@@ -70,3 +73,4 @@ inline std::string getChanMode(ChanModes mode) {
 }
 
 #endif
+
