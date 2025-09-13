@@ -224,8 +224,12 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message)
             else {
                 std::string singleCallParam = action[0].second;
                 if (modeChar == 'k') {
-                    if (singleCallParam.size() > 23) {
-                        singleCallParam.resize(23);
+                    std::string passLimitStr = getLimitString(LIMITS_MODEPASSMAX);
+                    std::istringstream iss(passLimitStr);
+                    int passLimit;
+                    iss >> passLimit;
+                    if (singleCallParam.size() > passLimit) {
+                        singleCallParam.resize(passLimit);
                     }
                     if (action[0].first == '+') {
                         targetChannel->setKey(singleCallParam);
@@ -241,11 +245,21 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message)
                         }
                     }
                 }
+                // if bigger than 3 digit, too big
+                // if iss fails, means garbage value in iss
+                // if there are leftover char after iss, means garbage string input
+
                 else if (modeChar == 'l') {
                     if (action[0].first == '+') {
+                        if (singleCallParam.size() > 3)
+                            singleCallParam = getLimitString(LIMITS_MODELIMITMAX);
+                        // if (iss.peek() != singleCallParam.eof) {
+                        //     // there are left over string
+                        //     // erase everythign else behind
+                        // }
                         std::istringstream iss(singleCallParam);
                         int value;
-                        if (iss >> value && value > 0) {
+                        if (iss >> value && value >= 1 && value <= LIMITS_MODELIMITMAX) {
                             targetChannel->setLimit(value);
                             flagCollector += "+l";
                             paramCollector.push_back(singleCallParam);
@@ -271,12 +285,12 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message)
                             responses.push_back(resp);
                             continue;
                         }
-                        Client& potentialOperator = *dataStore.getClient(multiCallParam);
-                        if (targetChannel->isMember(potentialOperator) == false) {
-                            singleResponse resp = createSingleResponse("442", clientFdStr);
+                        if (targetChannel->isMember(*targetClient) == false) {
+                            singleResponse resp = createSingleResponse("441", clientFdStr);
                             resp["<client>"] = clientNick;
+                            resp["<nick>"] = multiCallParam;
                             resp["<channel>"] = channelName;
-                            resp["<reason>"] = "They're not on that channel";
+                            resp["<reason>"] = "They aren't on that channel";
                             responses.push_back(resp);
                             continue ;
                         }
