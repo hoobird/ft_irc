@@ -245,25 +245,35 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message)
                         }
                     }
                 }
+
                 // if bigger than 3 digit, too big
                 // if iss fails, means garbage value in iss
                 // if there are leftover char after iss, means garbage string input
-
                 else if (modeChar == 'l') {
                     if (action[0].first == '+') {
+                        // bigger than 3 char, set to "100"
                         if (singleCallParam.size() > 3)
                             singleCallParam = getLimitString(LIMITS_MODELIMITMAX);
-                        // if (iss.peek() != singleCallParam.eof) {
-                        //     // there are left over string
-                        //     // erase everythign else behind
-                        // }
-                        std::istringstream iss(singleCallParam);
+                        //get limitMaxInt from limitMaxStr
+                        std::istringstream issLimitStr(getLimitString(LIMITS_MODELIMITMAX));
+                        int limitMax;
+                        issLimitStr >> limitMax;
+                        // check if there are leftover char that is not digit in give param
+                        std::istringstream issInput(singleCallParam);
                         int value;
-                        if (iss >> value && value >= 1 && value <= LIMITS_MODELIMITMAX) {
-                            targetChannel->setLimit(value);
+                        if (issInput >> value && issInput.eof()) {
+                            if (value >= 1 && value <= limitMax) {
+                                targetChannel->setLimit(value);
+                            }
+                            else if (value > limitMax) {
+                                targetChannel->setLimit(limitMax);
+                                singleCallParam = getLimitString(LIMITS_MODELIMITMAX);
+                            }
                             flagCollector += "+l";
-                            paramCollector.push_back(singleCallParam);
+                            paramCollector.push_back(singleCallParam); // single call param for limit numeric could be 009, need truncate the leading zeros.
                         }
+                        // silently consume the SingleCallParam as it's garbage input with non-digit chars
+                        // otherwise can considered ERR_INVALIDMODEPARAM (696) but it's a numeric only used in modern IRCs
                     }
                     else if (action[0].first == '-') {
                         targetChannel->setLimit(-1);
