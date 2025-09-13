@@ -50,7 +50,7 @@ re : fclean all
 debug: CXXFLAGS += -g
 debug: re
 	@echo "Run test with: "
-	@echo "valgrind --show-leak-kinds=all --leak-check=full --track-fds=yes ./bin/<bot> <server> <port> <pass>"
+	@echo "valgrind --show-leak-kinds=all --leak-check=full --track-fds=yes ./bonus_bot/bin/<bot> <server> <port> <pass>"
 
 list-bots:
 	@echo "Available bots:"
