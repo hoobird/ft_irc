@@ -271,6 +271,15 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message)
                             responses.push_back(resp);
                             continue;
                         }
+                        Client& potentialOperator = *dataStore.getClient(multiCallParam);
+                        if (targetChannel->isMember(potentialOperator) == false) {
+                            singleResponse resp = createSingleResponse("442", clientFdStr);
+                            resp["<client>"] = clientNick;
+                            resp["<channel>"] = channelName;
+                            resp["<reason>"] = "They're not on that channel";
+                            responses.push_back(resp);
+                            return responses;
+                        }
                         if (it->first == '+') {
                             targetChannel->addOperator(*targetClient);
                             flagCollector += "+o";
@@ -303,11 +312,12 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message)
             // return MODE acknowledgement response
             // >> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #helluu +i+k pass
             parseFlagCollector(flagCollector);
-            singleResponse resp = createSingleResponse("MODE", clientFdStr);
+            std::string channelMembersStr = intSetToCSVString(targetChannel->getMembers());
+            singleResponse resp = createSingleResponse("MODE", channelMembersStr);
             resp["<nick_sender>"] = clientNick;
             resp["<user_sender>"] = client.getUsername();
             resp["<host_sender>"] = client.getHostname();
-            resp["<channel>"] = message.parameters[0];
+            resp["<channel>"] = channelName;
             resp["<flag>"] = flagCollector;
             resp["<param>"] = ss.str();
             responses.push_back(resp);
