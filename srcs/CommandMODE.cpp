@@ -12,7 +12,8 @@ CommandMODE::~CommandMODE()
 {
 }
 
-responseList CommandMODE::errorHandle(const ParsedMessage& message, const std::string clientFdStr, const std::string clientNick) {
+responseList CommandMODE::errorHandle(const ParsedMessage& message, const std::string clientFdStr, const std::string clientNick)
+{
     responseList responses;
 
     // 461 ERR_NEEDMOREPARAMS
@@ -59,12 +60,11 @@ CommandMODE::mapModeFlags CommandMODE::parse(const ParsedMessage& message)
     // typedef std::map<char, std::vector<std::pair<char, std::string> > >
     // map = parsedFlags; map[key] = char flags[i]; map[value] = actionList<action>; action.first(char) = "+"/"-"/'0'; action.second(string) = modeParams (i.e "password", limit value, UserNick)
     mapModeFlags   parsedFlags; //std::map
-	const std::string flags = message.parameters[1];
+    std::vector<std::string>::const_iterator paramIt = message.parameters.begin() + 1;
+	const std::string flags = *paramIt;
+    ++paramIt;
     char commandType;
     char operation = '\0'; // default behaviour
-
-    // loop through commandType, if no command type to loop, there should be no valid modeParam.
-    size_t multiParamFlagCount = 1;
     for (std::string::const_iterator flagIt = flags.begin(); flagIt != flags.end(); ++flagIt) {
         char c = *flagIt;
         if (c == '+' || c == '-') {
@@ -77,9 +77,9 @@ CommandMODE::mapModeFlags CommandMODE::parse(const ParsedMessage& message)
             if (commandType != '\0') {
                 parsedFlags[commandType];
             }
-            if (needParameter(commandType, operation) == true && multiParamFlagCount <= message.parameters.size()) {
-                multiParamFlagCount++;
-                action.second = message.parameters[multiParamFlagCount];
+            if (needParameter(commandType, operation) == true && paramIt != message.parameters.end()) {
+                action.second = *paramIt;
+                ++paramIt;
             }
             else {
                 action.second = "";
@@ -92,7 +92,27 @@ CommandMODE::mapModeFlags CommandMODE::parse(const ParsedMessage& message)
     return parsedFlags;
 }
 
+bool CommandMODE::isValidModeChar(char modeChar)
+{
+    return (modeChar == 't' || modeChar == 'i'
+        || modeChar == 'l' || modeChar == 'o' || modeChar == 'k');
+}
 
+void CommandMODE::parseFlagCollector(std::string &flagCollector)
+{
+    std::string::iterator flagIt;
+    char currState = '0';
+
+    for (flagIt = flagCollector.begin(); flagIt != flagCollector.end(); ++flagIt) {
+        if (*flagIt == '+' || *flagIt == '-') {
+            if (currState != *flagIt) {
+                currState = *flagIt;
+                continue ;
+            }
+            flagCollector.erase(flagIt);
+        }
+    }
+}
 // 461 ERR_NEEDMOREPARAMS (done)
 // 501 ERR_UMODEUNKNOWNFLAG (done)
 // 403 ERR_NOSUCHCHANNEL (done)
@@ -112,13 +132,13 @@ CommandMODE::mapModeFlags CommandMODE::parse(const ParsedMessage& message)
 // Channel Mode Parameters: <channel> {[+|-]|o|i|t|k|l} [<limit>] [<user>] [<ban mask>]
 
 // need to do basic parsing (if + or -, then followed by whatever mode)
-responseList CommandMODE::execute(Client& client, const ParsedMessage& message) {
+responseList CommandMODE::execute(Client& client, const ParsedMessage& message)
+{
     responseList responses;
     const std::string clientNick = client.getClientPrefix();
     const std::string clientFdStr = client.getSocketFdString();
 
     responses = errorHandle(message, clientFdStr, clientNick);
-
     const std::string channelName = message.parameters[0];
     Channel* targetChannel = dataStore.getChannel(channelName);
     if (!targetChannel) {
@@ -136,16 +156,23 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message) 
         singleResponse resp = createSingleResponse("324", clientFdStr);
         resp["<client>"] = clientNick;
         resp["<channel>"] = channelName;
-        resp["<mode>"] = targetChannel->displayModes(); // default seems to just display + if is query
+        resp["<mode>"] = targetChannel->displayModes();
         resp["<mode_params>"] = "";
         responses.push_back(resp);
-        return responses; // rethink if I should return responses.
+        return responses;
     }
-
     // Setting mode
+    // param > 1 (at least 2)
     else {
+        if (targetChannel->isMember(client) == false) {
+            singleResponse resp = createSingleResponse("442", clientFdStr);
+            resp["<client>"] = clientNick;
+            resp["<channel>"] = channelName;
+            resp["<reason>"] = "You're not on that channel";
+            responses.push_back(resp);
+            return responses;
+        }
         if (targetChannel->isOperator(client) == false) {
-            // 482 ERR_CHANOPRIVSNEEDED
             singleResponse resp = createSingleResponse("482", clientFdStr);
             resp["<client>"] = clientNick;
             resp["<channel>"] = channelName;
@@ -155,14 +182,11 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message) 
         }
         mapModeFlags parsedFlags = parse(message);
         std::string flagCollector;
-        std::string paramCollector;
-        // std::map<char, std::vector<std::pair<char, std::string>>>
+        std::vector<std::string> paramCollector;
 		for (mapModeFlags::const_iterator mapIt = parsedFlags.begin(); mapIt != parsedFlags.end(); ++mapIt) {
             char modeChar = mapIt->first;
             std::vector<std::pair<char, std::string> > action = mapIt->second;
-            // std::cout << "[DEBUG] action[0].first: " << action[0].first << std::endl; // debug
-            // std::cout << "[DEBUG] action[0].second: " << action[0].second << std::endl; // debug
-            if (action[0].second.empty()) {
+            if (action[0].second.empty() && isValidModeChar(modeChar)) {
                 if (modeChar == 'i') {
                     if (action[0].first == '+') {
                         targetChannel->setInviteMode(true);
@@ -187,7 +211,7 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message) 
                 }
                 else {
                     std::ostringstream oss;
-                    oss << "MODE ISSUE" << action[0].first << modeChar;
+                    oss << "MODE " << action[0].first << modeChar;
                     singleResponse resp = createSingleResponse("461", clientFdStr);
                     resp["<client>"] = clientNick;
                     resp["<command>"] = oss.str();
@@ -200,16 +224,20 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message) 
             else {
                 std::string singleCallParam = action[0].second;
                 if (modeChar == 'k') {
+                    if (singleCallParam.size() > 23) {
+                        singleCallParam.resize(23);
+                    }
                     if (action[0].first == '+') {
                         targetChannel->setKey(singleCallParam);
                         flagCollector += "+k";
-                        paramCollector += singleCallParam;
+                        paramCollector.push_back(singleCallParam);
                     }
                     else if (action[0].first == '-') {
-                        if (singleCallParam == targetChannel->getKey()) { // does the param need to have the same key to trigger remove? NC seems yes, IRSSI seems no
+                        if (singleCallParam == targetChannel->getKey()) {
                             targetChannel->setKey("");
                             flagCollector += "-k";
-                            paramCollector += singleCallParam;
+                            paramCollector.push_back(singleCallParam);
+
                         }
                     }
                 }
@@ -217,23 +245,23 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message) 
                     if (action[0].first == '+') {
                         std::istringstream iss(singleCallParam);
                         int value;
-                        if (iss >> value && value > 0) { // only set if value is negative
+                        if (iss >> value && value > 0) {
                             targetChannel->setLimit(value);
                             flagCollector += "+l";
-                            paramCollector += singleCallParam;
+                            paramCollector.push_back(singleCallParam);
                         }
                     }
                     else if (action[0].first == '-') {
                         targetChannel->setLimit(-1);
                         flagCollector += "-l";
-                        paramCollector += singleCallParam;
+                        paramCollector.push_back(singleCallParam);
                     }
                 }
                 else if (modeChar == 'o') {
                     std::vector<std::pair<char, std::string> >::const_iterator it;
                     for (it = action.begin(); it != action.end(); ++it) {
                         std::string multiCallParam = it->second;
-                        Client* targetClient = dataStore.getClient(multiCallParam);
+                        Client* targetClient = dataStore.getClient(multiCallParam); // may not be correct
                         if (!targetClient) {
                             // ERR_NOSUCHNICK 401
                             singleResponse resp = createSingleResponse("401", clientFdStr);
@@ -241,16 +269,17 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message) 
                             resp["<nick>"] = multiCallParam;
                             resp["<reason>"] = "No such nick/channel";
                             responses.push_back(resp);
+                            continue;
                         }
                         if (it->first == '+') {
                             targetChannel->addOperator(*targetClient);
                             flagCollector += "+o";
-                            paramCollector += multiCallParam;
-                    }
+                            paramCollector.push_back(multiCallParam);
+                        }
                         else if (it->first == '-') {
                             targetChannel->removeOperator(*targetClient);
                             flagCollector += "-o";
-                            paramCollector += multiCallParam;
+                            paramCollector.push_back(multiCallParam);
                         }
                     }
                 }
@@ -264,28 +293,31 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message) 
                     responses.push_back(resp);
                 }
             }
-            if (paramCollector.size() > 1)
-                paramCollector += " ";
         }
-
         if (!flagCollector.empty())
         {
+            std::stringstream ss;
+            for (std::vector<std::string>::iterator strIt = paramCollector.begin(); strIt != paramCollector.end(); ++strIt) {
+                    ss << *strIt << " ";
+            }
             // return MODE acknowledgement response
             // >> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #helluu +i+k pass
+            parseFlagCollector(flagCollector);
             singleResponse resp = createSingleResponse("MODE", clientFdStr);
             resp["<nick_sender>"] = clientNick;
             resp["<user_sender>"] = client.getUsername();
             resp["<host_sender>"] = client.getHostname();
             resp["<channel>"] = message.parameters[0];
             resp["<flag>"] = flagCollector;
-            resp["<param>"] = paramCollector;
+            resp["<param>"] = ss.str();
             responses.push_back(resp);
         }
     }
     return responses;
 }
 
-CommandBase* CommandMODE::clone() const {
+CommandBase* CommandMODE::clone() const
+{
     return new CommandMODE(*this);
 }
 

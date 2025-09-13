@@ -63,8 +63,9 @@ public:
     responseList errorHandle(const ParsedMessage& message, const std::string clientFdStr, const std::string clientNick);
     bool needParameter(char commandType, char operation);
     mapModeFlags parse(const ParsedMessage& message);
-    void handleSingleCallModes(); // reconsider refactoring
-    void handleMultiCallModes(); // reconsider refactoring
+    bool isValidModeChar(char modeChar);
+    void parseFlagCollector(std::string& flagCollector);
+
 
     responseList execute(Client& client, const ParsedMessage& message);
 	CommandBase* clone() const;
