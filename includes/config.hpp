@@ -27,6 +27,8 @@ enum Limits {
     LIMITS_CASEMAPPING,
     LIMITS_CHANMODES,
     LIMITS_TARGMAX,
+    LIMITS_MODEPASSMAX,
+    LIMITS_MODELIMITMAX,
 };
 
 inline std::string getLimitString(Limits limit) {
@@ -49,6 +51,8 @@ inline std::string getLimitString(Limits limit) {
         // commands INVITE, NICK, USER, MODE and PASS do not require a max allowed target count
         // limits can be but are not set at startup for the below commands
         case LIMITS_TARGMAX: return "DCCALLOW:,JOIN:,KICK:,PART:,PRIVMSG:";
+        case LIMITS_MODEPASSMAX: return "23";
+        case LIMITS_MODELIMITMAX: return "100";
 
         default: return "Unable to retrieve limits";
     }
