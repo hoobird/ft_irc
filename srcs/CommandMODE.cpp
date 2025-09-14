@@ -59,7 +59,7 @@ CommandMODE::mapModeFlags CommandMODE::parse(const ParsedMessage& message)
 {
     // typedef std::map<char, std::vector<std::pair<char, std::string> > >
     // map = parsedFlags; map[key] = char flags[i]; map[value] = actionList<action>; action.first(char) = "+"/"-"/'0'; action.second(string) = modeParams (i.e "password", limit value, UserNick)
-    mapModeFlags   parsedFlags; //std::map
+    mapModeFlags   parsedFlags;
     std::vector<std::string>::const_iterator paramIt = message.parameters.begin() + 1;
 	const std::string flags = *paramIt;
     ++paramIt;
@@ -117,13 +117,12 @@ void CommandMODE::parseFlagCollector(std::string &flagCollector)
 // 501 ERR_UMODEUNKNOWNFLAG (done)
 // 403 ERR_NOSUCHCHANNEL (done)
 // 482 ERR_CHANOPRIVSNEEDED (done)
-// 442 ERR_NOTONCHANNEL (Returned when a client tries to perform a channel-affecting command on a channel which the client isn’t a part of.)
-// 401 ERR_NOSUCHNICK (Indicates that no client can be found for the supplied nickname. The text used in the last param of this message may vary.)
-// 324 RPL_CHANNELMODEIS (sent to a client to inform them of the currently active modes of a channel)
-// 329 RPL_CREATIONTIME (maybe cannot replicate cause of illegal function)
-// 329 RPL_CREATIONTIME (maybe cannot replicate cause of illegal function)
-// 472 ERR_UNKNOWNMODE (Indicates that a mode character used by a client is not recognized by the server. The text used in the last param of this message may vary.)
+// 442 ERR_NOTONCHANNEL (done)
+// 401 ERR_NOSUCHNICK (done)
+// 324 RPL_CHANNELMODEIS (done)
+// 472 ERR_UNKNOWNMODE (done)
 
+// 329 RPL_CREATIONTIME (maybe cannot replicate cause of illegal function)
 // 467 ERR_KEYSET (Implemented for classic RFC compliant server, where if a key is set already, it needs to be removed first, dalnet simply overwrites with +k if pass was set alr)
 // 346 RPL_INVITELIST (under client protocol)
 // 347 RPL_ENDOFINVITELIST (likely paired with 346, check output, under client protocol)
@@ -139,6 +138,8 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message)
     const std::string clientFdStr = client.getSocketFdString();
 
     responses = errorHandle(message, clientFdStr, clientNick);
+    if (!responses.empty())
+        return responses;
     const std::string channelName = message.parameters[0];
     Channel* targetChannel = dataStore.getChannel(channelName);
     if (!targetChannel) {
@@ -159,6 +160,11 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message)
         resp["<mode>"] = targetChannel->displayModes();
         resp["<mode_params>"] = "";
         responses.push_back(resp);
+        // resp = createSingleResponse("329", clientFdStr);
+        // resp["<client>"] = clientNick;
+        // resp["<channel>"] = channelName;
+        // resp["<creation_time>"] = targetChannel->getCreationTime(); // look into storing creation time of channel?
+        // responses.push_back(resp);
         return responses;
     }
     // Setting mode
