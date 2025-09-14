@@ -65,7 +65,7 @@ public:
     mapModeFlags parse(const ParsedMessage& message);
     bool isValidModeChar(char modeChar);
     void parseFlagCollector(std::string& flagCollector);
-
+    void addLimitHelper(std::string& singleCallParam, Channel* targetChannel, std::string& flagCollector, std::vector<std::string>& paramCollector);
 
     responseList execute(Client& client, const ParsedMessage& message);
 	CommandBase* clone() const;
