@@ -46,10 +46,9 @@ responseList CommandJOIN::execute(Client& client, const ParsedMessage& message) 
     std::vector<std::string>::iterator itn = channelNames.begin();
     std::vector<std::string>::iterator itk = channelKeys.begin();
     while (itn != channelNames.end()) {
-        if ((*itn).length() > static_cast<size_t>(channelNameMaxLength)) {
-            *itn = (*itn).substr(0, channelNameMaxLength);
-        }
-        if ((*itn).size() > 1 && (*itn)[0] != '#') {
+        bool nothash = (*itn).size() > 1 && (*itn)[0] != '#';
+        bool tooLong = (*itn).size() > channelNameMaxLength;
+        if (nothash || tooLong) {
             // ERR_NOSUCHCHANNEL (403)
             singleResponse resp = createSingleResponse("403", clientFdStr);
             resp["<client>"] = clientNick;
@@ -59,9 +58,6 @@ responseList CommandJOIN::execute(Client& client, const ParsedMessage& message) 
         } else {
             std::string key = "";
             if (itk != channelKeys.end()) {
-                if ((*itk).length() > static_cast<size_t>(channelKeyMaxLength)) {
-                    *itk = (*itk).substr(0, channelKeyMaxLength);
-                }
                 key = *itk;
                 ++itk;
             }
@@ -112,8 +108,10 @@ responseList CommandJOIN::execute(Client& client, const ParsedMessage& message) 
                 continue ;
             }
             // if channel does not need password, but password is provided, return success; password is ignored
-            if (findChannel->getKey() != "" && itmck->second != findChannel->getKey()) {
-                // if channel is password-protected, and password is wrong, return false
+            if (findChannel->getKey() != "" &&
+                (itmck->second.length() > channelKeyMaxLength || itmck->second != findChannel->getKey())
+            ) {
+                // if channel is password-protected, and (password is wrong or password is too long), reject join
                 resp = createSingleResponse("475", clientFdStr);
                 resp["<client>"] = clientNick;
                 resp["<channel>"] = findChannel->getName();
