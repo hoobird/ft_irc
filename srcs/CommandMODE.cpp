@@ -118,6 +118,31 @@ void CommandMODE::parseFlagCollector(std::string &flagCollector)
         }
     }
 }
+
+void CommandMODE::addLimitHelper(std::string& singleCallParam, Channel* targetChannel, std::string& flagCollector, std::vector<std::string>& paramCollector) {
+// bigger than 3 char, set to "100"
+    if (singleCallParam.size() > 3)
+        singleCallParam = getLimitString(LIMITS_MODELIMITMAX);
+    //get limitMaxInt from limitMaxStr
+    std::istringstream issLimitStr(getLimitString(LIMITS_MODELIMITMAX));
+    int limitMax;
+    issLimitStr >> limitMax;
+    // check if there are leftover char that is not digit in give param
+    std::istringstream issInput(singleCallParam);
+    int value;
+    if (issInput >> value && issInput.eof()) {
+        if (value >= 1 && value <= limitMax) {
+            targetChannel->setLimit(value);
+        }
+        else if (value > limitMax) {
+            targetChannel->setLimit(limitMax);
+            singleCallParam = getLimitString(LIMITS_MODELIMITMAX);
+        }
+        flagCollector += "+l";
+        paramCollector.push_back(singleCallParam); // single call param for limit numeric could be 009, need truncate the leading zeros.
+    }
+}
+
 // 461 ERR_NEEDMOREPARAMS (done)
 // 501 ERR_UMODEUNKNOWNFLAG (done)
 // 403 ERR_NOSUCHCHANNEL (done)
@@ -256,33 +281,9 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message)
                         }
                     }
                 }
-
-                // if bigger than 3 digit, too big
-                // if iss fails, means garbage value in iss
-                // if there are leftover char after iss, means garbage string input
                 else if (modeChar == 'l') {
                     if (action[0].first == '+') {
-                        // bigger than 3 char, set to "100"
-                        if (singleCallParam.size() > 3)
-                            singleCallParam = getLimitString(LIMITS_MODELIMITMAX);
-                        //get limitMaxInt from limitMaxStr
-                        std::istringstream issLimitStr(getLimitString(LIMITS_MODELIMITMAX));
-                        int limitMax;
-                        issLimitStr >> limitMax;
-                        // check if there are leftover char that is not digit in give param
-                        std::istringstream issInput(singleCallParam);
-                        int value;
-                        if (issInput >> value && issInput.eof()) {
-                            if (value >= 1 && value <= limitMax) {
-                                targetChannel->setLimit(value);
-                            }
-                            else if (value > limitMax) {
-                                targetChannel->setLimit(limitMax);
-                                singleCallParam = getLimitString(LIMITS_MODELIMITMAX);
-                            }
-                            flagCollector += "+l";
-                            paramCollector.push_back(singleCallParam); // single call param for limit numeric could be 009, need truncate the leading zeros.
-                        }
+                        addLimitHelper(singleCallParam, targetChannel, flagCollector, paramCollector);
                         // silently consume the SingleCallParam as it's garbage input with non-digit chars
                         // otherwise can considered ERR_INVALIDMODEPARAM (696) but it's a numeric only used in modern IRCs
                     }
@@ -378,7 +379,3 @@ CommandBase* CommandMODE::clone() const
 // -l +l +l =  -l (takes first instance of mode flag, delim by space) second priority?
 // ---------+l = +l (takes the closest symbol to the mode flag) top priority?
 
-
-// save last symbol encountered
-// last symbol encountered + valid letters = flag
-//
