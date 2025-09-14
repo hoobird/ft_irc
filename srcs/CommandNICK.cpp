@@ -29,14 +29,6 @@ responseList CommandNICK::execute(Client &client, const ParsedMessage &message)
         return responses;
     }
     std::string newNick = message.parameters[0];
-    std::string nickLimitStr = getLimitString(LIMITS_NICKNAMELENGTH);
-    std::istringstream iss(nickLimitStr);
-    size_t nickMaxLength;
-    iss >> nickMaxLength;
-    if (newNick.length() > static_cast<size_t>(nickMaxLength))
-    {
-       newNick = newNick.substr(0, nickMaxLength);
-    }
     if (!isValidNickname(newNick))
     {
         singleResponse resp = createSingleResponse("432", client.getSocketFdString());
@@ -113,12 +105,14 @@ CommandBase *CommandNICK::clone() const
 
 bool CommandNICK::isValidNickname(std::string nick)
 {
-    if (nick.empty())
+    std::string nickLimitStr = getLimitString(LIMITS_NICKNAMELENGTH);
+    std::istringstream iss(nickLimitStr);
+    size_t nickMaxLength;
+    iss >> nickMaxLength;
+    if (nick.empty() || nick.length() > nickMaxLength)
         return false;
     if (!isalpha(nick[0]))
         return false; // nicknames cannot start with channel prefix
-    if (nick.empty())
-        return false;
     for (size_t i = 0; i < nick.size(); ++i)
     {
         char c = nick[i];
