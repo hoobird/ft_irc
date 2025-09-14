@@ -101,15 +101,20 @@ bool CommandMODE::isValidModeChar(char modeChar)
 void CommandMODE::parseFlagCollector(std::string &flagCollector)
 {
     std::string::iterator flagIt;
+    std::string res;
     char currState = '0';
 
     for (flagIt = flagCollector.begin(); flagIt != flagCollector.end(); ++flagIt) {
-        if (*flagIt == '+' || *flagIt == '-') {
-            if (currState != *flagIt) {
-                currState = *flagIt;
-                continue ;
+        char c = *flagIt;
+        if (c == '+' || c == '-') {
+            if (currState != c) {
+                currState = c;
+                res += c;
             }
-            flagCollector.erase(flagIt);
+            else {
+                res += c;
+            }
+            flagCollector = res;
         }
     }
 }
