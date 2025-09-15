@@ -40,7 +40,7 @@ re: fclean all
 
 valgrind: CXXFLAGS += -g
 valgrind: re
-	valgrind --show-leak-kinds=all --leak-check=full --track-fds=yes ./ircserv 8080 pass
+	valgrind --log-file=valgrind_report.txt --show-leak-kinds=all --leak-check=full --track-fds=yes ./ircserv 8080 pass
 
 -include $(DEP)
 
