@@ -25,7 +25,15 @@ responseList CommandTOPIC::execute(Client& client, const ParsedMessage& message)
     const std::string clientFdsStr = client.getSocketFdString();
     const std::string clientNick = client.getClientPrefix();
 
-    if (message.parameters.empty()) {
+    // Param = channel
+    // OR
+    // Param = channel + topic
+    // OR
+    // Param = channel AND trailing = something
+    bool firstCase = message.parameters.size() >= 1;
+    bool secondCase = message.parameters.size() == 1 && !message.trailing.empty();
+    bool thirdCase = message.parameters.size() >= 2;
+    if (!firstCase) {
         singleResponse resp = createSingleResponse("461", clientFdsStr);
         resp["<client>"] = clientNick;
         resp["<command>"] = "TOPIC";
@@ -51,9 +59,39 @@ responseList CommandTOPIC::execute(Client& client, const ParsedMessage& message)
             responses.push_back(resp);
             return responses;
         }
-        // just query
-        if ((message.parameters.size() < 2 || message.parameters[1].empty())
-            && message.trailing.empty()) {
+        // set topic
+        if (secondCase || thirdCase) {
+            // need check here if commandMODE restricts topic setting to operator only.
+            if (findChannel->getTopicRestrict() == true && findChannel->isOperator(client) == false) {
+                singleResponse resp = createSingleResponse("482", clientFdsStr);
+                resp["<client>"] = clientNick;
+                resp["<channel>"] = message.parameters[0];
+                resp["<reason>"] = "You're not channel operator";
+                responses.push_back(resp);
+                return responses;
+            }
+            std::string newTopic;
+            if (message.parameters.size() > 1) {
+                newTopic = message.parameters[1];
+            }
+            else if (!message.trailing.empty()) {
+                newTopic = message.trailing;
+            }
+            findChannel->setTopic(newTopic);
+            std::string memberFdsStr = intSetToCSVString(findChannel->getMembers());
+            singleResponse resp = createSingleResponse("TOPIC", memberFdsStr);
+            resp["<nick_sender>"] = clientNick;
+            resp["<user_sender>"] = client.getUsername();
+            resp["<host_sender>"] = client.getHostname();
+            resp["<channel>"] = message.parameters[0];
+            resp["<new_topic>"] = newTopic;
+            responses.push_back(resp);
+            // update topicUpdateTime and update topic author
+            findChannel->setTopicAuthor(clientNick);
+            findChannel->setTopicUpdateTime();
+        }
+        // just query (first case)
+        else {
             if (findChannel->getTopic().empty()) {
                 singleResponse resp = createSingleResponse("331", clientFdsStr);
                 resp["<client>"] = clientNick;
@@ -68,36 +106,15 @@ responseList CommandTOPIC::execute(Client& client, const ParsedMessage& message)
                 resp["<channel>"] = message.parameters[0];
                 resp["<topic>"] = findChannel->getTopic();
                 responses.push_back(resp);
-                return responses;
-            }
-        }
-        // set topic
-        else {
-            // need check here if commandMODE restricts topic setting to operator only.
-            if (findChannel->getTopicRestrict() == true && findChannel->isOperator(client) == false) {
-                singleResponse resp = createSingleResponse("482", clientFdsStr);
+
+                resp = createSingleResponse("333", clientFdsStr);
                 resp["<client>"] = clientNick;
                 resp["<channel>"] = message.parameters[0];
-                resp["<reason>"] = "You're not channel operator";
+                resp["<nick>"] = findChannel->getTopicAuthor();
+                resp["<setat>"] = findChannel->getTopicUpdateTimeString();
                 responses.push_back(resp);
                 return responses;
             }
-            std::string newTopic;
-            if (message.parameters.size() >= 2) {
-                newTopic = message.parameters[1];
-            }
-            else if (message.parameters.size() == 1 && !message.trailing.empty()) {
-                newTopic = message.trailing;
-            }
-            findChannel->setTopic(newTopic);
-            std::string memberFdsStr = intSetToCSVString(findChannel->getMembers());
-            singleResponse resp = createSingleResponse("TOPIC", memberFdsStr);
-            resp["<nick_sender>"] = clientNick;
-            resp["<user_sender>"] = client.getUsername();
-            resp["<host_sender>"] = client.getHostname();
-            resp["<channel>"] = message.parameters[0];
-            resp["<new_topic>"] = newTopic;
-            responses.push_back(resp);
         }
     }
     return responses;

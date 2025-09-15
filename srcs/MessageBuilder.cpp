@@ -169,6 +169,7 @@ void MessageBuilder::initializeNumericTemplates()
     numericTemplates["329"] = "<client> <channel> <creation_time>"; //RPL_CREATIONTIME (cannot use cause creation time needs time)
     numericTemplates["331"] = "<client> <channel> :<info>"; // RPL_NOTOPIC
     numericTemplates["332"] = "<client> <channel> :<topic>"; // RPL_TOPIC
+    numericTemplates["333"] = "<client> <channel> <nick> <setat>"; // RPL_TOPICWHOTIME
     numericTemplates["341"] = "<client> <nick> <channel>"; // RPL_INVITING
     numericTemplates["342"] = "<client> <user> :<info>"; // RPL_SUMMONING
     numericTemplates["346"] = "<client> <channel> <invitemask>"; // RPL_INVITELIST
