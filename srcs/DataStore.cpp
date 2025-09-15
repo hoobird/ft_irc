@@ -42,7 +42,7 @@ void DataStore::removeClient(int clientId) {
             (*it)->removeMember(currclient);
             if ((*it)->getMembers().empty()) {
                 // delete channel object and remove from DataStore ChannelMap (use datastore method)
-               removeChannel((*it)->getName());
+                removeChannel((*it)->getName());
             }
         }
 
