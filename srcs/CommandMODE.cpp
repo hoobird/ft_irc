@@ -150,9 +150,9 @@ void CommandMODE::addLimitHelper(std::string& singleCallParam, Channel* targetCh
 // 442 ERR_NOTONCHANNEL (done)
 // 401 ERR_NOSUCHNICK (done)
 // 324 RPL_CHANNELMODEIS (done)
+// 329 RPL_CREATIONTIME (done)
 // 472 ERR_UNKNOWNMODE (done)
 
-// 329 RPL_CREATIONTIME (maybe cannot replicate cause of illegal function)
 // 467 ERR_KEYSET (Implemented for classic RFC compliant server, where if a key is set already, it needs to be removed first, dalnet simply overwrites with +k if pass was set alr)
 // 346 RPL_INVITELIST (under client protocol)
 // 347 RPL_ENDOFINVITELIST (likely paired with 346, check output, under client protocol)
@@ -191,11 +191,12 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message)
         resp["<mode>"] = targetChannel->displayModes();
         resp["<mode_params>"] = "";
         responses.push_back(resp);
-        // resp = createSingleResponse("329", clientFdStr);
-        // resp["<client>"] = clientNick;
-        // resp["<channel>"] = channelName;
-        // resp["<creation_time>"] = targetChannel->getCreationTime(); // store the creation time in CommandJOIN()
-        // responses.push_back(resp);
+
+        resp = createSingleResponse("329", clientFdStr);
+        resp["<client>"] = clientNick;
+        resp["<channel>"] = channelName;
+        resp["<creation_time>"] = targetChannel->getCreationTimeString();
+        responses.push_back(resp);
         return responses;
     }
     // Setting mode
