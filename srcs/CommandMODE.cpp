@@ -111,12 +111,12 @@ void CommandMODE::parseFlagCollector(std::string &flagCollector)
                 currState = c;
                 res += c;
             }
-            else {
-                res += c;
-            }
-            flagCollector = res;
+        }
+        else {
+            res += c;
         }
     }
+    flagCollector = res;
 }
 
 void CommandMODE::addLimitHelper(std::string& singleCallParam, Channel* targetChannel, std::string& flagCollector, std::vector<std::string>& paramCollector) {
@@ -170,6 +170,7 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message)
     responses = errorHandle(message, clientFdStr, clientNick);
     if (!responses.empty())
         return responses;
+
     const std::string channelName = message.parameters[0];
     Channel* targetChannel = dataStore.getChannel(channelName);
     if (!targetChannel) {
