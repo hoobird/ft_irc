@@ -9,14 +9,6 @@ Channel::~Channel() {
     // Destructor logic if needed
 }
 
-// void Channel::setMode(const std::string& mode, const std::string& value)
-// {
-
-
-// void Channel::removeMode(const std::string& mode, const std::string& value)
-// {
-
-
 void Channel::addMember(Client& client)
 {
     if (this->members.empty())
@@ -63,22 +55,8 @@ void Channel::addInvitedUser(const Client& client)
 
 void Channel::removeInvitedUser(const Client& client)
 {
-    if (!this->inviteList.empty()) {
-        int clientFd = client.getSocketFd();
-        std::set<int>::const_iterator it = inviteList.find(clientFd);
-        if (it != inviteList.end())
-            inviteList.erase(it);
-    }
-}
-
-
-void Channel::emptyInviteList()
-{
-    if (!this->inviteList.empty()) {
-        for (std::set<int>::const_iterator it = inviteList.begin(); it != inviteList.end(); ++it) {
-            inviteList.erase(it);
-        }
-    }
+    int clientFd = client.getSocketFd();
+    inviteList.erase(clientFd);
 }
 
 std::string Channel::displayModes() const {
