@@ -159,6 +159,14 @@ responseList CommandJOIN::execute(Client& client, const ParsedMessage& message) 
             resp["<channel>"] = findChannel->getName();
             resp["<topic>"] = findChannel->getTopic();
             responses.push_back(resp);
+
+            resp = createSingleResponse("333", clientFdStr);
+            resp["<client>"] = clientNick;
+            resp["<channel>"] = message.parameters[0];
+            resp["<nick>"] = findChannel->getTopicAuthor();
+            resp["<setat>"] = findChannel->getTopicUpdateTimeString();
+
+            responses.push_back(resp);
         }
         // send names list (RPL_NAMREPLY) to client
         // send end of names (RPL_ENDOFNAMES) to client
