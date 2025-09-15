@@ -1,7 +1,7 @@
 #include "Channel.hpp"
 
 Channel::Channel(const std::string &name)
-    : name(name), topic(""), inviteMode(false), topicRestrict(false), key(""), limit(-1)
+    :creationTime(time(NULL)), topicUpdateTime(0), name(name), topic(""), topicAuthor(""), inviteMode(false), topicRestrict(false), key(""), limit(-1)
 {
 }
 
@@ -81,6 +81,29 @@ std::string Channel::displayModes() const {
     return modeFlag + " " + modeValue;
 }
 
+time_t Channel::getCreationTime() const
+{
+    return this->creationTime;
+}
+
+std::string Channel::getCreationTimeString() const
+{
+    std::ostringstream ss;
+    ss << creationTime;
+    return ss.str();
+}
+
+time_t Channel::getTopicUpdateTime() const
+{
+    return this->topicUpdateTime;
+}
+
+std::string Channel::getTopicUpdateTimeString() const
+{
+    std::ostringstream ss;
+    ss << topicUpdateTime;
+    return ss.str();
+}
 
 std::string Channel::getName() const
 {
@@ -90,6 +113,11 @@ std::string Channel::getName() const
 std::string Channel::getTopic() const
 {
     return this->topic;
+}
+
+std::string Channel::getTopicAuthor() const
+{
+    return this->topicAuthor;
 }
 
 std::set<int> Channel::getMembers() const
@@ -127,6 +155,11 @@ bool Channel::getTopicRestrict() const
     return this->topicRestrict;
 }
 
+void Channel::setTopicUpdateTime()
+{
+    this->topicUpdateTime = time(NULL);
+}
+
 void Channel::setName(const std::string &name)
 {
     this->name = name;
@@ -135,6 +168,11 @@ void Channel::setName(const std::string &name)
 void Channel::setTopic(const std::string &topic)
 {
     this->topic = topic;
+}
+
+void Channel::setTopicAuthor(const std::string &author)
+{
+    this->topicAuthor = author;
 }
 
 void Channel::setKey(const std::string &key)

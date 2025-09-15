@@ -4,6 +4,7 @@
 #include <string>
 #include <set>
 #include <map>
+#include <ctime> // for Channel Creation time and Topic update time
 #include "Client.hpp"
 
 // Is client/user invited/banned from the channel
@@ -31,8 +32,13 @@ public:
 	std::string displayModes() const;
 
 	// getters
+	time_t getCreationTime() const;
+	std::string getCreationTimeString() const;
+	time_t getTopicUpdateTime() const;
+	std::string getTopicUpdateTimeString() const;
 	std::string getName() const;
 	std::string getTopic() const;
+	std::string getTopicAuthor() const;
 	std::set<int> getMembers() const;
 	std::set<int> getOperators() const;
 	std::set<int> getInviteList() const;
@@ -43,16 +49,21 @@ public:
     bool getTopicRestrict() const;
 
 	// setters
+	void setTopicUpdateTime(); // no input cuz the time is now
 	void setName(const std::string& name);
 	void setTopic(const std::string& topic);
+	void setTopicAuthor(const std::string& author);
 	void setKey(const std::string& key);
 	void setLimit(int limit);
     void setInviteMode(bool status);
     void setTopicRestrict(bool status);
 
 private:
+	time_t creationTime;
+	time_t topicUpdateTime; // 0 if unset
 	std::string name;
 	std::string topic;
+	std::string topicAuthor;
 	std::set<int> members;
 	std::set<int> operators;
     std::set<int> inviteList; // tracks which client has been invited but yet to join the channel
