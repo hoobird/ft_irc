@@ -32,10 +32,21 @@ void DataStore::addClients(const std::vector<Client *> &clients)
 }
 
 void DataStore::removeClient(int clientId) {
-    // TODO: to remove from client map, but also Channel map if client is in any channel
-    std::cout << "Removing client with ID: " << clientId << " from DataStore" << std::endl;
     ClientMap::iterator it = clients.find(clientId);
     if (it != clients.end()) {
+        std::cout << "Remove client from all channels" << std::endl;
+        Client &currclient = *(it->second);
+        std::vector<Channel*> channels = getChannelsForClient(currclient);
+        for (std::vector<Channel*>::const_iterator it = channels.begin(); it != channels.end(); ++it) {
+            // remove client from channel object (remove from member list and operator list (if applicable))
+            (*it)->removeMember(currclient);
+            if ((*it)->getMembers().empty()) {
+                // delete channel object and remove from DataStore ChannelMap (use datastore method)
+               removeChannel((*it)->getName());
+            }
+        }
+
+        std::cout << "Removing client with ID: " << clientId << " from DataStore" << std::endl;
         delete it->second;
         clients.erase(it);
     }

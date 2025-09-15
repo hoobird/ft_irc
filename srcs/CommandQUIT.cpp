@@ -18,17 +18,11 @@ responseList CommandQUIT::execute(Client& client, const ParsedMessage& message) 
 
     // collect all members to notify except for quitting client
     for (std::vector<Channel*>::const_iterator it = channels.begin(); it != channels.end(); ++it) {
-        // remove client from channel object (remove from member list and operator list (if applicable))
-        (*it)->removeMember(client);
         // add all member fds of channel to channelMates to inform them of action
         std::set<int> members = (*it)->getMembers();
         channelMates.insert(members.begin(), members.end());
-        // if channel object has no members left
-        if ((*it)->getMembers().empty()) {
-            // delete channel object and remove from DataStore ChannelMap (use datastore method)
-            this->dataStore.removeChannel((*it)->getName());
-        }
     }
+    channelMates.erase(client.getSocketFd());
 
     // send QUIT notification to all members in memberFds with reason
     // note: reason is optional, if not provided use ":Client Quit"
