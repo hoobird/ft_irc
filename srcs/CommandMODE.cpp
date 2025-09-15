@@ -231,7 +231,7 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message)
                     }
                     else if (action[0].first == '-') {
                         targetChannel->setInviteMode(false);
-                        targetChannel->emptyInviteList();
+                        targetChannel->getInviteList().clear(); // clear can be called to empty the std::set without empty check
                         flagCollector += "-i";
                     }
                 }

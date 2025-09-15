@@ -18,8 +18,6 @@ public:
 	Channel(const std::string& name);
 	~Channel();
 
-	void setMode(const std::string& mode, const std::string& value);
-	void removeMode(const std::string& mode, const std::string& value);
 	void addMember(Client& client);
 	void removeMember(Client& client);
 	bool isMember(const Client& client) const;
@@ -30,7 +28,6 @@ public:
 	void addInvitedUser(const Client& client); // for commandINVITE not commandMODE +i
     void removeInvitedUser(const Client& client); // for commandJOIN, to remove invited user upon successful channel join
     // commandMODE i: inviteList always exists, just whether there are invited users called through commandINVITE
-    void emptyInviteList(); // -i
 	std::string displayModes() const;
 
 	// getters
