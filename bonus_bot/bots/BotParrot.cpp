@@ -2,15 +2,15 @@
 #define BOTPARROT_CPP
 #include "BotBase.hpp"
 
-class BotHuhCat : public BotBase {
+class BotParrot : public BotBase {
     public:
-        BotHuhCat();
-        virtual ~BotHuhCat();
+        BotParrot();
+        virtual ~BotParrot();
         virtual std::pair<std::string,std::string> handle_server_message(BotBase::MessageIN messageIN);
 
     private:
-        BotHuhCat(const BotHuhCat&);
-        BotHuhCat& operator=(const BotHuhCat&);
+        BotParrot(const BotParrot&);
+        BotParrot& operator=(const BotParrot&);
 };
 #endif
 
@@ -19,7 +19,7 @@ int main(int argc, char** argv) {
     if (args.size() != 3) {
         return 1;
     }
-    BotHuhCat bot;
+    BotParrot bot;
     try {
         bot.connect_to_server(args);
         bot.run();
@@ -29,13 +29,13 @@ int main(int argc, char** argv) {
     return 0;
 }
 
-BotHuhCat::BotHuhCat(): BotBase() {
+BotParrot::BotParrot(): BotBase() {
     name = "Parrot";
 }
 
-BotHuhCat::~BotHuhCat(){}
+BotParrot::~BotParrot(){}
 
-std::pair<std::string,std::string> BotHuhCat::handle_server_message(BotBase::MessageIN messageIN)
+std::pair<std::string,std::string> BotParrot::handle_server_message(BotBase::MessageIN messageIN)
 {
     std::string response;
     response += messageIN.message;
