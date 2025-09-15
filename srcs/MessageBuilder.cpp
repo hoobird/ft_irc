@@ -250,4 +250,5 @@ void MessageBuilder::initializeNumericTemplates()
     numericTemplates["491"] = "<client> :<reason>"; // ERR_NOOPERHOST
     numericTemplates["501"] = "<client> :<reason>"; // ERR_UMODEUNKNOWNFLAG
     numericTemplates["502"] = "<client> :<reason>"; // ERR_USERSDONTMATCH
+    numericTemplates["696"] = "<client> <target chan/user> <mode char> <parameter> :<description>"; // ERR_INVALIDMODEPARAM
 }
