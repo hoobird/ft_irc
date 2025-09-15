@@ -3,7 +3,7 @@
 /logs
 ircserv
 **/bin
-
+valgrind_report.txt
 
 # Prerequisites
 *.d
