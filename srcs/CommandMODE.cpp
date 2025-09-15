@@ -293,7 +293,7 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message)
                             resp["<parameter>"] = singleCallParam;
                             resp["<description>"] = "Invalid mode parameter - does not match with current channel key";
                             responses.push_back(resp);
-                            continue ;
+                            continue;
                         }
                     }
                 }
