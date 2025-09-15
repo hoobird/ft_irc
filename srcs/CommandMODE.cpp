@@ -194,7 +194,7 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message)
         // resp = createSingleResponse("329", clientFdStr);
         // resp["<client>"] = clientNick;
         // resp["<channel>"] = channelName;
-        // resp["<creation_time>"] = targetChannel->getCreationTime(); // look into storing creation time of channel?
+        // resp["<creation_time>"] = targetChannel->getCreationTime(); // store the creation time in CommandJOIN()
         // responses.push_back(resp);
         return responses;
     }
@@ -246,6 +246,12 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message)
                         flagCollector += "-t";
                     }
                 }
+                else if (modeChar == 'l') {
+                    if (action[0].first == '-') {
+                        targetChannel->setLimit(-1);
+                        flagCollector += "-l";
+                    }
+                }
                 else {
                     std::ostringstream oss;
                     oss << "MODE " << action[0].first << modeChar;
@@ -278,7 +284,16 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message)
                             targetChannel->setKey("");
                             flagCollector += "-k";
                             paramCollector.push_back(singleCallParam);
-
+                        }
+                        else {
+                            singleResponse resp = createSingleResponse("696", clientFdStr);
+                            resp["<client>"] = clientNick;
+                            resp["<target chan/user>"] = channelName;
+                            resp["<mode char>"] = "k";
+                            resp["<parameter>"] = singleCallParam;
+                            resp["<description>"] = "Invalid mode parameter - does not match with current channel key";
+                            responses.push_back(resp);
+                            continue ;
                         }
                     }
                 }
@@ -287,11 +302,6 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message)
                         addLimitHelper(singleCallParam, targetChannel, flagCollector, paramCollector);
                         // silently consume the SingleCallParam as it's garbage input with non-digit chars
                         // otherwise can considered ERR_INVALIDMODEPARAM (696) but it's a numeric only used in modern IRCs
-                    }
-                    else if (action[0].first == '-') {
-                        targetChannel->setLimit(-1);
-                        flagCollector += "-l";
-                        paramCollector.push_back(singleCallParam);
                     }
                 }
                 else if (modeChar == 'o') {
