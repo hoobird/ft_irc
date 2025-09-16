@@ -247,13 +247,11 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message)
                         flagCollector += "-t";
                     }
                 }
-                else if (modeChar == 'l') {
-                    if (action[0].first == '-') {
-                        targetChannel->setLimit(-1);
-                        flagCollector += "-l";
-                    }
+                else if (modeChar == 'l' && action[0].first == '-') {
+                    targetChannel->setLimit(-1);
+                    flagCollector += "-l";
                 }
-                else {
+                else { // +l +k +o
                     std::ostringstream oss;
                     oss << "MODE " << action[0].first << modeChar;
                     singleResponse resp = createSingleResponse("461", clientFdStr);
@@ -261,9 +259,7 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message)
                     resp["<command>"] = oss.str();
                     resp["<reason>"] = "Not enough parameters";
                     responses.push_back(resp);
-                    return responses;
                 }
-
             }
             else {
                 std::string singleCallParam = action[0].second;
@@ -309,7 +305,7 @@ responseList CommandMODE::execute(Client& client, const ParsedMessage& message)
                     std::vector<std::pair<char, std::string> >::const_iterator it;
                     for (it = action.begin(); it != action.end(); ++it) {
                         std::string multiCallParam = it->second;
-                        Client* targetClient = dataStore.getClient(multiCallParam); // may not be correct
+                        Client* targetClient = dataStore.getClient(multiCallParam);
                         if (!targetClient) {
                             // ERR_NOSUCHNICK 401
                             singleResponse resp = createSingleResponse("401", clientFdStr);
