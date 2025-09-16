@@ -14,7 +14,7 @@ CommandINVITE::~CommandINVITE() {
 responseList CommandINVITE::execute(Client& client, const ParsedMessage& message) {
     responseList responses;
 
-    if (message.parameters.size() < 1) { // if message has no parameters
+    if (message.parameters.size() < 2) { // if message has no parameters
         // ERR_NEEDMOREPARAMS (461)
         singleResponse resp = createSingleResponse("461", client.getSocketFdString());
         resp["<client>"] = client.getClientPrefix();
@@ -45,6 +45,7 @@ responseList CommandINVITE::execute(Client& client, const ParsedMessage& message
         return responses;
 	}
 
+    // person being invited
     Client* targetClient = this->dataStore.getClient(message.parameters[0]);
     if (!targetClient) { // if targetClient is not in server client list
         // ERR_NOSUCHNICK (401)
@@ -85,7 +86,7 @@ responseList CommandINVITE::execute(Client& client, const ParsedMessage& message
     resp["<nick>"] = message.parameters[0];
     resp["<channel>"] = targetChannel->getName();
     responses.push_back(resp);
-    // if client’s INVITE command to the server is successful, send acknowledgement
+    // send acknowledgement
     // :elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip INVITE elfoo_ :#hello (to target user)
     resp = createSingleResponse("INVITE", targetClient->getSocketFdString());
     resp["<nick_sender>"] = client.getClientPrefix();
@@ -93,6 +94,16 @@ responseList CommandINVITE::execute(Client& client, const ParsedMessage& message
     resp["<host_sender>"] = client.getHostname();
     resp["<target_member>"] = message.parameters[0];
     resp["<channel>"] = targetChannel->getName();
+    responses.push_back(resp);
+    // send broadcast NOTICE message to channel to inform that user has joined
+    // :lair.nl.eu.dal.net NOTICE @#ji :anteo invited anteo_ into channel #ji
+    std::string memberFds = intSetToCSVString(targetChannel->getMembers());
+    resp = createSingleResponse("NOTICE", memberFds);
+    resp["<nick_sender>"] = client.getClientPrefix();
+    resp["<user_sender>"] = client.getUsername();
+    resp["<host_sender>"] = client.getHostname();
+    resp["<msg_receiver>"] = "@" + targetChannel->getName();
+    resp["<msg>"] = client.getUsername() + " invited " + targetClient->getNickname() + " into channel " + targetChannel->getName();
     responses.push_back(resp);
     // add targetClient to invite list; use Channel class' inviteList
 	targetChannel->addInvitedUser(*targetClient);
