@@ -107,30 +107,38 @@ responseList CommandJOIN::execute(Client& client, const ParsedMessage& message) 
                 ++itmck;
                 continue ;
             }
-            // if channel does not need password, but password is provided, return success; password is ignored
-            if (findChannel->getKey() != "" &&
-                (itmck->second.length() > channelKeyMaxLength || itmck->second != findChannel->getKey())
-            ) {
-                // if channel is password-protected, and (password is wrong or password is too long), reject join
-                resp = createSingleResponse("475", clientFdStr);
-                resp["<client>"] = clientNick;
-                resp["<channel>"] = findChannel->getName();
-                resp["<reason>"] = "Cannot join channel (+k)";
-                responses.push_back(resp);
-                ++itmck;
-                continue ;
+            // if invite-only channel (meaning invited users no need password)
+            //      if not invited, reject join
+            //      else allow join
+            // else if password-protected channel
+            //      if password is too long or wrong, reject join
+            //      else allow join
+            if (findChannel->getInviteMode() == true) {
+                if (findChannel->isMemberInvited(client) == false) {
+                    resp = createSingleResponse("473", clientFdStr);
+                    resp["<client>"] = clientNick;
+                    resp["<channel>"] = findChannel->getName();
+                    resp["<reason>"] = "Cannot join channel (+i)";
+                    responses.push_back(resp);
+                    ++itmck;
+                    continue ;
+                }
+                // successful join for invite-only channel
             }
-            if (findChannel->getInviteMode() == true && findChannel->isMemberInvited(client) == false) {
-                resp = createSingleResponse("473", clientFdStr);
-                resp["<client>"] = clientNick;
-                resp["<channel>"] = findChannel->getName();
-                resp["<reason>"] = "Cannot join channel (+i)";
-                responses.push_back(resp);
-                ++itmck;
-                continue ;
-                // invite overrides bans (if a user is banned from an invite-only channel, if they are given invite, they can join)
+            else if (findChannel->getKey() != "") {
+                if (itmck->second.length() > channelKeyMaxLength || itmck->second != findChannel->getKey())
+                {
+                    // if channel is password-protected, and (password is wrong or password is too long), reject join
+                    resp = createSingleResponse("475", clientFdStr);
+                    resp["<client>"] = clientNick;
+                    resp["<channel>"] = findChannel->getName();
+                    resp["<reason>"] = "Cannot join channel (+k)";
+                    responses.push_back(resp);
+                    ++itmck;
+                    continue ;
+                }
+                // successful join for password-protected channel
             }
-
             // all checks passed
             // then add client to channel
             findChannel->addMember(client);
