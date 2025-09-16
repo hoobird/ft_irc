@@ -109,6 +109,8 @@ responseList CommandKICK::execute(Client& client, const ParsedMessage& message) 
             resp["<comment>"] = message.parameters[2];
         else if (!message.trailing.empty())
             resp["<comment>"] = ":" + message.trailing;
+        else
+            resp["<comment>"] = client.getNickname();
 
         responses.push_back(resp);
         continue ;
