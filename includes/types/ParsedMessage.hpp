@@ -11,6 +11,7 @@ struct ParsedMessage {
     std::string command;
     std::vector<std::string> parameters;
     std::string trailing;
+    bool trailingExists;
 };
 
 #endif
