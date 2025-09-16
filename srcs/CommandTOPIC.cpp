@@ -25,14 +25,17 @@ responseList CommandTOPIC::execute(Client& client, const ParsedMessage& message)
     const std::string clientFdsStr = client.getSocketFdString();
     const std::string clientNick = client.getClientPrefix();
 
-    // Param = channel
+    // firstCase : Param = channel  -> query topic
     // OR
-    // Param = channel + topic
+    // secondCase : Param = channel + topic -> set topic
     // OR
-    // Param = channel AND trailing = something
+    // thirdCase : Param = channel AND trailing = something  -> set topic
+    // OR
+    // fourthCase : Param = channel AND trailingExist = true but trailing = "" -> Unset topic
     bool firstCase = message.parameters.size() >= 1;
     bool secondCase = message.parameters.size() == 1 && !message.trailing.empty();
     bool thirdCase = message.parameters.size() >= 2;
+    bool fourthCase = message.parameters.size() == 1 && message.trailingExists && message.trailing.empty();
     if (!firstCase) {
         singleResponse resp = createSingleResponse("461", clientFdsStr);
         resp["<client>"] = clientNick;
@@ -60,7 +63,7 @@ responseList CommandTOPIC::execute(Client& client, const ParsedMessage& message)
             return responses;
         }
         // set topic
-        if (secondCase || thirdCase) {
+        if (secondCase || thirdCase || fourthCase) {
             // need check here if commandMODE restricts topic setting to operator only.
             if (findChannel->getTopicRestrict() == true && findChannel->isOperator(client) == false) {
                 singleResponse resp = createSingleResponse("482", clientFdsStr);

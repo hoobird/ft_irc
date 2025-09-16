@@ -52,6 +52,7 @@ ParsedMessage MessageParser::parse(const std::string &input)
     // Read in command
     iss >> parsedMessage.command;
 
+    parsedMessage.trailingExists = false;
     // Read in parameters
     std::string param;
     while (iss >> param) {
@@ -63,6 +64,7 @@ ParsedMessage MessageParser::parse(const std::string &input)
             std::string restOfLine;
             std::getline(iss, restOfLine);
             parsedMessage.trailing = trailingPart + restOfLine;
+            parsedMessage.trailingExists = true;
             break;
         }
     }
