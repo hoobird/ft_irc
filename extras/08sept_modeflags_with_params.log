@@ -1,0 +1,488 @@
+<< MODE #hellu +kl +l 50
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +kl +l 50
+<< MODE #hellu -i
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -i
+<< MODE #hellu
+>> :lair.nl.eu.dal.net 324 anteo #hellu +mtlk 50 +l
+>> :lair.nl.eu.dal.net 329 anteo #hellu 1757335336
+<< MODE #hellu -m
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -m
+<< MODE #hellu
+>> :lair.nl.eu.dal.net 324 anteo #hellu +tlk 50 +l
+>> :lair.nl.eu.dal.net 329 anteo #hellu 1757335336
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+>> :anteo_!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip PART #hellu
+<< MODE #hellu
+>> :lair.nl.eu.dal.net 324 anteo #hellu +tlk 50 +l
+>> :lair.nl.eu.dal.net 329 anteo #hellu 1757335336
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+>> :anteo_!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#hellu
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu +t
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +t
+<< MODE #hellu -t
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -t
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu
+>> :lair.nl.eu.dal.net 324 anteo #hellu +lk 50 +l
+>> :lair.nl.eu.dal.net 329 anteo #hellu 1757335336
+<< MODE #hellu
+>> :lair.nl.eu.dal.net 324 anteo #hellu +lk 50 +l
+>> :lair.nl.eu.dal.net 329 anteo #hellu 1757335336
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+>> :elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#hellu
+<< MODE #hellu +o elfoo
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +o elfoo
+<< MODE #hellu -o elfoo
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -o elfoo
+<< MODE #hellu +o Elfoo
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +o elfoo
+>> :monalisa!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#hellu
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu +o ELFO
+>> :lair.nl.eu.dal.net 401 anteo ELFO :No such nick/channel
+>> :lair.nl.eu.dal.net 441 anteo ELFO #hellu :They aren't on that channel
+<< MODE #hellu +o ELFOO
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +o elfoo
+<< MODE #hellu +o ELFOo
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +o elfoo
+<< MODE #hellu -o ELFOO
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -o elfoo
+<< MODE #hellu -o ELFOO,monalisa
+>> :lair.nl.eu.dal.net 401 anteo ELFOO,monalisa :No such nick/channel
+>> :lair.nl.eu.dal.net 441 anteo ELFOO,monalisa #hellu :They aren't on that channel
+<< MODE #hellu -o ELFOO,monalisa
+>> :lair.nl.eu.dal.net 401 anteo ELFOO,monalisa :No such nick/channel
+>> :lair.nl.eu.dal.net 441 anteo ELFOO,monalisa #hellu :They aren't on that channel
+<< MODE #hellu -o elfoo,monalisa
+>> :lair.nl.eu.dal.net 401 anteo elfoo,monalisa :No such nick/channel
+>> :lair.nl.eu.dal.net 441 anteo elfoo,monalisa #hellu :They aren't on that channel
+<< MODE #hellu +o elfoo,monalisa
+>> :lair.nl.eu.dal.net 401 anteo elfoo,monalisa :No such nick/channel
+>> :lair.nl.eu.dal.net 441 anteo elfoo,monalisa #hellu :They aren't on that channel
+<< MODE #hellu +oelfoo elfoo,monalisa
+>> :lair.nl.eu.dal.net 401 anteo elfoo,monalisa :No such nick/channel
+>> :lair.nl.eu.dal.net 441 anteo elfoo,monalisa #hellu :They aren't on that channel
+>> :lair.nl.eu.dal.net 349 anteo #hellu :End of Channel Exempt List
+>> :lair.nl.eu.dal.net 461 anteo MODE +l :Not enough parameters
+>> :lair.nl.eu.dal.net 472 anteo f :is unknown mode char to me
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu +omonalisa elfoo,monalisa
+>> :lair.nl.eu.dal.net 401 anteo elfoo,monalisa :No such nick/channel
+>> :lair.nl.eu.dal.net 441 anteo elfoo,monalisa #hellu :They aren't on that channel
+>> :lair.nl.eu.dal.net 472 anteo a :is unknown mode char to me
+>> :lair.nl.eu.dal.net 461 anteo MODE +l :Not enough parameters
+>> :lair.nl.eu.dal.net 472 anteo a :is unknown mode char to me
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +mnis
+<< MODE #hellu +oelfoo elfoo,monalisa
+>> :lair.nl.eu.dal.net 401 anteo elfoo,monalisa :No such nick/channel
+>> :lair.nl.eu.dal.net 441 anteo elfoo,monalisa #hellu :They aren't on that channel
+>> :lair.nl.eu.dal.net 349 anteo #hellu :End of Channel Exempt List
+>> :lair.nl.eu.dal.net 461 anteo MODE +l :Not enough parameters
+>> :lair.nl.eu.dal.net 472 anteo f :is unknown mode char to me
+<< MODE #hellu +e
+>> :lair.nl.eu.dal.net 349 anteo #hellu :End of Channel Exempt List
+<< MODE #hellu +e
+>> :lair.nl.eu.dal.net 349 anteo #hellu :End of Channel Exempt List
+<< MODE #hellu +e
+>> :lair.nl.eu.dal.net 349 anteo #hellu :End of Channel Exempt List
+<< MODE #hellu +e
+>> :lair.nl.eu.dal.net 349 anteo #hellu :End of Channel Exempt List
+<< MODE #hellu +olfoo elfoo,monalisa
+>> :lair.nl.eu.dal.net 401 anteo elfoo,monalisa :No such nick/channel
+>> :lair.nl.eu.dal.net 441 anteo elfoo,monalisa #hellu :They aren't on that channel
+>> :lair.nl.eu.dal.net 461 anteo MODE +l :Not enough parameters
+>> :lair.nl.eu.dal.net 472 anteo f :is unknown mode char to me
+<< MODE #hellu +oelfoo elfoo,monalisa
+>> :lair.nl.eu.dal.net 401 anteo elfoo,monalisa :No such nick/channel
+>> :lair.nl.eu.dal.net 441 anteo elfoo,monalisa #hellu :They aren't on that channel
+>> :lair.nl.eu.dal.net 349 anteo #hellu :End of Channel Exempt List
+>> :lair.nl.eu.dal.net 461 anteo MODE +l :Not enough parameters
+>> :lair.nl.eu.dal.net 472 anteo f :is unknown mode char to me
+<< MODE #hellu +e
+>> :lair.nl.eu.dal.net 349 anteo #hellu :End of Channel Exempt List
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu +o-elfoo elfoo,monalisa
+>> :lair.nl.eu.dal.net 401 anteo elfoo,monalisa :No such nick/channel
+>> :lair.nl.eu.dal.net 441 anteo elfoo,monalisa #hellu :They aren't on that channel
+>> :lair.nl.eu.dal.net 349 anteo #hellu :End of Channel Exempt List
+>> :lair.nl.eu.dal.net 472 anteo f :is unknown mode char to me
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -l
+<< MODE #hellu -olfoo elfoo,monalisa
+>> :lair.nl.eu.dal.net 401 anteo elfoo,monalisa :No such nick/channel
+>> :lair.nl.eu.dal.net 441 anteo elfoo,monalisa #hellu :They aren't on that channel
+>> :lair.nl.eu.dal.net 472 anteo f :is unknown mode char to me
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -l
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu +o-o+o elfoo
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +o elfoo
+<< MODE #hellu +o-o+o-o elfoo
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +o elfoo
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu -oo+o-o elfoo
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -o elfoo
+<< MODE #hellu +o-o+o-o elfoo
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +o elfoo
+<< MODE #hellu +o-ooo elfoo
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +o elfoo
+<< MODE #hellu +o-oelfoo +o +o
+>> :lair.nl.eu.dal.net 401 anteo +o :No such nick/channel
+>> :lair.nl.eu.dal.net 441 anteo +o #hellu :They aren't on that channel
+>> :lair.nl.eu.dal.net 401 anteo +o :No such nick/channel
+>> :lair.nl.eu.dal.net 441 anteo +o #hellu :They aren't on that channel
+>> :lair.nl.eu.dal.net 349 anteo #hellu :End of Channel Exempt List
+>> :lair.nl.eu.dal.net 472 anteo f :is unknown mode char to me
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -l
+<< MODE #hellu +ooelfoo -o +o
+>> :lair.nl.eu.dal.net 401 anteo -o :No such nick/channel
+>> :lair.nl.eu.dal.net 441 anteo -o #hellu :They aren't on that channel
+>> :lair.nl.eu.dal.net 401 anteo +o :No such nick/channel
+>> :lair.nl.eu.dal.net 441 anteo +o #hellu :They aren't on that channel
+>> :lair.nl.eu.dal.net 349 anteo #hellu :End of Channel Exempt List
+>> :lair.nl.eu.dal.net 461 anteo MODE +l :Not enough parameters
+>> :lair.nl.eu.dal.net 472 anteo f :is unknown mode char to me
+<< MODE #hellu +ooo -o +o elfoo
+>> :lair.nl.eu.dal.net 401 anteo -o :No such nick/channel
+>> :lair.nl.eu.dal.net 441 anteo -o #hellu :They aren't on that channel
+>> :lair.nl.eu.dal.net 401 anteo +o :No such nick/channel
+>> :lair.nl.eu.dal.net 441 anteo +o #hellu :They aren't on that channel
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +o elfoo
+<< MODE #hellu +ooo -o elfoo elfoo
+>> :lair.nl.eu.dal.net 401 anteo -o :No such nick/channel
+>> :lair.nl.eu.dal.net 441 anteo -o #hellu :They aren't on that channel
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +oo elfoo elfoo
+<< MODE #hellu +ooo elfoo elfoo elfoo
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +ooo elfoo elfoo elfoo
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu +oooo elfoo elfoo elfoo elfoo
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +oooo elfoo elfoo elfoo elfoo
+<< MODE #hellu +ooooo elfoo elfoo elfoo elfoo elfoo
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +ooooo elfoo elfoo elfoo elfoo elfoo
+<< MODE #hellu +oooo-o elfoo elfoo elfoo elfoo elfoo
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +oooo-o elfoo elfoo elfoo elfoo elfoo
+<< MODE #hellu +ooooo elfoo elfoo elfoo elfoo elfoo
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +ooooo elfoo elfoo elfoo elfoo elfoo
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu +oooo-o elfoo elfoo elfoo elfoo elfoo
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +oooo-o elfoo elfoo elfoo elfoo elfoo
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu +ooooo elfoo elfoo elfoo elfoo elfoo
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +ooooo elfoo elfoo elfoo elfoo elfoo
+<< MODE #hellu +oooo-o elfoo elfoo elfoo elfoo elfoo
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +oooo-o elfoo elfoo elfoo elfoo elfoo
+<< MODE #hellu +ooooo elfoo elfoo elfoo elfoo elfoo
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +ooooo elfoo elfoo elfoo elfoo elfoo
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu +oooo-o elfoo elfoo elfoo elfoo elfoo
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +oooo-o elfoo elfoo elfoo elfoo elfoo
+<< MODE #hellu +oooo-o elfoo elfoo elfoo elfoo elfoo
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +oooo-o elfoo elfoo elfoo elfoo elfoo
+<< MODE #hellu +oooo-o elfoo elfoo elfoo elfoo elfoo
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +oooo-o elfoo elfoo elfoo elfoo elfoo
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu +ooooo elfoo elfoo elfoo elfoo elfoo
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +ooooo elfoo elfoo elfoo elfoo elfoo
+<< MODE #hellu +l-l50+l-l50 50 50
+>> :lair.nl.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :lair.nl.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :lair.nl.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :lair.nl.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +l 50
+<< MODE #hellu +l-l50l50l50 50
+>> :lair.nl.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :lair.nl.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :lair.nl.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :lair.nl.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :lair.nl.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :lair.nl.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +l 50
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu -l50+lll 50 50 50
+>> :lair.nl.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :lair.nl.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -l
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu +l-l50l50+l 50 50
+>> :lair.nl.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :lair.nl.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :lair.nl.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :lair.nl.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +l 50
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu +l-j k
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -j
+<< MODE #hellu -lk -j
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -lk +l
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu -lk +t
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -lk +t
+<< MODE #hellu -l+k +t
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -l+k +t
+>> :anteo_!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip PART #hellu
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu -i
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -i
+>> :anteo_!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#hellu
+<< MODE #hellu -l+kanteo_ +o
+>> :lair.nl.eu.dal.net 472 anteo a :is unknown mode char to me
+>> :lair.nl.eu.dal.net 349 anteo #hellu :End of Channel Exempt List
+>> :lair.nl.eu.dal.net 472 anteo _ :is unknown mode char to me
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -l+knt +o
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+>> :anteo_!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip PART #hellu
+>> :anteo_!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#hellu
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu +l
+>> :lair.nl.eu.dal.net 461 anteo MODE +l :Not enough parameters
+<< MODE #hellu -l
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -l
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu -o
+<< MODE #hellu -o
+<< MODE #hellu -o elfoo
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -o elfoo
+<< MODE #hellu -o
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu -o anteo
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -o anteo
+<< MODE #hellu +o anteo
+>> :lair.nl.eu.dal.net 482 anteo #hellu :You're not channel operator
+<< PART #hellu
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip PART #hellu
+<< JOIN #hellu
+>> :lair.nl.eu.dal.net 475 anteo #hellu :Cannot join channel (+k)
+<< JOIN #hello1
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#hello1
+>> :lair.nl.eu.dal.net 353 anteo = #hello1 :@anteo
+>> :lair.nl.eu.dal.net 366 anteo #hello1 :End of /NAMES list.
+<< MODE #hello1
+>> :lair.nl.eu.dal.net 324 anteo #hello1 +
+--> chanquery mode
+<< WHO #hello1
+>> :lair.nl.eu.dal.net 329 anteo #hello1 1757338196
+--> event 329
+>> :lair.nl.eu.dal.net 352 anteo #hello1 ~anteo 5626-2a9c-92a4-503c-675e.149.203.ip lair.nl.eu.dal.net anteo H@ :0 anteo
+--> silent event who
+>> :lair.nl.eu.dal.net 315 anteo #hello1 :End of /WHO list.
+--> chanquery who end
+<< MODE #hello1 b
+>> :lair.nl.eu.dal.net 368 anteo #hello1 :End of Channel Ban List
+--> chanquery ban end
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+>> :anteo_!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#hello1
+<< INVITE elfoo #hello1
+>> :lair.nl.eu.dal.net 341 anteo elfoo #hello1
+>> :serenity.fl.us.dal.net NOTICE @#hello1 :anteo invited elfoo into channel #hello1
+<< PART #hello1
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip PART #hello1
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< JOIN #hellu1
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#hellu1
+>> :lair.nl.eu.dal.net 353 anteo = #hellu1 :anteo elfoo @monalisa
+>> :lair.nl.eu.dal.net 366 anteo #hellu1 :End of /NAMES list.
+<< MODE #hellu1
+>> :lair.nl.eu.dal.net 324 anteo #hellu1 +
+--> chanquery mode
+<< WHO #hellu1
+>> :lair.nl.eu.dal.net 329 anteo #hellu1 1757338227
+--> event 329
+>> :lair.nl.eu.dal.net 352 anteo #hellu1 ~anteo 5626-2a9c-92a4-503c-675e.149.203.ip lair.nl.eu.dal.net anteo H :0 anteo
+--> silent event who
+>> :lair.nl.eu.dal.net 352 anteo #hellu1 ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip serenity.fl.us.dal.net elfoo H :5 elfoo
+--> silent event who
+>> :lair.nl.eu.dal.net 352 anteo #hellu1 ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip jingo.ix.us.dal.net monalisa H@ :5 elfoo
+--> silent event who
+>> :lair.nl.eu.dal.net 315 anteo #hellu1 :End of /WHO list.
+--> chanquery who end
+<< MODE #hellu1 b
+>> :lair.nl.eu.dal.net 368 anteo #hellu1 :End of Channel Ban List
+--> chanquery ban end
+>> :anteo_!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#hellu1
+>> :monalisa!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu1 +o anteo
+<< PRIVMSG #hellu1 :ll
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu1 -llk
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu1 -l
+<< MODE #hellu1 -ll50k
+>> :lair.nl.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :lair.nl.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu1 -l
+<< MODE #hellu1 -ll50k 50
+>> :lair.nl.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :lair.nl.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu1 -lk 50
+<< MODE #hellu1 -ll50+k 50
+>> :lair.nl.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :lair.nl.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu1 -l+k 50
+<< MODE #hellu1 -l+lk 50 50
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu1 -l+k 50
+<< MODE #hellu1 +l50k +l 50
+>> :lair.nl.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :lair.nl.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu1 +k 50
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu1 +l-l+k 50 50
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu1 +l+k 50 50
+<< MODE #hellu1 -l50l+k 50
+>> :lair.nl.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :lair.nl.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu1 -l+k 50
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu1 -l50l+k 50
+>> :lair.nl.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :lair.nl.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu1 -l+k 50
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu1 +l50 limitss
+>> :lair.nl.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :lair.nl.eu.dal.net 472 anteo 0 :is unknown mode char to me
+<< MODE #hellu1 +l50 limitss
+>> :lair.nl.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :lair.nl.eu.dal.net 472 anteo 0 :is unknown mode char to me
+<< MODE #hellu1 +l50 limits
+>> :lair.nl.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :lair.nl.eu.dal.net 472 anteo 0 :is unknown mode char to me
+<< MODE #hellu1 +llimits +k 50
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu1 +imts
+<< MODE #hellu1 +llimits +k 50
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu1 +imts
+<< MODE #hellu
+>> :lair.nl.eu.dal.net 403 anteo #hellu :No such channel
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu1 +l50 +k
+>> :lair.nl.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :lair.nl.eu.dal.net 472 anteo 0 :is unknown mode char to me
+<< MODE #hellu1 +l50 +k
+>> :lair.nl.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :lair.nl.eu.dal.net 472 anteo 0 :is unknown mode char to me
+<< MODE #hellu1 +l50 +k
+>> :lair.nl.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :lair.nl.eu.dal.net 472 anteo 0 :is unknown mode char to me
+<< MODE #hellu1 +l50 +k
+>> :lair.nl.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :lair.nl.eu.dal.net 472 anteo 0 :is unknown mode char to me
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu1 +mits50
+>> :lair.nl.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :lair.nl.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu1 +mits
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu1 +l-limits50 +k
+>> :lair.nl.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :lair.nl.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu1 -imts
+<< MODE #hellu1 +lkkkk - + j
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu1 +k +
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< PING lair.nl.eu.dal.net
+>> :lair.nl.eu.dal.net PONG lair.nl.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu1 +lmits50 +--------i
+>> :lair.nl.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :lair.nl.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu1 +mits

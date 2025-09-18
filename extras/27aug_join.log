@@ -1,0 +1,368 @@
+c2r5s14% tail -n 50 -F Dalnet.log\
+>> :bitcoin.uk.eu.dal.net 251 elfoo :There are 87 users and 6385 invisible on 39 servers
+>> :bitcoin.uk.eu.dal.net 252 elfoo 83 :IRC Operators online
+>> :bitcoin.uk.eu.dal.net 254 elfoo 3524 :channels formed
+>> :bitcoin.uk.eu.dal.net 255 elfoo :I have 237 clients and 1 servers
+>> :bitcoin.uk.eu.dal.net 265 elfoo :Current local users: 237 Max: 4001
+>> :bitcoin.uk.eu.dal.net 266 elfoo :Current global users: 6472 Max: 12809
+>> :bitcoin.uk.eu.dal.net NOTICE elfoo :*** Notice -- motd was last changed at 9/11/2017 12:51
+>> :bitcoin.uk.eu.dal.net 375 elfoo :- bitcoin.uk.eu.dal.net Message of the Day -
+>> :bitcoin.uk.eu.dal.net 372 elfoo :-9/11/2017 12:51
+>> :bitcoin.uk.eu.dal.net 372 elfoo :-                 [ bitcoin.uk.eu.dal.net    ]
+>> :bitcoin.uk.eu.dal.net 372 elfoo :-
+>> :bitcoin.uk.eu.dal.net 372 elfoo :-                 [ Accessible via...        ]
+>> :bitcoin.uk.eu.dal.net 372 elfoo :-                 [ ipv4: bitcoin.dal.net    ]
+>> :bitcoin.uk.eu.dal.net 372 elfoo :-
+>> :bitcoin.uk.eu.dal.net 372 elfoo :- Thank you to Private Internet Access (https://www.privateinternetaccess.com)
+>> :bitcoin.uk.eu.dal.net 372 elfoo :- for sponsoring this server.
+>> :bitcoin.uk.eu.dal.net 372 elfoo :-
+>> :bitcoin.uk.eu.dal.net 372 elfoo :- Welcome to DALnet!  By connecting to this network, you agree to abide
+>> :bitcoin.uk.eu.dal.net 372 elfoo :- by its acceptable use policy, available here: http://www.dal.net/aup
+>> :bitcoin.uk.eu.dal.net 372 elfoo :-
+>> :bitcoin.uk.eu.dal.net 372 elfoo :- Server Policies:
+>> :bitcoin.uk.eu.dal.net 372 elfoo :-
+>> :bitcoin.uk.eu.dal.net 372 elfoo :-    *   We reserve the right to deny access to this server without
+>> :bitcoin.uk.eu.dal.net 372 elfoo :-        warning or explanation
+>> :bitcoin.uk.eu.dal.net 372 elfoo :-    *   No malicious bots, including flood and nick/channel chasers
+>> :bitcoin.uk.eu.dal.net 372 elfoo :-    *   No channel filler bots/clients/psybncs
+>> :bitcoin.uk.eu.dal.net 372 elfoo :-          - A channel filler is a client, bnc, or bot which is
+>> :bitcoin.uk.eu.dal.net 372 elfoo :-            connected just to fill a channel and make it look
+>> :bitcoin.uk.eu.dal.net 372 elfoo :-            bigger
+>> :bitcoin.uk.eu.dal.net 372 elfoo :-    *   Operator impersonation, spamming, or any other abuse will
+>> :bitcoin.uk.eu.dal.net 372 elfoo :-        cause you to be banned from this server
+>> :bitcoin.uk.eu.dal.net 372 elfoo :-    *   Abide by DALnet's AUP (www.dal.net/aup)
+>> :bitcoin.uk.eu.dal.net 372 elfoo :-    *   Please have fun and enjoy DALnet!
+>> :bitcoin.uk.eu.dal.net 372 elfoo :-
+>> :bitcoin.uk.eu.dal.net 372 elfoo :- Server Administrator: tyler
+>> :bitcoin.uk.eu.dal.net 372 elfoo :-
+>> :bitcoin.uk.eu.dal.net 372 elfoo :- Thank you to Private Internet Access (https://www.privateinternetaccess.com) for sponsori
+>> :bitcoin.uk.eu.dal.net 372 elfoo :- ng this server.
+>> :bitcoin.uk.eu.dal.net 372 elfoo :-
+>> :bitcoin.uk.eu.dal.net 372 elfoo :- For IRCop assistance, please /join #operhelp or message one of our
+>> :bitcoin.uk.eu.dal.net 372 elfoo :- friendly server staff listed above.
+>> :bitcoin.uk.eu.dal.net 372 elfoo :-
+>> :bitcoin.uk.eu.dal.net 372 elfoo :- For multilingual information:  <http://docs.dal.net/>
+>> :bitcoin.uk.eu.dal.net 372 elfoo :-
+>> :bitcoin.uk.eu.dal.net 372 elfoo :- Thank you for using DALnet!  We hope you have a pleasant day.
+>> :bitcoin.uk.eu.dal.net 376 elfoo :End of /MOTD command.
+>> :elfoo MODE elfoo :+iH
+<< PING bitcoin.uk.eu.dal.net
+>> :bitcoin.uk.eu.dal.net PONG bitcoin.uk.eu.dal.net :elfoo
+--> lag pong
+<< JOIN #asdzxc
+>> :elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#asdzxc
+>> :bitcoin.uk.eu.dal.net 353 elfoo = #asdzxc :@elfoo
+>> :bitcoin.uk.eu.dal.net 366 elfoo #asdzxc :End of /NAMES list.
+<< MODE #asdzxc
+>> :bitcoin.uk.eu.dal.net 324 elfoo #asdzxc +
+--> chanquery mode
+<< WHO #asdzxc
+>> :bitcoin.uk.eu.dal.net 329 elfoo #asdzxc 1756306041
+--> event 329
+>> :bitcoin.uk.eu.dal.net 352 elfoo #asdzxc ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip bitcoin.uk.eu.dal.net elfoo H@ :0 elfoo
+--> silent event who
+>> :bitcoin.uk.eu.dal.net 315 elfoo #asdzxc :End of /WHO list.
+--> chanquery who end
+<< MODE #asdzxc b
+>> :bitcoin.uk.eu.dal.net 368 elfoo #asdzxc :End of Channel Ban List
+--> chanquery ban end
+<< PING bitcoin.uk.eu.dal.net
+>> :bitcoin.uk.eu.dal.net PONG bitcoin.uk.eu.dal.net :elfoo
+--> lag pong
+<< PART #asdzxc
+>> :elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip PART #asdzxc
+<< PING bitcoin.uk.eu.dal.net
+>> :bitcoin.uk.eu.dal.net PONG bitcoin.uk.eu.dal.net :elfoo
+--> lag pong
+<< JOIN #abc123
+>> :bitcoin.uk.eu.dal.net 475 elfoo #abc123 :Cannot join channel (+k)
+<< JOIN #abc321 password
+>> :elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#abc321
+>> :bitcoin.uk.eu.dal.net 353 elfoo = #abc321 :elfoo @hu1
+>> :bitcoin.uk.eu.dal.net 366 elfoo #abc321 :End of /NAMES list.
+<< MODE #abc321
+>> :bitcoin.uk.eu.dal.net 324 elfoo #abc321 +
+--> chanquery mode
+<< WHO #abc321
+>> :bitcoin.uk.eu.dal.net 329 elfoo #abc321 1756306129
+--> event 329
+>> :bitcoin.uk.eu.dal.net 352 elfoo #abc321 ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip bitcoin.uk.eu.dal.net elfoo H :0 elfoo
+--> silent event who
+>> :bitcoin.uk.eu.dal.net 352 elfoo #abc321 ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip lair.nl.eu.dal.net hu1 H@ :2 elfoo
+--> silent event who
+>> :bitcoin.uk.eu.dal.net 315 elfoo #abc321 :End of /WHO list.
+--> chanquery who end
+<< MODE #abc321 b
+>> :bitcoin.uk.eu.dal.net 368 elfoo #abc321 :End of Channel Ban List
+--> chanquery ban end
+<< PART #abc321
+>> :elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip PART #abc321
+<< PING bitcoin.uk.eu.dal.net
+>> :bitcoin.uk.eu.dal.net PONG bitcoin.uk.eu.dal.net :elfoo
+--> lag pong
+<< JOIN #abc321,#abc123 x,password
+>> :elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#abc321
+>> :bitcoin.uk.eu.dal.net 353 elfoo = #abc321 :elfoo @hu1
+>> :bitcoin.uk.eu.dal.net 366 elfoo #abc321 :End of /NAMES list.
+<< MODE #abc321
+>> :bitcoin.uk.eu.dal.net 475 elfoo #abc123 :Cannot join channel (+k)
+>> :bitcoin.uk.eu.dal.net 324 elfoo #abc321 +
+--> chanquery mode
+<< WHO #abc321
+>> :bitcoin.uk.eu.dal.net 329 elfoo #abc321 1756306129
+--> event 329
+>> :bitcoin.uk.eu.dal.net 352 elfoo #abc321 ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip bitcoin.uk.eu.dal.net elfoo H :0 elfoo
+--> silent event who
+>> :bitcoin.uk.eu.dal.net 352 elfoo #abc321 ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip lair.nl.eu.dal.net hu1 H@ :2 elfoo
+--> silent event who
+>> :bitcoin.uk.eu.dal.net 315 elfoo #abc321 :End of /WHO list.
+--> chanquery who end
+<< MODE #abc321 b
+>> :bitcoin.uk.eu.dal.net 368 elfoo #abc321 :End of Channel Ban List
+--> chanquery ban end
+<< PART #abc321
+>> :elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip PART #abc321
+<< JOIN #abc321,#abc123 x,pass
+>> :elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#abc321
+>> :bitcoin.uk.eu.dal.net 353 elfoo = #abc321 :elfoo @hu1
+>> :bitcoin.uk.eu.dal.net 366 elfoo #abc321 :End of /NAMES list.
+<< MODE #abc321
+>> :elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#abc123
+>> :bitcoin.uk.eu.dal.net 353 elfoo = #abc123 :elfoo @hu1
+>> :bitcoin.uk.eu.dal.net 366 elfoo #abc123 :End of /NAMES list.
+>> :bitcoin.uk.eu.dal.net 324 elfoo #abc321 +
+--> chanquery mode
+<< MODE #abc123
+>> :bitcoin.uk.eu.dal.net 329 elfoo #abc321 1756306129
+--> event 329
+>> :bitcoin.uk.eu.dal.net 324 elfoo #abc123 +k pass
+--> chanquery mode
+<< WHO #abc321
+>> :bitcoin.uk.eu.dal.net 329 elfoo #abc123 1756306110
+--> event 329
+>> :bitcoin.uk.eu.dal.net 352 elfoo #abc321 ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip bitcoin.uk.eu.dal.net elfoo H :0 elfoo
+--> silent event who
+>> :bitcoin.uk.eu.dal.net 352 elfoo #abc321 ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip lair.nl.eu.dal.net hu1 H@ :2 elfoo
+--> silent event who
+>> :bitcoin.uk.eu.dal.net 315 elfoo #abc321 :End of /WHO list.
+--> chanquery who end
+<< WHO #abc123
+>> :bitcoin.uk.eu.dal.net 352 elfoo #abc123 ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip bitcoin.uk.eu.dal.net elfoo H :0 elfoo
+--> silent event who
+>> :bitcoin.uk.eu.dal.net 352 elfoo #abc123 ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip lair.nl.eu.dal.net hu1 H@ :2 elfoo
+--> silent event who
+>> :bitcoin.uk.eu.dal.net 315 elfoo #abc123 :End of /WHO list.
+--> chanquery who end
+<< MODE #abc321 b
+>> :bitcoin.uk.eu.dal.net 368 elfoo #abc321 :End of Channel Ban List
+--> chanquery ban end
+<< MODE #abc123 b
+>> :bitcoin.uk.eu.dal.net 368 elfoo #abc123 :End of Channel Ban List
+--> chanquery ban end
+<< PING bitcoin.uk.eu.dal.net
+>> :bitcoin.uk.eu.dal.net PONG bitcoin.uk.eu.dal.net :elfoo
+--> lag pong
+<< PART #abc321
+>> :elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip PART #abc321
+<< PART #abc123
+>> :elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip PART #abc123
+<< JOIN #abc321,#abc123 x,pass
+>> :elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#abc321
+>> :bitcoin.uk.eu.dal.net 353 elfoo = #abc321 :elfoo @hu1
+>> :bitcoin.uk.eu.dal.net 366 elfoo #abc321 :End of /NAMES list.
+<< MODE #abc321
+>> :elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#abc123
+>> :bitcoin.uk.eu.dal.net 353 elfoo = #abc123 :elfoo @hu1
+>> :bitcoin.uk.eu.dal.net 366 elfoo #abc123 :End of /NAMES list.
+>> :bitcoin.uk.eu.dal.net 324 elfoo #abc321 +k x
+--> chanquery mode
+<< MODE #abc123
+>> :bitcoin.uk.eu.dal.net 329 elfoo #abc321 1756306129
+--> event 329
+>> :bitcoin.uk.eu.dal.net 324 elfoo #abc123 +k pass
+--> chanquery mode
+<< WHO #abc321
+>> :bitcoin.uk.eu.dal.net 329 elfoo #abc123 1756306110
+--> event 329
+>> :bitcoin.uk.eu.dal.net 352 elfoo #abc321 ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip bitcoin.uk.eu.dal.net elfoo H :0 elfoo
+--> silent event who
+>> :bitcoin.uk.eu.dal.net 352 elfoo #abc321 ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip lair.nl.eu.dal.net hu1 H@ :2 elfoo
+--> silent event who
+>> :bitcoin.uk.eu.dal.net 315 elfoo #abc321 :End of /WHO list.
+--> chanquery who end
+<< WHO #abc123
+>> :bitcoin.uk.eu.dal.net 352 elfoo #abc123 ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip bitcoin.uk.eu.dal.net elfoo H :0 elfoo
+--> silent event who
+>> :bitcoin.uk.eu.dal.net 352 elfoo #abc123 ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip lair.nl.eu.dal.net hu1 H@ :2 elfoo
+--> silent event who
+>> :bitcoin.uk.eu.dal.net 315 elfoo #abc123 :End of /WHO list.
+--> chanquery who end
+<< MODE #abc321 b
+>> :bitcoin.uk.eu.dal.net 368 elfoo #abc321 :End of Channel Ban List
+--> chanquery ban end
+<< MODE #abc123 b
+>> :bitcoin.uk.eu.dal.net 368 elfoo #abc123 :End of Channel Ban List
+--> chanquery ban end
+<< PING bitcoin.uk.eu.dal.net
+>> :bitcoin.uk.eu.dal.net PONG bitcoin.uk.eu.dal.net :elfoo
+--> lag pong
+<< PART abc321,abc123 :,pass
+>> :bitcoin.uk.eu.dal.net 403 elfoo abc321 :No such channel
+>> :bitcoin.uk.eu.dal.net 403 elfoo abc123 :No such channel
+<< PING bitcoin.uk.eu.dal.net
+>> :bitcoin.uk.eu.dal.net PONG bitcoin.uk.eu.dal.net :elfoo
+--> lag pong
+<< PART #abc321
+>> :elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip PART #abc321
+<< PART #abc123
+>> :elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip PART #abc123
+<< PING bitcoin.uk.eu.dal.net
+>> :bitcoin.uk.eu.dal.net PONG bitcoin.uk.eu.dal.net :elfoo
+--> lag pong
+<< JOIN #abc123,#abc321 pass,x
+>> :elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#abc123
+>> :bitcoin.uk.eu.dal.net 353 elfoo = #abc123 :elfoo @hu1
+>> :bitcoin.uk.eu.dal.net 366 elfoo #abc123 :End of /NAMES list.
+<< MODE #abc123
+>> :elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#abc321
+>> :bitcoin.uk.eu.dal.net 353 elfoo = #abc321 :elfoo @hu1
+>> :bitcoin.uk.eu.dal.net 366 elfoo #abc321 :End of /NAMES list.
+>> :bitcoin.uk.eu.dal.net 324 elfoo #abc123 +k pass
+--> chanquery mode
+<< MODE #abc321
+>> :bitcoin.uk.eu.dal.net 329 elfoo #abc123 1756306110
+--> event 329
+>> :bitcoin.uk.eu.dal.net 324 elfoo #abc321 +
+--> chanquery mode
+<< WHO #abc123
+>> :bitcoin.uk.eu.dal.net 329 elfoo #abc321 1756306129
+--> event 329
+>> :bitcoin.uk.eu.dal.net 352 elfoo #abc123 ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip bitcoin.uk.eu.dal.net elfoo H :0 elfoo
+--> silent event who
+>> :bitcoin.uk.eu.dal.net 352 elfoo #abc123 ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip lair.nl.eu.dal.net hu1 H@ :2 elfoo
+--> silent event who
+>> :bitcoin.uk.eu.dal.net 315 elfoo #abc123 :End of /WHO list.
+--> chanquery who end
+<< WHO #abc321
+>> :bitcoin.uk.eu.dal.net 352 elfoo #abc321 ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip bitcoin.uk.eu.dal.net elfoo H :0 elfoo
+--> silent event who
+>> :bitcoin.uk.eu.dal.net 352 elfoo #abc321 ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip lair.nl.eu.dal.net hu1 H@ :2 elfoo
+--> silent event who
+>> :bitcoin.uk.eu.dal.net 315 elfoo #abc321 :End of /WHO list.
+--> chanquery who end
+<< MODE #abc123 b
+>> :bitcoin.uk.eu.dal.net 368 elfoo #abc123 :End of Channel Ban List
+--> chanquery ban end
+<< MODE #abc321 b
+>> :bitcoin.uk.eu.dal.net 368 elfoo #abc321 :End of Channel Ban List
+--> chanquery ban end
+<< PING bitcoin.uk.eu.dal.net
+>> :bitcoin.uk.eu.dal.net PONG bitcoin.uk.eu.dal.net :elfoo
+--> lag pong
+<< PING bitcoin.uk.eu.dal.net
+>> :bitcoin.uk.eu.dal.net PONG bitcoin.uk.eu.dal.net :elfoo
+--> lag pong
+<< PING bitcoin.uk.eu.dal.net
+>> :bitcoin.uk.eu.dal.net PONG bitcoin.uk.eu.dal.net :elfoo
+--> lag pong
+<< JOIN #aaaa
+>> :elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#aaaa
+>> :bitcoin.uk.eu.dal.net 353 elfoo = #aaaa :@elfoo
+>> :bitcoin.uk.eu.dal.net 366 elfoo #aaaa :End of /NAMES list.
+<< MODE #aaaa
+>> :bitcoin.uk.eu.dal.net 324 elfoo #aaaa +
+--> chanquery mode
+<< WHO #aaaa
+>> :bitcoin.uk.eu.dal.net 329 elfoo #aaaa 1756306620
+--> event 329
+>> :bitcoin.uk.eu.dal.net 352 elfoo #aaaa ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip bitcoin.uk.eu.dal.net elfoo H@ :0 elfoo
+--> silent event who
+>> :bitcoin.uk.eu.dal.net 315 elfoo #aaaa :End of /WHO list.
+--> chanquery who end
+<< MODE #aaaa b
+>> :bitcoin.uk.eu.dal.net 368 elfoo #aaaa :End of Channel Ban List
+--> chanquery ban end
+^C
+c2r5s14% head -n 20 ./D
+head: cannot open './D' for reading: No such file or directory
+c2r5s14% head -n 20 ./Dalnet.log\
+<< CAP LS
+<< NICK elfoo
+<< USER elfoo elfoo irc.dal.net :elfoo
+>> :bitcoin.uk.eu.dal.net NOTICE AUTH :*** Looking up your hostname...
+>> :bitcoin.uk.eu.dal.net NOTICE AUTH :*** Your forward and reverse DNS do not match, ignoring hostname. [203.149.201.182 != 203.149.201.178]
+>> :bitcoin.uk.eu.dal.net NOTICE AUTH :*** Found your hostname
+>> :bitcoin.uk.eu.dal.net 001 elfoo :Welcome to the DALnet IRC Network elfoo!~elfoo@203.149.201.178
+<< MODE elfoo +i
+>> :bitcoin.uk.eu.dal.net 002 elfoo :Your host is bitcoin.uk.eu.dal.net, running version bahamut-2.2.4
+>> :bitcoin.uk.eu.dal.net 003 elfoo :This server was created Fri 22 Nov 2024 at 04:12:23 GMT
+>> :bitcoin.uk.eu.dal.net 004 elfoo bitcoin.uk.eu.dal.net bahamut-2.2.4 aAbcCdefFghHiIjkKmnoOPrRsSwxXy AbceiIjklLmMnoOpPrRsStv beIjklov
+>> :bitcoin.uk.eu.dal.net 005 elfoo NETWORK=DALnet SAFELIST MAXBANS=200 MAXCHANNELS=50 CHANNELLEN=32 KICKLEN=307 NICKLEN=30 TOPICLEN=307 MODES=6 CHANTYPES=# CHANLIMIT=#:50 PREFIX=(ohv)@%+ STATUSMSG=@%+ :are available on this server
+>> :bitcoin.uk.eu.dal.net 005 elfoo CASEMAPPING=ascii WATCH=128 SILENCE=10 ELIST=cmntu EXCEPTS INVEX CHANMODES=beI,k,jl,ciPAmMnOprRsSt MAXLIST=b:200,e:100,I:100 TARGMAX=DCCALLOW:,JOIN:,KICK:4,KILL:20,NOTICE:20,PART:,PRIVMSG:20,WHOIS:,WHOWAS: :are available on this server
+>> :bitcoin.uk.eu.dal.net 251 elfoo :There are 87 users and 6385 invisible on 39 servers
+>> :bitcoin.uk.eu.dal.net 252 elfoo 83 :IRC Operators online
+>> :bitcoin.uk.eu.dal.net 254 elfoo 3524 :channels formed
+>> :bitcoin.uk.eu.dal.net 255 elfoo :I have 237 clients and 1 servers
+>> :bitcoin.uk.eu.dal.net 265 elfoo :Current local users: 237 Max: 4001
+>> :bitcoin.uk.eu.dal.net 266 elfoo :Current global users: 6472 Max: 12809
+>> :bitcoin.uk.eu.dal.net NOTICE elfoo :*** Notice -- motd was last changed at 9/11/2017 12:51
+c2r5s14% nc irc.dal.net 6667 -C
+:serenity.fl.us.dal.net NOTICE AUTH :*** Looking up your hostname...
+:serenity.fl.us.dal.net NOTICE AUTH :*** Checking Ident
+:serenity.fl.us.dal.net NOTICE AUTH :*** Your forward and reverse DNS do not match, ignoring hostname. [203.149.201.182 != 203.149.201.178]
+:serenity.fl.us.dal.net NOTICE AUTH :*** Found your hostname
+CAP LS
+NICK elfoo
+USER elfoo elfoo irc.dal.net :elfoo
+
+^C
+c2r5s14% nc irc.dal.net 6667 -C
+:serenity.fl.us.dal.net NOTICE AUTH :*** Looking up your hostname...
+:serenity.fl.us.dal.net NOTICE AUTH :*** Checking Ident
+:serenity.fl.us.dal.net NOTICE AUTH :*** Your forward and reverse DNS do not match, ignoring hostname. [203.149.201.182 != 203.149.201.178]
+:serenity.fl.us.dal.net NOTICE AUTH :*** Found your hostname
+CAP LS
+
+NICK elfoo
+
+USER elfoo elfoo irc.dal.net :elfoo
+
+:serenity.fl.us.dal.net NOTICE AUTH :*** No Ident response
+:serenity.fl.us.dal.net 433 * elfoo :Nickname is already in use.
+NICK hu1
+:serenity.fl.us.dal.net 433 * hu1 :Nickname is already in use.
+NICK hu2
+:serenity.fl.us.dal.net 001 hu2 :Welcome to the DALnet IRC Network hu2!~elfoo@203.149.201.178
+:serenity.fl.us.dal.net 002 hu2 :Your host is serenity.fl.us.dal.net, running version bahamut-2.2.2
+:serenity.fl.us.dal.net 003 hu2 :This server was created Tue 23 Aug UTC at 2022 04:42:56 AM
+:serenity.fl.us.dal.net 004 hu2 serenity.fl.us.dal.net bahamut-2.2.2 aAbcCdefFghHiIjkKmnoOPrRsSwxXy AbceiIjklLmMnoOpPrRsStv beIjklov
+:serenity.fl.us.dal.net 005 hu2 NETWORK=DALnet SAFELIST MAXBANS=200 MAXCHANNELS=50 CHANNELLEN=32 KICKLEN=307 NICKLEN=30 TOPICLEN=307 MODES=6 CHANTYPES=# CHANLIMIT=#:50 PREFIX=(ohv)@%+ STATUSMSG=@%+ :are available on this server
+:serenity.fl.us.dal.net 005 hu2 CASEMAPPING=ascii WATCH=128 SILENCE=10 ELIST=cmntu EXCEPTS INVEX CHANMODES=beI,k,jl,ciPAmMnOprRsSt MAXLIST=b:200,e:100,I:100 TARGMAX=DCCALLOW:,JOIN:,KICK:4,KILL:20,NOTICE:20,PART:,PRIVMSG:20,WHOIS:,WHOWAS: :are available on this server
+:serenity.fl.us.dal.net 251 hu2 :There are 87 users and 6417 invisible on 39 servers
+:serenity.fl.us.dal.net 252 hu2 84 :IRC Operators online
+:serenity.fl.us.dal.net 254 hu2 3528 :channels formed
+:serenity.fl.us.dal.net 255 hu2 :I have 230 clients and 1 servers
+:serenity.fl.us.dal.net 265 hu2 :Current local users: 230 Max: 1393
+:serenity.fl.us.dal.net 266 hu2 :Current global users: 6504 Max: 12060
+:serenity.fl.us.dal.net NOTICE hu2 :*** Notice -- motd was last changed at 30/11/2020 19:09
+:serenity.fl.us.dal.net 375 hu2 :- serenity.fl.us.dal.net Message of the Day -
+:serenity.fl.us.dal.net 372 hu2 :-30/11/2020 19:09
+:serenity.fl.us.dal.net 372 hu2 :- serenity.fl.us.dal.net
+:serenity.fl.us.dal.net 372 hu2 :- sponsored by: Kape, Inc & Datapacket.com
+:serenity.fl.us.dal.net 372 hu2 :- admin: Mustang
+:serenity.fl.us.dal.net 372 hu2 :-
+:serenity.fl.us.dal.net 372 hu2 :- Please abide by DALnet's Acceptable Use Policy:
+:serenity.fl.us.dal.net 372 hu2 :- https://www.dal.net/aup
+:serenity.fl.us.dal.net 372 hu2 :-
+:serenity.fl.us.dal.net 372 hu2 :-
+:serenity.fl.us.dal.net 376 hu2 :End of /MOTD command.
+:hu2 MODE hu2 :+iH
+JOIN #bbbbb,#bbbbb,#bbbbb
+:hu2!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#bbbbb
+:serenity.fl.us.dal.net 353 hu2 = #bbbbb :@hu2
+:serenity.fl.us.dal.net 366 hu2 #bbbbb :End of /NAMES list.
+JOIN #abc123,#abc123,#abc123 x,x,pass
+:serenity.fl.us.dal.net 475 hu2 #abc123 :Cannot join channel (+k)
+^[[A                             :Unknown command
+^Cerenity.fl.us.dal.net 421 hu2
+c2r5s14%

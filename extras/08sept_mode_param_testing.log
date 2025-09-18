@@ -1,0 +1,310 @@
+>> :bitcoin.uk.eu.dal.net 372 anteo :-
+>> :bitcoin.uk.eu.dal.net 372 anteo :- For multilingual information:  <http://docs.dal.net/>
+>> :bitcoin.uk.eu.dal.net 372 anteo :-
+>> :bitcoin.uk.eu.dal.net 372 anteo :- Thank you for using DALnet!  We hope you have a pleasant day.
+>> :bitcoin.uk.eu.dal.net 376 anteo :End of /MOTD command.
+>> :anteo MODE anteo :+iH
+<< PING bitcoin.uk.eu.dal.net
+>> :bitcoin.uk.eu.dal.net PONG bitcoin.uk.eu.dal.net :anteo
+--> lag pong
+<< JOIN #hellu
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#hellu
+>> :bitcoin.uk.eu.dal.net 353 anteo = #hellu :@anteo
+>> :bitcoin.uk.eu.dal.net 366 anteo #hellu :End of /NAMES list.
+<< MODE #hellu
+>> :bitcoin.uk.eu.dal.net 324 anteo #hellu +
+--> chanquery mode
+<< WHO #hellu
+>> :bitcoin.uk.eu.dal.net 329 anteo #hellu 1757333741
+--> event 329
+>> :bitcoin.uk.eu.dal.net 352 anteo #hellu ~anteo 5626-2a9c-92a4-503c-675e.149.203.ip bitcoin.uk.eu.dal.net anteo H@ :0 anteo
+--> silent event who
+>> :bitcoin.uk.eu.dal.net 315 anteo #hellu :End of /WHO list.
+--> chanquery who end
+<< MODE #hellu b
+>> :bitcoin.uk.eu.dal.net 368 anteo #hellu :End of Channel Ban List
+--> chanquery ban end
+<< MODE #hellu +k-k 500
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +k 500
+<< MODE #hellu +k-k200 500 +k
+>> :bitcoin.uk.eu.dal.net 472 anteo 2 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +k 500
+<< MODE #hellu +k-l50k200 500 +k
+>> :bitcoin.uk.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 2 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +k-l 500
+<< MODE #hellu +kl-k200 500 50 +k
+>> :bitcoin.uk.eu.dal.net 472 anteo 2 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +kl 500 50
+<< MODE #hellu +k50-l50k200 500 +k
+>> :bitcoin.uk.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 2 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +k-l 500
+<< MODE #hellu +kl-l50k200 500 50 +k
+>> :bitcoin.uk.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 2 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +kl 500 50
+<< PING bitcoin.uk.eu.dal.net
+>> :bitcoin.uk.eu.dal.net PONG bitcoin.uk.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu
+>> :bitcoin.uk.eu.dal.net 324 anteo #hellu +lk 50 500
+>> :bitcoin.uk.eu.dal.net 329 anteo #hellu 1757333741
+<< MODE #hellu +kli-l50k200 500 50 +k
+>> :bitcoin.uk.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 2 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +kli 500 50
+<< MODE #hellu +kli-il50k200 500 50 +k
+>> :bitcoin.uk.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 2 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +kli 500 50
+<< MODE #hellu +kli-iil50k200 500 50 +k
+>> :bitcoin.uk.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 2 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +kli 500 50
+<< PING bitcoin.uk.eu.dal.net
+>> :bitcoin.uk.eu.dal.net PONG bitcoin.uk.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu +kli-iil50k200 500 50 +k
+>> :bitcoin.uk.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 2 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +kli 500 50
+<< MODE #hellu
+>> :bitcoin.uk.eu.dal.net 324 anteo #hellu +ilk 50 500
+>> :bitcoin.uk.eu.dal.net 329 anteo #hellu 1757333741
+<< MODE #hellu +kli-iil50k200 500 50 +k
+>> :bitcoin.uk.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 2 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +kli 500 50
+<< MODE #hellu +kl-il50k200 500 50 +k
+>> :bitcoin.uk.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 2 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +kl-i 500 50
+<< MODE #hellu
+>> :bitcoin.uk.eu.dal.net 324 anteo #hellu +lk 50 500
+>> :bitcoin.uk.eu.dal.net 329 anteo #hellu 1757333741
+<< MODE #hellu +kl-il50k200 500 50 +k
+>> :bitcoin.uk.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 2 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +kl-i 500 50
+<< MODE #hellu +i-i+i-i+i
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +i
+<< MODE #hellu +i-i+i-i+i-i
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +i
+<< MODE #hellu +i-i+i-i+i-ii
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +i
+<< MODE #hellu +i-i+i-i+i-ii
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +i
+<< MODE #hellu -ii+i-i+i-i
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -i
+<< PING bitcoin.uk.eu.dal.net
+>> :bitcoin.uk.eu.dal.net PONG bitcoin.uk.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu +i-i+i-i+i-i
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +i
+<< PING bitcoin.uk.eu.dal.net
+>> :bitcoin.uk.eu.dal.net PONG bitcoin.uk.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu -ikll 500
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -ikl 500
+<< MODE #hellu
+>> :bitcoin.uk.eu.dal.net 324 anteo #hellu +
+>> :bitcoin.uk.eu.dal.net 329 anteo #hellu 1757333741
+<< MODE #hellu -ikll+l
+>> :bitcoin.uk.eu.dal.net 461 anteo MODE +l :Not enough parameters
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -il
+<< MODE #hellu
+>> :bitcoin.uk.eu.dal.net 324 anteo #hellu +
+>> :bitcoin.uk.eu.dal.net 329 anteo #hellu 1757333741
+<< MODE #hellu +iklll
+>> :bitcoin.uk.eu.dal.net 461 anteo MODE +l :Not enough parameters
+>> :bitcoin.uk.eu.dal.net 461 anteo MODE +l :Not enough parameters
+>> :bitcoin.uk.eu.dal.net 461 anteo MODE +l :Not enough parameters
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +i
+<< MODE #hellu +iklll 5000
+>> :bitcoin.uk.eu.dal.net 461 anteo MODE +l :Not enough parameters
+>> :bitcoin.uk.eu.dal.net 461 anteo MODE +l :Not enough parameters
+>> :bitcoin.uk.eu.dal.net 461 anteo MODE +l :Not enough parameters
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +ik 5000
+<< MODE #hellu +iklll 5000 50
+>> :bitcoin.uk.eu.dal.net 461 anteo MODE +l :Not enough parameters
+>> :bitcoin.uk.eu.dal.net 461 anteo MODE +l :Not enough parameters
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +ikl 5000 50
+<< PING bitcoin.uk.eu.dal.net
+>> :bitcoin.uk.eu.dal.net PONG bitcoin.uk.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu
+>> :bitcoin.uk.eu.dal.net 324 anteo #hellu +ilk 50 5000
+>> :bitcoin.uk.eu.dal.net 329 anteo #hellu 1757333741
+<< PING bitcoin.uk.eu.dal.net
+>> :bitcoin.uk.eu.dal.net PONG bitcoin.uk.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu -i
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -i
+<< MODE #hellu
+>> :bitcoin.uk.eu.dal.net 324 anteo #hellu +lk 50 5000
+>> :bitcoin.uk.eu.dal.net 329 anteo #hellu 1757333741
+>> :anteo_!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#hellu
+<< PING bitcoin.uk.eu.dal.net
+>> :bitcoin.uk.eu.dal.net PONG bitcoin.uk.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu +iklll3 5000 50 1 2
+>> :bitcoin.uk.eu.dal.net 472 anteo 3 :is unknown mode char to me
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +ikl 5000 50
+<< MODE #hellu
+>> :bitcoin.uk.eu.dal.net 324 anteo #hellu +ilk 50 5000
+>> :bitcoin.uk.eu.dal.net 329 anteo #hellu 1757333741
+>> :anteo_!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip PART #hellu
+<< INVITE anteo_ #hellu
+>> :bitcoin.uk.eu.dal.net 341 anteo anteo_ #hellu
+>> :serenity.fl.us.dal.net NOTICE @#hellu :anteo invited anteo_ into channel #hellu
+>> :anteo_!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#hellu
+<< PING bitcoin.uk.eu.dal.net
+>> :bitcoin.uk.eu.dal.net PONG bitcoin.uk.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu +kk -k -i
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +k -k
+<< PING bitcoin.uk.eu.dal.net
+>> :bitcoin.uk.eu.dal.net PONG bitcoin.uk.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu -kk +k +k
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -k -k
+<< MODE #hellu
+>> :bitcoin.uk.eu.dal.net 324 anteo #hellu +il 50
+>> :bitcoin.uk.eu.dal.net 329 anteo #hellu 1757333741
+<< MODE #hellu -kk -k -k
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -k -k
+<< MODE #hellu -lll
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -l
+<< MODE #hellu -l+lk -l -l
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -l+k -l
+<< MODE #hellu -l+lk -l -+l
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -l+k -+l
+<< MODE #hellu -l+lk -l -+-l
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -l+k -+-l
+<< MODE #hellu -l+lk -l -+-+l
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -l+k -+-+l
+<< MODE #hellu -l+lk -l -+-+----l
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -l+k -+-+----l
+<< MODE #hellu -l+lk -l -+-+----+l
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -l+k -+-+----+l
+<< PING bitcoin.uk.eu.dal.net
+>> :bitcoin.uk.eu.dal.net PONG bitcoin.uk.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu -l+lk -l +++++++++++++l
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -l+k +++++++++++++l
+<< MODE #hellu -l+lk -l +l
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -l+k +l
+<< MODE #hellu +l 50
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +l 50
+<< MODE #hellu +l 50
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +l 50
+<< MODE #hellu -l50
+>> :bitcoin.uk.eu.dal.net 472 anteo 5 :is unknown mode char to me
+>> :bitcoin.uk.eu.dal.net 472 anteo 0 :is unknown mode char to me
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -l
+<< MODE #hellu -lk 50
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -lk +l
+<< PING bitcoin.uk.eu.dal.net
+>> :bitcoin.uk.eu.dal.net PONG bitcoin.uk.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu -lk 50
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -lk 50
+<< MODE #hellu +lk 50
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu +l 50
+<< PING bitcoin.uk.eu.dal.net
+>> :bitcoin.uk.eu.dal.net PONG bitcoin.uk.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu -lk 50
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -lk 50
+<< MODE #hellu -lk 50
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -lk 50
+<< MODE #hellu -lk 50
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -lk 50
+<< MODE #hellu -lk 50
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -lk 50
+<< MODE #hellu -lk 50
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -lk 50
+<< MODE #hellu -lk 50
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -lk 50
+<< MODE #hellu -lk 50
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -lk 50
+<< MODE #hellu -lk 50
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -lk 50
+<< MODE #hellu -lk 50
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -lk 50
+<< MODE #hellu -lk 50
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -lk 50
+<< MODE #hellu -lk 50
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -lk 50
+<< MODE #hellu -lk 50
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -lk 50
+<< MODE #hellu -lk 50
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -lk 50
+<< MODE #hellu -lk 50
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -lk 50
+<< MODE #hellu -l+lk -l +++++++++++++l
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -l+k +++++++++++++l
+<< MODE #hellu -lk 50
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -lk +++++++++++++l
+<< MODE #hellu -l+lk -l +++++++++++++l
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -l+k +++++++++++++l
+<< MODE #hellu -lk 50
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -lk +++++++++++++l
+<< PING bitcoin.uk.eu.dal.net
+>> :bitcoin.uk.eu.dal.net PONG bitcoin.uk.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu -l+lk -l +++++++++++++l
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -l+k +++++++++++++l
+<< MODE #hellu -lk 50
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -lk +++++++++++++l
+<< MODE #hellu -lk 50
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -lk 50
+<< MODE #hellu -lk 50
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -lk 50
+<< PING bitcoin.uk.eu.dal.net
+>> :bitcoin.uk.eu.dal.net PONG bitcoin.uk.eu.dal.net :anteo
+--> lag pong
+<< MODE #hellu -l+lk -l +++++++++++++l
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -l+k +++++++++++++l
+<< MODE #hellu -lk 50
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -lk +++++++++++++l
+<< MODE #hellu -lk 50
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip MODE #hellu -lk 50
+<< QUIT :leaving

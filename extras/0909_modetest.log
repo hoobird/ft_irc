@@ -1,0 +1,217 @@
+<< CAP LS
+<< NICK anteo
+<< USER anteo anteo irc.dal.net :anteo
+>> :sakura.jp.as.dal.net NOTICE AUTH :*** Looking up your hostname...
+>> :sakura.jp.as.dal.net NOTICE AUTH :*** Checking Ident
+>> :sakura.jp.as.dal.net NOTICE AUTH :*** Your forward and reverse DNS do not match, ignoring hostname. [203.149.201.182 != 203.149.201.178]
+>> :sakura.jp.as.dal.net NOTICE AUTH :*** Found your hostname
+>> :sakura.jp.as.dal.net NOTICE AUTH :*** No Ident response
+>> :sakura.jp.as.dal.net 001 anteo :Welcome to the DALnet IRC Network anteo!~anteo@203.149.201.178
+<< MODE anteo +i
+>> :sakura.jp.as.dal.net 002 anteo :Your host is sakura.jp.as.dal.net, running version bahamut-2.2.4
+>> :sakura.jp.as.dal.net 003 anteo :This server was created Sat Nov 23 2024 at 20:05:50 UTC
+>> :sakura.jp.as.dal.net 004 anteo sakura.jp.as.dal.net bahamut-2.2.4 aAbcCdefFghHiIjkKmnoOPrRsSwxXy AbceiIjklLmMnoOpPrRsStv beIjklov
+>> :sakura.jp.as.dal.net 005 anteo NETWORK=DALnet SAFELIST MAXBANS=200 MAXCHANNELS=50 CHANNELLEN=32 KICKLEN=307 NICKLEN=30 TOPICLEN=307 MODES=6 CHANTYPES=# CHANLIMIT=#:50 PREFIX=(ohv)@%+ STATUSMSG=@%+ :are available on this server
+>> :sakura.jp.as.dal.net 005 anteo CASEMAPPING=ascii WATCH=128 SILENCE=10 ELIST=cmntu EXCEPTS INVEX CHANMODES=beI,k,jl,ciPAmMnOprRsSt MAXLIST=b:200,e:100,I:100 TARGMAX=DCCALLOW:,JOIN:,KICK:4,KILL:20,NOTICE:20,PART:,PRIVMSG:20,WHOIS:,WHOWAS: :are available on this server
+>> :sakura.jp.as.dal.net 251 anteo :There are 83 users and 6158 invisible on 39 servers
+>> :sakura.jp.as.dal.net 252 anteo 80 :IRC Operators online
+>> :sakura.jp.as.dal.net 254 anteo 3462 :channels formed
+>> :sakura.jp.as.dal.net 255 anteo :I have 1257 clients and 1 servers
+>> :sakura.jp.as.dal.net 265 anteo :Current local users: 1257 Max: 3677
+>> :sakura.jp.as.dal.net 266 anteo :Current global users: 6241 Max: 12059
+>> :sakura.jp.as.dal.net NOTICE anteo :*** Notice -- motd was last changed at 23/1/2024 15:37
+>> :sakura.jp.as.dal.net 375 anteo :- sakura.jp.as.dal.net Message of the Day -
+>> :sakura.jp.as.dal.net 372 anteo :-23/1/2024 15:37
+>> :sakura.jp.as.dal.net 372 anteo :- =====================================================================
+>> :sakura.jp.as.dal.net 372 anteo :-
+>> :sakura.jp.as.dal.net 372 anteo :- Server: sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net 372 anteo :- Plaintext ports: 6660 - 6669, 7000
+>> :sakura.jp.as.dal.net 372 anteo :- SSL/TLS port: 6697
+>> :sakura.jp.as.dal.net 372 anteo :- Both IPv4 and IPv6 are supported on this server
+>> :sakura.jp.as.dal.net 372 anteo :-
+>> :sakura.jp.as.dal.net 372 anteo :- Server Administrator: xPsycho (xpsycho@DAL.net)
+>> :sakura.jp.as.dal.net 372 anteo :- Operators: toolman (toolman@DAL.net)
+>> :sakura.jp.as.dal.net 372 anteo :-
+>> :sakura.jp.as.dal.net 372 anteo :-
+>> :sakura.jp.as.dal.net 372 anteo :-            __.--~~.,-.__
+>> :sakura.jp.as.dal.net 372 anteo :-            `~-._.-(`-.__`-.
+>> :sakura.jp.as.dal.net 372 anteo :-                    \    `~~`
+>> :sakura.jp.as.dal.net 372 anteo :-               .--./ \
+>> :sakura.jp.as.dal.net 372 anteo :-              /#   \  \.--.
+>> :sakura.jp.as.dal.net 372 anteo :-              \    /  /#   \
+>> :sakura.jp.as.dal.net 372 anteo :-          jgs  '--'   \    /
+>> :sakura.jp.as.dal.net 372 anteo :-                       '--'
+>> :sakura.jp.as.dal.net 372 anteo :-
+>> :sakura.jp.as.dal.net 372 anteo :- This server is proudly sponsored by DataPacket.com
+>> :sakura.jp.as.dal.net 372 anteo :-       <https://www.datapacket.com/>
+>> :sakura.jp.as.dal.net 372 anteo :-
+>> :sakura.jp.as.dal.net 372 anteo :- =====================================================================
+>> :sakura.jp.as.dal.net 372 anteo :-
+>> :sakura.jp.as.dal.net 372 anteo :- Welcome to DALnet!  By connecting to this network, you agree to abide
+>> :sakura.jp.as.dal.net 372 anteo :- by its acceptable use policy available at: https://www.dal.net/aup
+>> :sakura.jp.as.dal.net 372 anteo :-
+>> :sakura.jp.as.dal.net 372 anteo :- We reserve the right to deny access to this server to anyone at any
+>> :sakura.jp.as.dal.net 372 anteo :- time without warning or explanation.
+>> :sakura.jp.as.dal.net 372 anteo :-
+>> :sakura.jp.as.dal.net 372 anteo :- To help prevent abuse, this server will check your PC for open proxy
+>> :sakura.jp.as.dal.net 372 anteo :- servers when you connect. If you do not want this test performed, do
+>> :sakura.jp.as.dal.net 372 anteo :- not connect.
+>> :sakura.jp.as.dal.net 372 anteo :-
+>> :sakura.jp.as.dal.net 372 anteo :- =====================================================================
+>> :sakura.jp.as.dal.net 372 anteo :-
+>> :sakura.jp.as.dal.net 372 anteo :- If you need general IRC assistance or help with services commands,
+>> :sakura.jp.as.dal.net 372 anteo :- please view our multilingual documentation at http://docs.dal.net/
+>> :sakura.jp.as.dal.net 372 anteo :-
+>> :sakura.jp.as.dal.net 372 anteo :- If your question is not answered after reading our documention,
+>> :sakura.jp.as.dal.net 372 anteo :- please /join #help for general questions or /join #OperHelp if you
+>> :sakura.jp.as.dal.net 372 anteo :- require the immediate assistance of an IRC Operator.
+>> :sakura.jp.as.dal.net 372 anteo :-
+>> :sakura.jp.as.dal.net 372 anteo :- =====================================================================
+>> :sakura.jp.as.dal.net 372 anteo :-
+>> :sakura.jp.as.dal.net 372 anteo :- Thank you, and enjoy your day!
+>> :sakura.jp.as.dal.net 372 anteo :-
+>> :sakura.jp.as.dal.net 372 anteo :- =====================================================================
+>> :sakura.jp.as.dal.net 372 anteo :-
+>> :sakura.jp.as.dal.net 376 anteo :End of /MOTD command.
+>> :anteo MODE anteo :+iH
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< JOIN #helluu
+>> :anteo!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#helluu
+>> :sakura.jp.as.dal.net 353 anteo = #helluu :@anteo
+>> :sakura.jp.as.dal.net 366 anteo #helluu :End of /NAMES list.
+<< MODE #helluu
+>> :sakura.jp.as.dal.net 324 anteo #helluu +
+--> chanquery mode
+<< WHO #helluu
+>> :sakura.jp.as.dal.net 329 anteo #helluu 1757417628
+--> event 329
+>> :sakura.jp.as.dal.net 352 anteo #helluu ~anteo 5626-2a9c-92a4-503c-675e.149.203.ip sakura.jp.as.dal.net anteo H@ :0 anteo
+--> silent event who
+>> :sakura.jp.as.dal.net 315 anteo #helluu :End of /WHO list.
+--> chanquery who end
+<< MODE #helluu b
+>> :sakura.jp.as.dal.net 368 anteo #helluu :End of Channel Ban List
+--> chanquery ban end
+<< MODE #helluu
+>> :sakura.jp.as.dal.net 324 anteo #helluu +
+>> :sakura.jp.as.dal.net 329 anteo #helluu 1757417628
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo
+--> lag pong
+<< QUIT :leaving

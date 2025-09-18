@@ -1,0 +1,392 @@
+<< CAP LS
+<< NICK elfoo
+<< USER elfoo elfoo irc.dal.net :elfoo
+>> :punch.wa.us.dal.net NOTICE AUTH :*** Looking up your hostname...
+>> :punch.wa.us.dal.net NOTICE AUTH :*** Your forward and reverse DNS do not match, ignoring hostname. [203.149.201.182 != 203.149.201.178]
+>> :punch.wa.us.dal.net NOTICE AUTH :*** Found your hostname
+>> :punch.wa.us.dal.net 001 elfoo :Welcome to the DALnet IRC Network elfoo!~elfoo@203.149.201.178
+<< MODE elfoo +i
+>> :punch.wa.us.dal.net 002 elfoo :Your host is punch.wa.us.dal.net, running version bahamut-2.2.3
+>> :punch.wa.us.dal.net 003 elfoo :This server was created Mon Dec 11 2023 at 20:33:25 UTC
+>> :punch.wa.us.dal.net 004 elfoo punch.wa.us.dal.net bahamut-2.2.3 aAbcCdefFghHiIjkKmnoOPrRsSwxXy AbceiIjklLmMnoOpPrRsStv beIjklov
+>> :punch.wa.us.dal.net 005 elfoo NETWORK=DALnet SAFELIST MAXBANS=200 MAXCHANNELS=50 CHANNELLEN=32 KICKLEN=307 NICKLEN=30 TOPICLEN=307 MODES=6 CHANTYPES=# CHANLIMIT=#:50 PREFIX=(ohv)@%+ STATUSMSG=@%+ :are available on this server
+>> :punch.wa.us.dal.net 005 elfoo CASEMAPPING=ascii WATCH=128 SILENCE=10 ELIST=cmntu EXCEPTS INVEX CHANMODES=beI,k,jl,ciPAmMnOprRsSt MAXLIST=b:200,e:100,I:100 TARGMAX=DCCALLOW:,JOIN:,KICK:4,KILL:20,NOTICE:20,PART:,PRIVMSG:20,WHOIS:,WHOWAS: :are available on this server
+>> :punch.wa.us.dal.net 251 elfoo :There are 89 users and 6477 invisible on 39 servers
+>> :punch.wa.us.dal.net 252 elfoo 86 :IRC Operators online
+>> :punch.wa.us.dal.net 254 elfoo 3481 :channels formed
+>> :punch.wa.us.dal.net 255 elfoo :I have 180 clients and 1 servers
+>> :punch.wa.us.dal.net 265 elfoo :Current local users: 180 Max: 2105
+>> :punch.wa.us.dal.net 266 elfoo :Current global users: 6566 Max: 12060
+>> :punch.wa.us.dal.net NOTICE elfoo :*** Notice -- motd was last changed at 14/8/2020 11:15
+>> :punch.wa.us.dal.net NOTICE elfoo :*** Notice -- Please read the motd if you haven't read it
+>> :punch.wa.us.dal.net 375 elfoo :- punch.wa.us.dal.net Message of the Day -
+>> :punch.wa.us.dal.net 372 elfoo :-
+>> :punch.wa.us.dal.net 372 elfoo :- Welcome to DALnet!  This is punch.wa.us.dal.net, and YOU are
+>> :punch.wa.us.dal.net 372 elfoo :- the reason punch.* is here!
+>> :punch.wa.us.dal.net 372 elfoo :-
+>> :punch.wa.us.dal.net 372 elfoo :-                     SERVER RULES:
+>> :punch.wa.us.dal.net 372 elfoo :-
+>> :punch.wa.us.dal.net 372 elfoo :-       IMPERSONATION, CLONING, SPAMMING, FLOODING,
+>> :punch.wa.us.dal.net 372 elfoo :-             OR ANY OTHER KIND OF ABUSE CAN
+>> :punch.wa.us.dal.net 372 elfoo :-        AND WILL CAUSE YOU TO BE BANNED FROM THIS
+>> :punch.wa.us.dal.net 372 elfoo :-                SERVER AT ANY GIVEN TIME
+>> :punch.wa.us.dal.net 372 elfoo :-
+>> :punch.wa.us.dal.net 372 elfoo :- We reserve the right to deny access to this server without
+>> :punch.wa.us.dal.net 372 elfoo :- warning or explanation.  Usage is governed by the DALnet
+>> :punch.wa.us.dal.net 372 elfoo :- AUP at <http://www.dal.net/aup/>.
+>> :punch.wa.us.dal.net 372 elfoo :-
+>> :punch.wa.us.dal.net 372 elfoo :-   * For help:                      /join #help              *
+>> :punch.wa.us.dal.net 372 elfoo :-   * For IRCop/CSop assistance:     /join #OperHelp          *
+>> :punch.wa.us.dal.net 372 elfoo :-   * For multilingual information:  <http://docs.dal.net/>   *
+>> :punch.wa.us.dal.net 372 elfoo :-   * For server related problems:   punch-staff@dal.net      *
+>> :punch.wa.us.dal.net 372 elfoo :-
+>> :punch.wa.us.dal.net 372 elfoo :- For assistance with trojan or virus removal please /join #NoHack
+>> :punch.wa.us.dal.net 372 elfoo :-
+>> :punch.wa.us.dal.net 372 elfoo :- This server does not check for ident, and does not support ident.
+>> :punch.wa.us.dal.net 372 elfoo :- To help prevent abuse, this server will check your PC for open proxy
+>> :punch.wa.us.dal.net 372 elfoo :- servers when you connect. If you do not want this test performed,
+>> :punch.wa.us.dal.net 372 elfoo :- do not connect.
+>> :punch.wa.us.dal.net 372 elfoo :-
+>> :punch.wa.us.dal.net 372 elfoo :- Please feel free to visit the only official punch.* server channel,
+>> :punch.wa.us.dal.net 372 elfoo :- #punch.
+>> :punch.wa.us.dal.net 372 elfoo :-
+>> :punch.wa.us.dal.net 372 elfoo :- Are you using SSL?  If not, why not?  Point your IRC client to
+>> :punch.wa.us.dal.net 372 elfoo :- TCP 6697 on punch.dal.net for encrypted chatting!
+>> :punch.wa.us.dal.net 372 elfoo :-
+>> :punch.wa.us.dal.net 372 elfoo :- More useful:
+>> :punch.wa.us.dal.net 372 elfoo :-
+>> :punch.wa.us.dal.net 372 elfoo :- Some children saw Nasreddin coming from the vineyard with two
+>> :punch.wa.us.dal.net 372 elfoo :- baskets full of grapes loaded on his donkey. They gathered around
+>> :punch.wa.us.dal.net 372 elfoo :- him and asked him to give them a taste.  Nasreddin picked up a
+>> :punch.wa.us.dal.net 372 elfoo :- bunch of grapes and gave each child a grape.  "You have so much,
+>> :punch.wa.us.dal.net 372 elfoo :- but you gave us so little," the children whined.  "There is no
+>> :punch.wa.us.dal.net 372 elfoo :- difference whether you have a basketful or a small piece. They
+>> :punch.wa.us.dal.net 372 elfoo :- all taste the same," Nasreddin answered, and continued on his way.
+>> :punch.wa.us.dal.net 372 elfoo :-
+>> :punch.wa.us.dal.net 372 elfoo :- Your hosts are:
+>> :punch.wa.us.dal.net 372 elfoo :-
+>> :punch.wa.us.dal.net 372 elfoo :-    robt@DAL.net     - Administrator
+>> :punch.wa.us.dal.net 372 elfoo :-    visigoth@DAL.net - IRC Operator, Services Administrator
+>> :punch.wa.us.dal.net 372 elfoo :-    key@DAL.net      - IRC Operator
+>> :punch.wa.us.dal.net 372 elfoo :-
+>> :punch.wa.us.dal.net 372 elfoo :- Please enjoy your stay and thank you for being part of DALnet!
+>> :punch.wa.us.dal.net 372 elfoo :-
+>> :punch.wa.us.dal.net 376 elfoo :End of /MOTD command.
+>> :punch.wa.us.dal.net NOTICE elfoo :*** Notice -- This server runs an open proxy monitor to prevent abuse.
+>> :punch.wa.us.dal.net NOTICE elfoo :*** Notice -- If you see connections on various ports from irc.dal.net
+>> :punch.wa.us.dal.net NOTICE elfoo :*** Notice -- please disregard them, as they are the monitor in action.
+>> :punch.wa.us.dal.net NOTICE elfoo :*** Notice -- For more information please visit http://kline.dal.net/proxy/
+>> :elfoo MODE elfoo :+iH
+<< PING punch.wa.us.dal.net
+>> :punch.wa.us.dal.net PONG punch.wa.us.dal.net :elfoo
+--> lag pong
+<< JOIN #hello
+>> :elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#hello
+>> :punch.wa.us.dal.net 353 elfoo = #hello :@elfoo
+>> :punch.wa.us.dal.net 366 elfoo #hello :End of /NAMES list.
+<< MODE #hello
+>> :punch.wa.us.dal.net 324 elfoo #hello +
+--> chanquery mode
+<< WHO #hello
+>> :punch.wa.us.dal.net 329 elfoo #hello 1756902491
+--> event 329
+>> :punch.wa.us.dal.net 352 elfoo #hello ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip punch.wa.us.dal.net elfoo H@ :0 elfoo
+--> silent event who
+>> :punch.wa.us.dal.net 315 elfoo #hello :End of /WHO list.
+--> chanquery who end
+<< MODE #hello b
+>> :punch.wa.us.dal.net 368 elfoo #hello :End of Channel Ban List
+--> chanquery ban end
+<< PING punch.wa.us.dal.net
+>> :punch.wa.us.dal.net PONG punch.wa.us.dal.net :elfoo
+--> lag pong
+>> :elfoo_!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#hello
+<< CAP LS
+<< NICK elfoo
+<< USER elfoo elfoo irc.dal.net :elfoo
+>> :choopa.nj.us.dal.net NOTICE AUTH :*** Looking up your hostname...
+>> :choopa.nj.us.dal.net NOTICE AUTH :*** Checking Ident
+>> :choopa.nj.us.dal.net NOTICE AUTH :*** Your forward and reverse DNS do not match, ignoring hostname. [203.149.201.182 != 203.149.201.178]
+>> :choopa.nj.us.dal.net NOTICE AUTH :*** Found your hostname
+>> :choopa.nj.us.dal.net NOTICE AUTH :*** No Ident response
+>> :choopa.nj.us.dal.net 433 * elfoo :Nickname is already in use.
+<< NICK elfoo_
+>> :choopa.nj.us.dal.net 001 elfoo_ :Welcome to the DALnet IRC Network elfoo_!~elfoo@203.149.201.178
+<< MODE elfoo_ +i
+<< WHOIS elfoo
+>> :choopa.nj.us.dal.net 002 elfoo_ :Your host is choopa.nj.us.dal.net, running version bahamut-2.2.2
+>> :choopa.nj.us.dal.net 003 elfoo_ :This server was created Tue Aug 23 2022 at 00:35:14 EDT
+>> :choopa.nj.us.dal.net 004 elfoo_ choopa.nj.us.dal.net bahamut-2.2.2 aAbcCdefFghHiIjkKmnoOPrRsSwxXy AbceiIjklLmMnoOpPrRsStv beIjklov
+>> :choopa.nj.us.dal.net 005 elfoo_ NETWORK=DALnet SAFELIST MAXBANS=200 MAXCHANNELS=20 CHANNELLEN=32 KICKLEN=307 NICKLEN=30 TOPICLEN=307 MODES=6 CHANTYPES=# CHANLIMIT=#:20 PREFIX=(ohv)@%+ STATUSMSG=@%+ :are available on this server
+>> :choopa.nj.us.dal.net 005 elfoo_ CASEMAPPING=ascii WATCH=128 SILENCE=10 ELIST=cmntu EXCEPTS INVEX CHANMODES=beI,k,jl,ciPAmMnOprRsSt MAXLIST=b:200,e:100,I:100 TARGMAX=DCCALLOW:,JOIN:,KICK:4,KILL:20,NOTICE:20,PART:,PRIVMSG:20,WHOIS:,WHOWAS: :are available on this server
+>> :choopa.nj.us.dal.net 251 elfoo_ :There are 89 users and 6478 invisible on 39 servers
+>> :choopa.nj.us.dal.net 252 elfoo_ 85 :IRC Operators online
+>> :choopa.nj.us.dal.net 254 elfoo_ 3481 :channels formed
+>> :choopa.nj.us.dal.net 255 elfoo_ :I have 212 clients and 1 servers
+>> :choopa.nj.us.dal.net 265 elfoo_ :Current local users: 212 Max: 2193
+>> :choopa.nj.us.dal.net 266 elfoo_ :Current global users: 6567 Max: 12809
+>> :choopa.nj.us.dal.net NOTICE elfoo_ :*** Notice -- motd was last changed at 16/3/2021 11:13
+>> :choopa.nj.us.dal.net 375 elfoo_ :- choopa.nj.us.dal.net Message of the Day -
+>> :choopa.nj.us.dal.net 372 elfoo_ :-16/3/2021 11:13
+>> :choopa.nj.us.dal.net 372 elfoo_ :- Welcome to choopa.nj.us.dal.net!
+>> :choopa.nj.us.dal.net 372 elfoo_ :-
+>> :choopa.nj.us.dal.net 372 elfoo_ :-   .,-:::::   ::   .:      ...         ...   ::::::::::. :::.
+>> :choopa.nj.us.dal.net 372 elfoo_ :- ,;;;'````'  ,;;   ;;,  .;;;;;;;.   .;;;;;;;. `;;;```.;;;;;`;;
+>> :choopa.nj.us.dal.net 372 elfoo_ :- [[[        ,[[[,,,[[[ ,[[     \[[,,[[     \[[,`]]nnn]]',[[ '[[,
+>> :choopa.nj.us.dal.net 372 elfoo_ :- $$$        "$$$"""$$$ $$$,     $$$$$$,     $$$ $$$""  c$$$cc$$$c
+>> :choopa.nj.us.dal.net 372 elfoo_ :- `88bo,__,o, 888   "88o"888,_ _,88P"888,_ _,88P 888o    888   888,
+>> :choopa.nj.us.dal.net 372 elfoo_ :-   "YUMMMMMP"MMM    YMM  "YMMMMMP"   "YMMMMMP"  YMMMb   YMM   ""`
+>> :choopa.nj.us.dal.net 372 elfoo_ :-
+>> :choopa.nj.us.dal.net 372 elfoo_ :- Server generously sponsored by http://www.choopa.com/
+>> :choopa.nj.us.dal.net 372 elfoo_ :-
+>> :choopa.nj.us.dal.net 372 elfoo_ :- By connecting to this server you agree to be bound by the terms put forth
+>> :choopa.nj.us.dal.net 372 elfoo_ :- in DALnet's Acceptable Use Policy (http://www.dal.net/aup/)
+>> :choopa.nj.us.dal.net 372 elfoo_ :-
+>> :choopa.nj.us.dal.net 372 elfoo_ :- For questions; please contact choopa-staff@dal.net
+>> :choopa.nj.us.dal.net 376 elfoo_ :End of /MOTD command.
+>> :choopa.nj.us.dal.net NOTICE elfoo_ :*** Notice -- This server runs an open proxy monitor to prevent abuse.
+>> :choopa.nj.us.dal.net NOTICE elfoo_ :*** Notice -- If you see connections on various ports from 108.61.240.240
+>> :choopa.nj.us.dal.net NOTICE elfoo_ :*** Notice -- please disregard them, as they are the monitor in action.
+>> :choopa.nj.us.dal.net NOTICE elfoo_ :*** Notice -- For more information please visit kline.dal.net/proxy/wingate.htm
+>> :elfoo_ MODE elfoo_ :+iH
+>> :choopa.nj.us.dal.net 311 elfoo_ elfoo ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip * :elfoo
+--> nickfind event whois
+>> :choopa.nj.us.dal.net 319 elfoo_ elfoo :@#hello
+--> event empty
+>> :choopa.nj.us.dal.net 312 elfoo_ elfoo punch.wa.us.dal.net : Shovel ready since 1998!
+--> event empty
+>> :choopa.nj.us.dal.net 318 elfoo_ elfoo :End of /WHOIS list.
+--> event empty
+<< PING choopa.nj.us.dal.net
+>> :choopa.nj.us.dal.net PONG choopa.nj.us.dal.net :elfoo_
+--> lag pong
+<< JOIN #hello
+>> :elfoo_!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#hello
+>> :choopa.nj.us.dal.net 353 elfoo_ = #hello :elfoo_ @elfoo
+>> :choopa.nj.us.dal.net 366 elfoo_ #hello :End of /NAMES list.
+<< MODE #hello
+>> :choopa.nj.us.dal.net 324 elfoo_ #hello +
+--> chanquery mode
+<< WHO #hello
+>> :choopa.nj.us.dal.net 329 elfoo_ #hello 1756902491
+--> event 329
+>> :choopa.nj.us.dal.net 352 elfoo_ #hello ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip choopa.nj.us.dal.net elfoo_ H :0 elfoo
+--> silent event who
+>> :choopa.nj.us.dal.net 352 elfoo_ #hello ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip punch.wa.us.dal.net elfoo H@ :2 elfoo
+--> silent event who
+>> :choopa.nj.us.dal.net 315 elfoo_ #hello :End of /WHO list.
+--> chanquery who end
+<< MODE #hello b
+>> :choopa.nj.us.dal.net 368 elfoo_ #hello :End of Channel Ban List
+--> chanquery ban end
+<< KICK #hello alice :
+>> :punch.wa.us.dal.net 401 elfoo alice :No such nick/channel
+<< PING choopa.nj.us.dal.net
+>> :choopa.nj.us.dal.net PONG choopa.nj.us.dal.net :elfoo_
+--> lag pong
+<< PING punch.wa.us.dal.net
+>> :punch.wa.us.dal.net PONG punch.wa.us.dal.net :elfoo
+--> lag pong
+<< KICK #hello alice :
+>> :punch.wa.us.dal.net 401 elfoo alice :No such nick/channel
+<< PING choopa.nj.us.dal.net
+>> :choopa.nj.us.dal.net PONG choopa.nj.us.dal.net :elfoo_
+--> lag pong
+<< PING punch.wa.us.dal.net
+>> :punch.wa.us.dal.net PONG punch.wa.us.dal.net :elfoo
+--> lag pong
+<< PING choopa.nj.us.dal.net
+>> :choopa.nj.us.dal.net PONG choopa.nj.us.dal.net :elfoo_
+--> lag pong
+<< PING punch.wa.us.dal.net
+>> :punch.wa.us.dal.net PONG punch.wa.us.dal.net :elfoo
+--> lag pong
+<< PING choopa.nj.us.dal.net
+>> :choopa.nj.us.dal.net PONG choopa.nj.us.dal.net :elfoo_
+--> lag pong
+<< PING punch.wa.us.dal.net
+>> :punch.wa.us.dal.net PONG punch.wa.us.dal.net :elfoo
+--> lag pong
+<< PING choopa.nj.us.dal.net
+>> :choopa.nj.us.dal.net PONG choopa.nj.us.dal.net :elfoo_
+--> lag pong
+>> :elfoo__!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#hello
+>> :elfoo__!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#hello
+<< PING punch.wa.us.dal.net
+>> :punch.wa.us.dal.net PONG punch.wa.us.dal.net :elfoo
+--> lag pong
+<< PING choopa.nj.us.dal.net
+>> :choopa.nj.us.dal.net PONG choopa.nj.us.dal.net :elfoo_
+--> lag pong
+<< PING punch.wa.us.dal.net
+>> :punch.wa.us.dal.net PONG punch.wa.us.dal.net :elfoo
+--> lag pong
+<< KICK #hello elfoo_,alice :
+>> :elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip KICK #hello elfoo_ :elfoo
+>> :punch.wa.us.dal.net 401 elfoo alice :No such nick/channel
+>> :elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip KICK #hello elfoo_ :elfoo
+<< PING choopa.nj.us.dal.net
+>> :choopa.nj.us.dal.net PONG choopa.nj.us.dal.net :elfoo_
+--> lag pong
+<< PING punch.wa.us.dal.net
+>> :punch.wa.us.dal.net PONG punch.wa.us.dal.net :elfoo
+--> lag pong
+<< KICK #hello_ elfoo_,elfoo__ :
+>> :punch.wa.us.dal.net 403 elfoo #hello_ :No such channel
+<< PING choopa.nj.us.dal.net
+>> :choopa.nj.us.dal.net PONG choopa.nj.us.dal.net :elfoo_
+--> lag pong
+<< PING punch.wa.us.dal.net
+>> :punch.wa.us.dal.net PONG punch.wa.us.dal.net :elfoo
+--> lag pong
+<< JOIN #hello
+>> :elfoo_!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#hello
+>> :choopa.nj.us.dal.net 353 elfoo_ = #hello :elfoo_ elfoo__ @elfoo
+>> :choopa.nj.us.dal.net 366 elfoo_ #hello :End of /NAMES list.
+<< MODE #hello
+>> :elfoo_!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#hello
+>> :choopa.nj.us.dal.net 324 elfoo_ #hello +
+--> chanquery mode
+<< WHO #hello
+>> :choopa.nj.us.dal.net 329 elfoo_ #hello 1756902491
+--> event 329
+>> :choopa.nj.us.dal.net 352 elfoo_ #hello ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip choopa.nj.us.dal.net elfoo_ H :0 elfoo
+--> silent event who
+>> :choopa.nj.us.dal.net 352 elfoo_ #hello ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip lion.tx.us.dal.net elfoo__ H :5 elfoo
+--> silent event who
+>> :choopa.nj.us.dal.net 352 elfoo_ #hello ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip punch.wa.us.dal.net elfoo H@ :2 elfoo
+--> silent event who
+>> :choopa.nj.us.dal.net 315 elfoo_ #hello :End of /WHO list.
+--> chanquery who end
+<< MODE #hello b
+>> :choopa.nj.us.dal.net 368 elfoo_ #hello :End of Channel Ban List
+--> chanquery ban end
+<< PING choopa.nj.us.dal.net
+>> :choopa.nj.us.dal.net PONG choopa.nj.us.dal.net :elfoo_
+--> lag pong
+<< PING punch.wa.us.dal.net
+>> :punch.wa.us.dal.net PONG punch.wa.us.dal.net :elfoo
+--> lag pong
+<< KICK #hello_ elfoo_,elfoo__ :
+>> :punch.wa.us.dal.net 403 elfoo #hello_ :No such channel
+<< PING choopa.nj.us.dal.net
+>> :choopa.nj.us.dal.net PONG choopa.nj.us.dal.net :elfoo_
+--> lag pong
+<< PING punch.wa.us.dal.net
+>> :punch.wa.us.dal.net PONG punch.wa.us.dal.net :elfoo
+--> lag pong
+<< KICK #hello_ elfoo_,elfoo__ :
+>> :punch.wa.us.dal.net 403 elfoo #hello_ :No such channel
+<< PING choopa.nj.us.dal.net
+>> :choopa.nj.us.dal.net PONG choopa.nj.us.dal.net :elfoo_
+--> lag pong
+<< KICK #hello elfoo_,alice :
+>> :elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip KICK #hello elfoo_ :elfoo
+>> :punch.wa.us.dal.net 401 elfoo alice :No such nick/channel
+>> :elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip KICK #hello elfoo_ :elfoo
+<< PING punch.wa.us.dal.net
+>> :punch.wa.us.dal.net PONG punch.wa.us.dal.net :elfoo
+--> lag pong
+<< PING choopa.nj.us.dal.net
+>> :choopa.nj.us.dal.net PONG choopa.nj.us.dal.net :elfoo_
+--> lag pong
+<< PING punch.wa.us.dal.net
+>> :punch.wa.us.dal.net PONG punch.wa.us.dal.net :elfoo
+--> lag pong
+<< PING choopa.nj.us.dal.net
+>> :choopa.nj.us.dal.net PONG choopa.nj.us.dal.net :elfoo_
+--> lag pong
+<< PING punch.wa.us.dal.net
+>> :punch.wa.us.dal.net PONG punch.wa.us.dal.net :elfoo
+--> lag pong
+<< PING choopa.nj.us.dal.net
+>> :choopa.nj.us.dal.net PONG choopa.nj.us.dal.net :elfoo_
+--> lag pong
+<< PING punch.wa.us.dal.net
+>> :punch.wa.us.dal.net PONG punch.wa.us.dal.net :elfoo
+--> lag pong
+<< PING choopa.nj.us.dal.net
+>> :choopa.nj.us.dal.net PONG choopa.nj.us.dal.net :elfoo_
+--> lag pong
+<< PING punch.wa.us.dal.net
+>> :punch.wa.us.dal.net PONG punch.wa.us.dal.net :elfoo
+--> lag pong
+<< PING choopa.nj.us.dal.net
+>> :choopa.nj.us.dal.net PONG choopa.nj.us.dal.net :elfoo_
+--> lag pong
+<< PING punch.wa.us.dal.net
+>> :punch.wa.us.dal.net PONG punch.wa.us.dal.net :elfoo
+--> lag pong
+<< QUIT :leaving
+<< QUIT :leaving
+<< CAP LS
+<< NICK elfoo
+<< USER elfoo elfoo irc.dal.net :elfoo
+>> :jingo.ix.us.dal.net NOTICE AUTH :*** Looking up your hostname...
+>> :jingo.ix.us.dal.net NOTICE AUTH :*** Checking Ident
+>> :jingo.ix.us.dal.net NOTICE AUTH :*** No Ident response
+>> :jingo.ix.us.dal.net NOTICE AUTH :*** Your forward and reverse DNS do not match, ignoring hostname. [203.149.201.182 != 203.149.201.178]
+>> :jingo.ix.us.dal.net NOTICE AUTH :*** Found your hostname
+>> :jingo.ix.us.dal.net 001 elfoo :Welcome to the DALnet IRC Network elfoo!~elfoo@203.149.201.178
+<< MODE elfoo +i
+>> :jingo.ix.us.dal.net 002 elfoo :Your host is jingo.ix.us.dal.net, running version bahamut-2.2.3
+>> :jingo.ix.us.dal.net 003 elfoo :This server was created Wed Dec 6 2023 at 08:18:53 PST
+>> :jingo.ix.us.dal.net 004 elfoo jingo.ix.us.dal.net bahamut-2.2.3 aAbcCdefFghHiIjkKmnoOPrRsSwxXy AbceiIjklLmMnoOpPrRsStv beIjklov
+>> :jingo.ix.us.dal.net 005 elfoo NETWORK=DALnet SAFELIST MAXBANS=200 MAXCHANNELS=20 CHANNELLEN=32 KICKLEN=307 NICKLEN=30 TOPICLEN=307 MODES=6 CHANTYPES=# CHANLIMIT=#:20 PREFIX=(ohv)@%+ STATUSMSG=@%+ :are available on this server
+>> :jingo.ix.us.dal.net 005 elfoo CASEMAPPING=ascii WATCH=128 SILENCE=10 ELIST=cmntu EXCEPTS INVEX CHANMODES=beI,k,jl,ciPAmMnOprRsSt MAXLIST=b:200,e:100,I:100 TARGMAX=DCCALLOW:,JOIN:,KICK:4,KILL:20,NOTICE:20,PART:,PRIVMSG:20,WHOIS:,WHOWAS: :are available on this server
+>> :jingo.ix.us.dal.net 251 elfoo :There are 90 users and 6576 invisible on 39 servers
+>> :jingo.ix.us.dal.net 252 elfoo 84 :IRC Operators online
+>> :jingo.ix.us.dal.net 254 elfoo 3470 :channels formed
+>> :jingo.ix.us.dal.net 255 elfoo :I have 22 clients and 1 servers
+>> :jingo.ix.us.dal.net 265 elfoo :Current local users: 22 Max: 1269
+>> :jingo.ix.us.dal.net 266 elfoo :Current global users: 6666 Max: 67741
+>> :jingo.ix.us.dal.net NOTICE elfoo :*** Notice -- motd was last changed at 27/11/2012 18:13
+>> :jingo.ix.us.dal.net NOTICE elfoo :*** Notice -- Please read the motd if you haven't read it
+>> :jingo.ix.us.dal.net 375 elfoo :- jingo.ix.us.dal.net Message of the Day -
+>> :jingo.ix.us.dal.net 372 elfoo :- ix.dal.net - Seattle, Washington, USA
+>> :jingo.ix.us.dal.net 372 elfoo :-
+>> :jingo.ix.us.dal.net 372 elfoo :- By connecting to this server you agree to be bound by the
+>> :jingo.ix.us.dal.net 372 elfoo :- terms put forth in DALnet's Acceptable Use Policy at:
+>> :jingo.ix.us.dal.net 372 elfoo :- http://www.dal.net/aup/
+>> :jingo.ix.us.dal.net 372 elfoo :-
+>> :jingo.ix.us.dal.net 372 elfoo :- For help with IRC or DALnet, please join one of our recommended
+>> :jingo.ix.us.dal.net 372 elfoo :- help channels or visit http://docs.dal.net/
+>> :jingo.ix.us.dal.net 372 elfoo :-     /join #irchelp
+>> :jingo.ix.us.dal.net 372 elfoo :-     /join #dalnethelp
+>> :jingo.ix.us.dal.net 372 elfoo :-     /join #help
+>> :jingo.ix.us.dal.net 372 elfoo :-
+>> :jingo.ix.us.dal.net 372 elfoo :- To see more information about this server, type /motd
+>> :jingo.ix.us.dal.net 376 elfoo :End of /MOTD command.
+>> :jingo.ix.us.dal.net NOTICE elfoo :*** Notice -- This server runs an open proxy monitor to prevent abuse.
+>> :jingo.ix.us.dal.net NOTICE elfoo :*** Notice -- If you see connections on various ports from irc.dal.net
+>> :jingo.ix.us.dal.net NOTICE elfoo :*** Notice -- please disregard them, as they are the monitor in action.
+>> :jingo.ix.us.dal.net NOTICE elfoo :*** Notice -- For more information please visit http://kline.dal.net/proxy/
+>> :elfoo MODE elfoo :+iH
+<< PING jingo.ix.us.dal.net
+>> :jingo.ix.us.dal.net PONG jingo.ix.us.dal.net :elfoo
+--> lag pong
+<< JOIN #hello
+>> :elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#hello
+>> :jingo.ix.us.dal.net 353 elfoo = #hello :@elfoo
+>> :jingo.ix.us.dal.net 366 elfoo #hello :End of /NAMES list.
+<< MODE #hello
+>> :jingo.ix.us.dal.net 324 elfoo #hello +
+--> chanquery mode
+<< WHO #hello
+>> :jingo.ix.us.dal.net 329 elfoo #hello 1756908447
+--> event 329
+>> :jingo.ix.us.dal.net 352 elfoo #hello ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip jingo.ix.us.dal.net elfoo H@ :0 elfoo
+--> silent event who
+>> :jingo.ix.us.dal.net 315 elfoo #hello :End of /WHO list.
+--> chanquery who end
+<< MODE #hello b
+>> :jingo.ix.us.dal.net 368 elfoo #hello :End of Channel Ban List
+--> chanquery ban end
+>> :elfoo_!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#hello
+>> :elfoo__!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#hello
+<< KICK #lobby elfoo :
+>> :jingo.ix.us.dal.net 482 elfoo #lobby :You're not channel operator
+<< PING jingo.ix.us.dal.net
+>> :jingo.ix.us.dal.net PONG jingo.ix.us.dal.net :elfoo
+--> lag pong
+<< QUIT :leaving

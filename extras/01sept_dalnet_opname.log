@@ -1,0 +1,124 @@
+<< CAP LS
+<< NICK elfoo
+<< USER elfoo elfoo irc.dal.net :elfoo
+>> :lion.tx.us.dal.net NOTICE AUTH :*** Looking up your hostname...
+>> :lion.tx.us.dal.net NOTICE AUTH :*** Checking Ident
+>> :lion.tx.us.dal.net NOTICE AUTH :*** Your forward and reverse DNS do not match, ignoring hostname. [203.149.201.182 != 203.149.201.178]
+>> :lion.tx.us.dal.net NOTICE AUTH :*** Found your hostname
+>> :lion.tx.us.dal.net NOTICE AUTH :*** No Ident response
+>> :lion.tx.us.dal.net 433 * elfoo :Nickname is already in use.
+<< NICK elfoo_
+>> :lion.tx.us.dal.net 001 elfoo_ :Welcome to the DALnet IRC Network elfoo_!~elfoo@203.149.201.178
+<< MODE elfoo_ +i
+<< WHOIS elfoo
+>> :lion.tx.us.dal.net 002 elfoo_ :Your host is lion.tx.us.dal.net, running version bahamut-2.2.4
+>> :lion.tx.us.dal.net 003 elfoo_ :This server was created Sat Feb 22 2025 at 12:32:54 EST
+>> :lion.tx.us.dal.net 004 elfoo_ lion.tx.us.dal.net bahamut-2.2.4 aAbcCdefFghHiIjkKmnoOPrRsSwxXy AbceiIjklLmMnoOpPrRsStv beIjklov
+>> :lion.tx.us.dal.net 005 elfoo_ NETWORK=DALnet SAFELIST MAXBANS=200 MAXCHANNELS=50 CHANNELLEN=32 KICKLEN=307 NICKLEN=30 TOPICLEN=307 MODES=6 CHANTYPES=# CHANLIMIT=#:50 PREFIX=(ohv)@%+ STATUSMSG=@%+ :are available on this server
+>> :lion.tx.us.dal.net 005 elfoo_ CASEMAPPING=ascii WATCH=128 SILENCE=10 ELIST=cmntu EXCEPTS INVEX CHANMODES=beI,k,jl,ciPAmMnOprRsSt MAXLIST=b:200,e:100,I:100 TARGMAX=DCCALLOW:,JOIN:,KICK:4,KILL:20,NOTICE:20,PART:,PRIVMSG:20,WHOIS:,WHOWAS: :are available on this server
+>> :lion.tx.us.dal.net 251 elfoo_ :There are 88 users and 6595 invisible on 39 servers
+>> :lion.tx.us.dal.net 252 elfoo_ 86 :IRC Operators online
+>> :lion.tx.us.dal.net 254 elfoo_ 3464 :channels formed
+>> :lion.tx.us.dal.net 255 elfoo_ :I have 1325 clients and 1 servers
+>> :lion.tx.us.dal.net 265 elfoo_ :Current local users: 1325 Max: 1812
+>> :lion.tx.us.dal.net 266 elfoo_ :Current global users: 6683 Max: 8222
+>> :lion.tx.us.dal.net NOTICE elfoo_ :*** Notice -- motd was last changed at 21/2/2024 4:48
+>> :lion.tx.us.dal.net 375 elfoo_ :- lion.tx.us.dal.net Message of the Day -
+>> :lion.tx.us.dal.net 372 elfoo_ :-21/2/2024 4:48
+>> :lion.tx.us.dal.net 372 elfoo_ :-      Welcome to,
+>> :lion.tx.us.dal.net 372 elfoo_ :-       _ _
+>> :lion.tx.us.dal.net 372 elfoo_ :-      | (_)
+>> :lion.tx.us.dal.net 372 elfoo_ :-      | |_  ___  _ __
+>> :lion.tx.us.dal.net 372 elfoo_ :-      | | |/ _ \| '_ \
+>> :lion.tx.us.dal.net 372 elfoo_ :-      | | | (_) | | | |
+>> :lion.tx.us.dal.net 372 elfoo_ :-      |_|_|\___/|_| |_|.tx.us.dal.net
+>> :lion.tx.us.dal.net 372 elfoo_ :-
+>> :lion.tx.us.dal.net 372 elfoo_ :-       * Host..............: lion.dal.net | lion-v6.dal.net
+>> :lion.tx.us.dal.net 372 elfoo_ :-       * Ports.............: 6667 - 6669, 7000 | SSL - 6697
+>> :lion.tx.us.dal.net 372 elfoo_ :-
+>> :lion.tx.us.dal.net 372 elfoo_ :-    Welcome to DALnet, by connecting to this network you agree to
+>> :lion.tx.us.dal.net 372 elfoo_ :-    abide by its acceptable use policy, visit : http://www.dal.net/aup
+>> :lion.tx.us.dal.net 372 elfoo_ :-
+>> :lion.tx.us.dal.net 372 elfoo_ :-      "This server has been sponsored by Psychz Networks"
+>> :lion.tx.us.dal.net 372 elfoo_ :-
+>> :lion.tx.us.dal.net 372 elfoo_ :-            ---===[https://www.psychz.net/]===---
+>> :lion.tx.us.dal.net 372 elfoo_ :-
+>> :lion.tx.us.dal.net 372 elfoo_ :-    -------------------------------------------------------------------
+>> :lion.tx.us.dal.net 372 elfoo_ :-    [%] Server Policies  =-
+>> :lion.tx.us.dal.net 372 elfoo_ :-
+>> :lion.tx.us.dal.net 372 elfoo_ :-    a. No spamming or advertising allowed, if found you will be banned
+>> :lion.tx.us.dal.net 372 elfoo_ :-       from this server/network.
+>> :lion.tx.us.dal.net 372 elfoo_ :-    b. No malicious bots, including flood and nick/channel chasers
+>> :lion.tx.us.dal.net 372 elfoo_ :-    c. No channel filler bots/clients/psybncs
+>> :lion.tx.us.dal.net 372 elfoo_ :-       #  A channel filler is a client, bnc, or bot which is connected
+>> :lion.tx.us.dal.net 372 elfoo_ :-          just to fill a channel and make it look bigger
+>> :lion.tx.us.dal.net 372 elfoo_ :-    d. Operator impersonation will not be tolerated and cause you to be
+>> :lion.tx.us.dal.net 372 elfoo_ :-       banned from this server/network.
+>> :lion.tx.us.dal.net 372 elfoo_ :-
+>> :lion.tx.us.dal.net 372 elfoo_ :-            "REMEMBER IRC IS A PRIVILEGE, NOT A RIGHT"
+>> :lion.tx.us.dal.net 372 elfoo_ :-
+>> :lion.tx.us.dal.net 372 elfoo_ :-    --------------------------------------------------------------------
+>> :lion.tx.us.dal.net 372 elfoo_ :-    For IRC Operator assistance /join #Operhelp
+>> :lion.tx.us.dal.net 372 elfoo_ :-
+>> :lion.tx.us.dal.net 372 elfoo_ :-    For DALnet and General IRC related help, goto #Help
+>> :lion.tx.us.dal.net 372 elfoo_ :-
+>> :lion.tx.us.dal.net 372 elfoo_ :-    For multi-lingual documentation - [http://docs.dal.net]
+>> :lion.tx.us.dal.net 372 elfoo_ :-
+>> :lion.tx.us.dal.net 372 elfoo_ :-    If you have any questions/issues related to this server,
+>> :lion.tx.us.dal.net 372 elfoo_ :-    contact us using: lion-staff@dal.net
+>> :lion.tx.us.dal.net 372 elfoo_ :-
+>> :lion.tx.us.dal.net 372 elfoo_ :-    Thank you, hope you enjoy your stay!
+>> :lion.tx.us.dal.net 376 elfoo_ :End of /MOTD command.
+>> :elfoo_ MODE elfoo_ :+iH
+>> :lion.tx.us.dal.net 311 elfoo_ elfoo ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip * :elfoo
+--> nickfind event whois
+>> :lion.tx.us.dal.net 319 elfoo_ elfoo :@#hello
+--> event empty
+>> :lion.tx.us.dal.net 312 elfoo_ elfoo punch.wa.us.dal.net : Shovel ready since 1998!
+--> event empty
+>> :lion.tx.us.dal.net 318 elfoo_ elfoo :End of /WHOIS list.
+--> event empty
+<< PING lion.tx.us.dal.net
+>> :lion.tx.us.dal.net PONG lion.tx.us.dal.net :elfoo_
+--> lag pong
+<< JOIN #hello
+>> :elfoo_!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#hello
+>> :lion.tx.us.dal.net 353 elfoo_ = #hello :elfoo_ @elfoo
+>> :lion.tx.us.dal.net 366 elfoo_ #hello :End of /NAMES list.
+<< MODE #hello
+>> :lion.tx.us.dal.net 324 elfoo_ #hello +
+--> chanquery mode
+<< WHO #hello
+>> :lion.tx.us.dal.net 329 elfoo_ #hello 1756737972
+--> event 329
+>> :lion.tx.us.dal.net 352 elfoo_ #hello ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip lion.tx.us.dal.net elfoo_ H :0 elfoo
+--> silent event who
+>> :lion.tx.us.dal.net 352 elfoo_ #hello ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip punch.wa.us.dal.net elfoo H@ :5 elfoo
+--> silent event who
+>> :lion.tx.us.dal.net 315 elfoo_ #hello :End of /WHO list.
+--> chanquery who end
+<< MODE #hello b
+>> :lion.tx.us.dal.net 368 elfoo_ #hello :End of Channel Ban List
+--> chanquery ban end
+<< PING lion.tx.us.dal.net
+>> :lion.tx.us.dal.net PONG lion.tx.us.dal.net :elfoo_
+--> lag pong
+<< PING lion.tx.us.dal.net
+>> :lion.tx.us.dal.net PONG lion.tx.us.dal.net :elfoo_
+--> lag pong
+<< PING lion.tx.us.dal.net
+>> :lion.tx.us.dal.net PONG lion.tx.us.dal.net :elfoo_
+--> lag pong
+<< PING lion.tx.us.dal.net
+>> :lion.tx.us.dal.net PONG lion.tx.us.dal.net :elfoo_
+--> lag pong
+<< PING lion.tx.us.dal.net
+>> :lion.tx.us.dal.net PONG lion.tx.us.dal.net :elfoo_
+--> lag pong
+<< PING lion.tx.us.dal.net
+>> :lion.tx.us.dal.net PONG lion.tx.us.dal.net :elfoo_
+--> lag pong
+<< PING lion.tx.us.dal.net
+>> :lion.tx.us.dal.net PONG lion.tx.us.dal.net :elfoo_
+--> lag pong
+<< QUIT :leaving

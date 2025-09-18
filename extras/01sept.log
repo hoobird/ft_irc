@@ -1,0 +1,110 @@
+<< CAP LS
+<< NICK elfoo
+<< USER elfoo elfoo irc.dal.net :elfoo
+>> :punch.wa.us.dal.net NOTICE AUTH :*** Looking up your hostname...
+>> :punch.wa.us.dal.net NOTICE AUTH :*** Your forward and reverse DNS do not match, ignoring hostname. [203.149.201.182 != 203.149.201.178]
+>> :punch.wa.us.dal.net NOTICE AUTH :*** Found your hostname
+>> :punch.wa.us.dal.net 001 elfoo :Welcome to the DALnet IRC Network elfoo!~elfoo@203.149.201.178
+<< MODE elfoo +i
+>> :punch.wa.us.dal.net 002 elfoo :Your host is punch.wa.us.dal.net, running version bahamut-2.2.3
+>> :punch.wa.us.dal.net 003 elfoo :This server was created Mon Dec 11 2023 at 20:33:25 UTC
+>> :punch.wa.us.dal.net 004 elfoo punch.wa.us.dal.net bahamut-2.2.3 aAbcCdefFghHiIjkKmnoOPrRsSwxXy AbceiIjklLmMnoOpPrRsStv beIjklov
+>> :punch.wa.us.dal.net 005 elfoo NETWORK=DALnet SAFELIST MAXBANS=200 MAXCHANNELS=50 CHANNELLEN=32 KICKLEN=307 NICKLEN=30 TOPICLEN=307 MODES=6 CHANTYPES=# CHANLIMIT=#:50 PREFIX=(ohv)@%+ STATUSMSG=@%+ :are available on this server
+>> :punch.wa.us.dal.net 005 elfoo CASEMAPPING=ascii WATCH=128 SILENCE=10 ELIST=cmntu EXCEPTS INVEX CHANMODES=beI,k,jl,ciPAmMnOprRsSt MAXLIST=b:200,e:100,I:100 TARGMAX=DCCALLOW:,JOIN:,KICK:4,KILL:20,NOTICE:20,PART:,PRIVMSG:20,WHOIS:,WHOWAS: :are available on this server
+>> :punch.wa.us.dal.net 251 elfoo :There are 88 users and 6613 invisible on 39 servers
+>> :punch.wa.us.dal.net 252 elfoo 86 :IRC Operators online
+>> :punch.wa.us.dal.net 254 elfoo 3476 :channels formed
+>> :punch.wa.us.dal.net 255 elfoo :I have 230 clients and 1 servers
+>> :punch.wa.us.dal.net 265 elfoo :Current local users: 230 Max: 2105
+>> :punch.wa.us.dal.net 266 elfoo :Current global users: 6701 Max: 12060
+>> :punch.wa.us.dal.net NOTICE elfoo :*** Notice -- motd was last changed at 14/8/2020 11:15
+>> :punch.wa.us.dal.net NOTICE elfoo :*** Notice -- Please read the motd if you haven't read it
+>> :punch.wa.us.dal.net 375 elfoo :- punch.wa.us.dal.net Message of the Day -
+>> :punch.wa.us.dal.net 372 elfoo :-
+>> :punch.wa.us.dal.net 372 elfoo :- Welcome to DALnet!  This is punch.wa.us.dal.net, and YOU are
+>> :punch.wa.us.dal.net 372 elfoo :- the reason punch.* is here!
+>> :punch.wa.us.dal.net 372 elfoo :-
+>> :punch.wa.us.dal.net 372 elfoo :-                     SERVER RULES:
+>> :punch.wa.us.dal.net 372 elfoo :-
+>> :punch.wa.us.dal.net 372 elfoo :-       IMPERSONATION, CLONING, SPAMMING, FLOODING,
+>> :punch.wa.us.dal.net 372 elfoo :-             OR ANY OTHER KIND OF ABUSE CAN
+>> :punch.wa.us.dal.net 372 elfoo :-        AND WILL CAUSE YOU TO BE BANNED FROM THIS
+>> :punch.wa.us.dal.net 372 elfoo :-                SERVER AT ANY GIVEN TIME
+>> :punch.wa.us.dal.net 372 elfoo :-
+>> :punch.wa.us.dal.net 372 elfoo :- We reserve the right to deny access to this server without
+>> :punch.wa.us.dal.net 372 elfoo :- warning or explanation.  Usage is governed by the DALnet
+>> :punch.wa.us.dal.net 372 elfoo :- AUP at <http://www.dal.net/aup/>.
+>> :punch.wa.us.dal.net 372 elfoo :-
+>> :punch.wa.us.dal.net 372 elfoo :-   * For help:                      /join #help              *
+>> :punch.wa.us.dal.net 372 elfoo :-   * For IRCop/CSop assistance:     /join #OperHelp          *
+>> :punch.wa.us.dal.net 372 elfoo :-   * For multilingual information:  <http://docs.dal.net/>   *
+>> :punch.wa.us.dal.net 372 elfoo :-   * For server related problems:   punch-staff@dal.net      *
+>> :punch.wa.us.dal.net 372 elfoo :-
+>> :punch.wa.us.dal.net 372 elfoo :- For assistance with trojan or virus removal please /join #NoHack
+>> :punch.wa.us.dal.net 372 elfoo :-
+>> :punch.wa.us.dal.net 372 elfoo :- This server does not check for ident, and does not support ident.
+>> :punch.wa.us.dal.net 372 elfoo :- To help prevent abuse, this server will check your PC for open proxy
+>> :punch.wa.us.dal.net 372 elfoo :- servers when you connect. If you do not want this test performed,
+>> :punch.wa.us.dal.net 372 elfoo :- do not connect.
+>> :punch.wa.us.dal.net 372 elfoo :-
+>> :punch.wa.us.dal.net 372 elfoo :- Please feel free to visit the only official punch.* server channel,
+>> :punch.wa.us.dal.net 372 elfoo :- #punch.
+>> :punch.wa.us.dal.net 372 elfoo :-
+>> :punch.wa.us.dal.net 372 elfoo :- Are you using SSL?  If not, why not?  Point your IRC client to
+>> :punch.wa.us.dal.net 372 elfoo :- TCP 6697 on punch.dal.net for encrypted chatting!
+>> :punch.wa.us.dal.net 372 elfoo :-
+>> :punch.wa.us.dal.net 372 elfoo :- More useful:
+>> :punch.wa.us.dal.net 372 elfoo :-
+>> :punch.wa.us.dal.net 372 elfoo :- Some children saw Nasreddin coming from the vineyard with two
+>> :punch.wa.us.dal.net 372 elfoo :- baskets full of grapes loaded on his donkey. They gathered around
+>> :punch.wa.us.dal.net 372 elfoo :- him and asked him to give them a taste.  Nasreddin picked up a
+>> :punch.wa.us.dal.net 372 elfoo :- bunch of grapes and gave each child a grape.  "You have so much,
+>> :punch.wa.us.dal.net 372 elfoo :- but you gave us so little," the children whined.  "There is no
+>> :punch.wa.us.dal.net 372 elfoo :- difference whether you have a basketful or a small piece. They
+>> :punch.wa.us.dal.net 372 elfoo :- all taste the same," Nasreddin answered, and continued on his way.
+>> :punch.wa.us.dal.net 372 elfoo :-
+>> :punch.wa.us.dal.net 372 elfoo :- Your hosts are:
+>> :punch.wa.us.dal.net 372 elfoo :-
+>> :punch.wa.us.dal.net 372 elfoo :-    robt@DAL.net     - Administrator
+>> :punch.wa.us.dal.net 372 elfoo :-    visigoth@DAL.net - IRC Operator, Services Administrator
+>> :punch.wa.us.dal.net 372 elfoo :-    key@DAL.net      - IRC Operator
+>> :punch.wa.us.dal.net 372 elfoo :-
+>> :punch.wa.us.dal.net 372 elfoo :- Please enjoy your stay and thank you for being part of DALnet!
+>> :punch.wa.us.dal.net 372 elfoo :-
+>> :punch.wa.us.dal.net 376 elfoo :End of /MOTD command.
+>> :punch.wa.us.dal.net NOTICE elfoo :*** Notice -- This server runs an open proxy monitor to prevent abuse.
+>> :punch.wa.us.dal.net NOTICE elfoo :*** Notice -- If you see connections on various ports from irc.dal.net
+>> :punch.wa.us.dal.net NOTICE elfoo :*** Notice -- please disregard them, as they are the monitor in action.
+>> :punch.wa.us.dal.net NOTICE elfoo :*** Notice -- For more information please visit http://kline.dal.net/proxy/
+>> :elfoo MODE elfoo :+iH
+<< PING punch.wa.us.dal.net
+>> :punch.wa.us.dal.net PONG punch.wa.us.dal.net :elfoo
+--> lag pong
+<< JOIN #asdfg
+>> :elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#asdfg
+>> :punch.wa.us.dal.net 353 elfoo = #asdfg :@elfoo
+>> :punch.wa.us.dal.net 366 elfoo #asdfg :End of /NAMES list.
+<< MODE #asdfg
+>> :punch.wa.us.dal.net 324 elfoo #asdfg +
+--> chanquery mode
+<< WHO #asdfg
+>> :punch.wa.us.dal.net 329 elfoo #asdfg 1756734197
+--> event 329
+>> :punch.wa.us.dal.net 352 elfoo #asdfg ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip punch.wa.us.dal.net elfoo H@ :0 elfoo
+--> silent event who
+>> :punch.wa.us.dal.net 315 elfoo #asdfg :End of /WHO list.
+--> chanquery who end
+<< MODE #asdfg b
+>> :punch.wa.us.dal.net 368 elfoo #asdfg :End of Channel Ban List
+--> chanquery ban end
+>> :elfoo_!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#asdfg
+<< PING punch.wa.us.dal.net
+>> :punch.wa.us.dal.net PONG punch.wa.us.dal.net :elfoo
+--> lag pong
+<< PING punch.wa.us.dal.net
+>> :punch.wa.us.dal.net PONG punch.wa.us.dal.net :elfoo
+--> lag pong
+<< PING punch.wa.us.dal.net
+>> :punch.wa.us.dal.net PONG punch.wa.us.dal.net :elfoo
+--> lag pong
+<< QUIT :leaving

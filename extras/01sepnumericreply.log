@@ -1,0 +1,99 @@
+<< CAP LS
+<< NICK elfoo
+<< USER elfoo elfoo irc.dal.net :elfoo
+>> :atw.hu.eu.dal.net NOTICE AUTH :*** Looking up your hostname...
+>> :atw.hu.eu.dal.net NOTICE AUTH :*** Checking Ident
+>> :atw.hu.eu.dal.net NOTICE AUTH :*** Your forward and reverse DNS do not match, ignoring hostname. [203.149.201.182 != 203.149.201.178]
+>> :atw.hu.eu.dal.net NOTICE AUTH :*** Found your hostname
+>> :atw.hu.eu.dal.net NOTICE AUTH :*** No Ident response
+>> :atw.hu.eu.dal.net 001 elfoo :Welcome to the DALnet IRC Network elfoo!~elfoo@203.149.201.178
+<< MODE elfoo +i
+>> :atw.hu.eu.dal.net 002 elfoo :Your host is atw.hu.eu.dal.net, running version bahamut-2.2.3
+>> :atw.hu.eu.dal.net 003 elfoo :This server was created Tue Dec 12 2023 at 01:47:04 AM CET
+>> :atw.hu.eu.dal.net 004 elfoo atw.hu.eu.dal.net bahamut-2.2.3 aAbcCdefFghHiIjkKmnoOPrRsSwxXy AbceiIjklLmMnoOpPrRsStv beIjklov
+>> :atw.hu.eu.dal.net 005 elfoo NETWORK=DALnet SAFELIST MAXBANS=200 MAXCHANNELS=50 CHANNELLEN=32 KICKLEN=307 NICKLEN=30 TOPICLEN=307 MODES=6 CHANTYPES=# CHANLIMIT=#:50 PREFIX=(ohv)@%+ STATUSMSG=@%+ :are available on this server
+>> :atw.hu.eu.dal.net 005 elfoo CASEMAPPING=ascii WATCH=128 SILENCE=10 ELIST=cmntu EXCEPTS INVEX CHANMODES=beI,k,jl,ciPAmMnOprRsSt MAXLIST=b:200,e:100,I:100 TARGMAX=DCCALLOW:,JOIN:,KICK:4,KILL:20,NOTICE:20,PART:,PRIVMSG:20,WHOIS:,WHOWAS: :are available on this server
+>> :atw.hu.eu.dal.net 251 elfoo :There are 88 users and 6641 invisible on 39 servers
+>> :atw.hu.eu.dal.net 252 elfoo 86 :IRC Operators online
+>> :atw.hu.eu.dal.net 254 elfoo 3477 :channels formed
+>> :atw.hu.eu.dal.net 255 elfoo :I have 1314 clients and 1 servers
+>> :atw.hu.eu.dal.net 265 elfoo :Current local users: 1314 Max: 2113
+>> :atw.hu.eu.dal.net 266 elfoo :Current global users: 6729 Max: 12060
+>> :atw.hu.eu.dal.net NOTICE elfoo :*** Notice -- motd was last changed at 20/1/2021 6:02
+>> :atw.hu.eu.dal.net 375 elfoo :- atw.hu.eu.dal.net Message of the Day -
+>> :atw.hu.eu.dal.net 372 elfoo :-20/1/2021 6:02
+>> :atw.hu.eu.dal.net 372 elfoo :- Welcome to DALnet!  By connecting to this network, you agree to abide
+>> :atw.hu.eu.dal.net 372 elfoo :- by its acceptable use policy, available here: http://www.dal.net/aup
+>> :atw.hu.eu.dal.net 372 elfoo :-
+>> :atw.hu.eu.dal.net 372 elfoo :- Server Policies:
+>> :atw.hu.eu.dal.net 372 elfoo :-
+>> :atw.hu.eu.dal.net 372 elfoo :-    *   We reserve the right to deny access to this server without
+>> :atw.hu.eu.dal.net 372 elfoo :-        warning or explanation
+>> :atw.hu.eu.dal.net 372 elfoo :-    *   No malicious bots, including flood and nick/channel chasers
+>> :atw.hu.eu.dal.net 372 elfoo :-    *   No channel filler bots/clients/psybncs
+>> :atw.hu.eu.dal.net 372 elfoo :-          - A channel filler is a client, bnc, or bot which is
+>> :atw.hu.eu.dal.net 372 elfoo :-            connected just to fill a channel and make it look
+>> :atw.hu.eu.dal.net 372 elfoo :-            bigger
+>> :atw.hu.eu.dal.net 372 elfoo :-    *   Operator impersonation, spamming, or any other abuse will
+>> :atw.hu.eu.dal.net 372 elfoo :-        cause you to be banned from this server
+>> :atw.hu.eu.dal.net 372 elfoo :-    *   Abide by DALnet's AUP (www.dal.net/aup)
+>> :atw.hu.eu.dal.net 372 elfoo :-    *   Please have fun and enjoy DALnet!
+>> :atw.hu.eu.dal.net 372 elfoo :-
+>> :atw.hu.eu.dal.net 372 elfoo :-      ///admins////////////////////////////////////////
+>> :atw.hu.eu.dal.net 372 elfoo :-      //                                             //
+>> :atw.hu.eu.dal.net 372 elfoo :-      //  [ Hidden  - administrator             ]    //
+>> :atw.hu.eu.dal.net 372 elfoo :-      //                                             //
+>> :atw.hu.eu.dal.net 372 elfoo :-      //  [ koszik  - assistant administrator   ]    //
+>> :atw.hu.eu.dal.net 372 elfoo :-      //                                             //
+>> :atw.hu.eu.dal.net 372 elfoo :-      ///operators/////////////////////////////////////
+>> :atw.hu.eu.dal.net 372 elfoo :-      //                                             //
+>> :atw.hu.eu.dal.net 372 elfoo :-      //                                             //
+>> :atw.hu.eu.dal.net 372 elfoo :-      //                                             //
+>> :atw.hu.eu.dal.net 372 elfoo :-      /////////////////////////////////////////////////
+>> :atw.hu.eu.dal.net 372 elfoo :-
+>> :atw.hu.eu.dal.net 372 elfoo :-
+>> :atw.hu.eu.dal.net 372 elfoo :- For IRCop assistance, please /join #operhelp or message one of our
+>> :atw.hu.eu.dal.net 372 elfoo :- friendly server staff listed above.
+>> :atw.hu.eu.dal.net 372 elfoo :-
+>> :atw.hu.eu.dal.net 372 elfoo :- For multilingual information:  <http://docs.dal.net/>
+>> :atw.hu.eu.dal.net 372 elfoo :-
+>> :atw.hu.eu.dal.net 372 elfoo :- Thank you for using DALnet!  We hope you have a pleasant day.
+>> :atw.hu.eu.dal.net 372 elfoo :-
+>> :atw.hu.eu.dal.net 376 elfoo :End of /MOTD command.
+>> :elfoo MODE elfoo :+iH
+<< PING atw.hu.eu.dal.net
+>> :atw.hu.eu.dal.net PONG atw.hu.eu.dal.net :elfoo
+--> lag pong
+<< JOIN #asdfg
+>> :elfoo!~elfoo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#asdfg
+>> :atw.hu.eu.dal.net 353 elfoo = #asdfg :@elfoo
+>> :atw.hu.eu.dal.net 366 elfoo #asdfg :End of /NAMES list.
+<< MODE #asdfg
+>> :atw.hu.eu.dal.net 324 elfoo #asdfg +
+--> chanquery mode
+<< WHO #asdfg
+>> :atw.hu.eu.dal.net 329 elfoo #asdfg 1756736111
+--> event 329
+>> :atw.hu.eu.dal.net 352 elfoo #asdfg ~elfoo 5626-2a9c-92a4-503c-675e.149.203.ip atw.hu.eu.dal.net elfoo H@ :0 elfoo
+--> silent event who
+>> :atw.hu.eu.dal.net 315 elfoo #asdfg :End of /WHO list.
+--> chanquery who end
+<< MODE #asdfg b
+>> :atw.hu.eu.dal.net 368 elfoo #asdfg :End of Channel Ban List
+--> chanquery ban end
+<< PING atw.hu.eu.dal.net
+>> :atw.hu.eu.dal.net PONG atw.hu.eu.dal.net :elfoo
+--> lag pong
+<< PING atw.hu.eu.dal.net
+>> :atw.hu.eu.dal.net PONG atw.hu.eu.dal.net :elfoo
+--> lag pong
+<< PING atw.hu.eu.dal.net
+>> :atw.hu.eu.dal.net PONG atw.hu.eu.dal.net :elfoo
+--> lag pong
+<< PING atw.hu.eu.dal.net
+>> :atw.hu.eu.dal.net PONG atw.hu.eu.dal.net :elfoo
+--> lag pong
+<< PING atw.hu.eu.dal.net
+>> :atw.hu.eu.dal.net PONG atw.hu.eu.dal.net :elfoo
+--> lag pong
+<< QUIT :leaving

@@ -1,0 +1,187 @@
+<< CAP LS
+<< NICK anteo
+<< USER anteo anteo irc.dal.net :anteo
+>> :sakura.jp.as.dal.net NOTICE AUTH :*** Looking up your hostname...
+>> :sakura.jp.as.dal.net NOTICE AUTH :*** Checking Ident
+>> :sakura.jp.as.dal.net NOTICE AUTH :*** Your forward and reverse DNS do not match, ignoring hostname. [203.149.201.182 != 203.149.201.178]
+>> :sakura.jp.as.dal.net NOTICE AUTH :*** Found your hostname
+>> :sakura.jp.as.dal.net NOTICE AUTH :*** No Ident response
+>> :sakura.jp.as.dal.net 433 * anteo :Nickname is already in use.
+<< NICK anteo_
+>> :sakura.jp.as.dal.net 001 anteo_ :Welcome to the DALnet IRC Network anteo_!~anteo@203.149.201.178
+<< MODE anteo_ +i
+<< WHOIS anteo
+>> :sakura.jp.as.dal.net 002 anteo_ :Your host is sakura.jp.as.dal.net, running version bahamut-2.2.4
+>> :sakura.jp.as.dal.net 003 anteo_ :This server was created Sat Nov 23 2024 at 20:05:50 UTC
+>> :sakura.jp.as.dal.net 004 anteo_ sakura.jp.as.dal.net bahamut-2.2.4 aAbcCdefFghHiIjkKmnoOPrRsSwxXy AbceiIjklLmMnoOpPrRsStv beIjklov
+>> :sakura.jp.as.dal.net 005 anteo_ NETWORK=DALnet SAFELIST MAXBANS=200 MAXCHANNELS=50 CHANNELLEN=32 KICKLEN=307 NICKLEN=30 TOPICLEN=307 MODES=6 CHANTYPES=# CHANLIMIT=#:50 PREFIX=(ohv)@%+ STATUSMSG=@%+ :are available on this server
+>> :sakura.jp.as.dal.net 005 anteo_ CASEMAPPING=ascii WATCH=128 SILENCE=10 ELIST=cmntu EXCEPTS INVEX CHANMODES=beI,k,jl,ciPAmMnOprRsSt MAXLIST=b:200,e:100,I:100 TARGMAX=DCCALLOW:,JOIN:,KICK:4,KILL:20,NOTICE:20,PART:,PRIVMSG:20,WHOIS:,WHOWAS: :are available on this server
+>> :sakura.jp.as.dal.net 251 anteo_ :There are 90 users and 6619 invisible on 39 servers
+>> :sakura.jp.as.dal.net 252 anteo_ 84 :IRC Operators online
+>> :sakura.jp.as.dal.net 254 anteo_ 3455 :channels formed
+>> :sakura.jp.as.dal.net 255 anteo_ :I have 1369 clients and 1 servers
+>> :sakura.jp.as.dal.net 265 anteo_ :Current local users: 1369 Max: 3677
+>> :sakura.jp.as.dal.net 266 anteo_ :Current global users: 6709 Max: 12059
+>> :sakura.jp.as.dal.net NOTICE anteo_ :*** Notice -- motd was last changed at 23/1/2024 15:37
+>> :sakura.jp.as.dal.net 375 anteo_ :- sakura.jp.as.dal.net Message of the Day -
+>> :sakura.jp.as.dal.net 372 anteo_ :-23/1/2024 15:37
+>> :sakura.jp.as.dal.net 372 anteo_ :- =====================================================================
+>> :sakura.jp.as.dal.net 372 anteo_ :-
+>> :sakura.jp.as.dal.net 372 anteo_ :- Server: sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net 372 anteo_ :- Plaintext ports: 6660 - 6669, 7000
+>> :sakura.jp.as.dal.net 372 anteo_ :- SSL/TLS port: 6697
+>> :sakura.jp.as.dal.net 372 anteo_ :- Both IPv4 and IPv6 are supported on this server
+>> :sakura.jp.as.dal.net 372 anteo_ :-
+>> :sakura.jp.as.dal.net 372 anteo_ :- Server Administrator: xPsycho (xpsycho@DAL.net)
+>> :sakura.jp.as.dal.net 372 anteo_ :- Operators: toolman (toolman@DAL.net)
+>> :sakura.jp.as.dal.net 372 anteo_ :-
+>> :sakura.jp.as.dal.net 372 anteo_ :-
+>> :sakura.jp.as.dal.net 372 anteo_ :-            __.--~~.,-.__
+>> :sakura.jp.as.dal.net 372 anteo_ :-            `~-._.-(`-.__`-.
+>> :sakura.jp.as.dal.net 372 anteo_ :-                    \    `~~`
+>> :sakura.jp.as.dal.net 372 anteo_ :-               .--./ \
+>> :sakura.jp.as.dal.net 372 anteo_ :-              /#   \  \.--.
+>> :sakura.jp.as.dal.net 372 anteo_ :-              \    /  /#   \
+>> :sakura.jp.as.dal.net 372 anteo_ :-          jgs  '--'   \    /
+>> :sakura.jp.as.dal.net 372 anteo_ :-                       '--'
+>> :sakura.jp.as.dal.net 372 anteo_ :-
+>> :sakura.jp.as.dal.net 372 anteo_ :- This server is proudly sponsored by DataPacket.com
+>> :sakura.jp.as.dal.net 372 anteo_ :-       <https://www.datapacket.com/>
+>> :sakura.jp.as.dal.net 372 anteo_ :-
+>> :sakura.jp.as.dal.net 372 anteo_ :- =====================================================================
+>> :sakura.jp.as.dal.net 372 anteo_ :-
+>> :sakura.jp.as.dal.net 372 anteo_ :- Welcome to DALnet!  By connecting to this network, you agree to abide
+>> :sakura.jp.as.dal.net 372 anteo_ :- by its acceptable use policy available at: https://www.dal.net/aup
+>> :sakura.jp.as.dal.net 372 anteo_ :-
+>> :sakura.jp.as.dal.net 372 anteo_ :- We reserve the right to deny access to this server to anyone at any
+>> :sakura.jp.as.dal.net 372 anteo_ :- time without warning or explanation.
+>> :sakura.jp.as.dal.net 372 anteo_ :-
+>> :sakura.jp.as.dal.net 372 anteo_ :- To help prevent abuse, this server will check your PC for open proxy
+>> :sakura.jp.as.dal.net 372 anteo_ :- servers when you connect. If you do not want this test performed, do
+>> :sakura.jp.as.dal.net 372 anteo_ :- not connect.
+>> :sakura.jp.as.dal.net 372 anteo_ :-
+>> :sakura.jp.as.dal.net 372 anteo_ :- =====================================================================
+>> :sakura.jp.as.dal.net 372 anteo_ :-
+>> :sakura.jp.as.dal.net 372 anteo_ :- If you need general IRC assistance or help with services commands,
+>> :sakura.jp.as.dal.net 372 anteo_ :- please view our multilingual documentation at http://docs.dal.net/
+>> :sakura.jp.as.dal.net 372 anteo_ :-
+>> :sakura.jp.as.dal.net 372 anteo_ :- If your question is not answered after reading our documention,
+>> :sakura.jp.as.dal.net 372 anteo_ :- please /join #help for general questions or /join #OperHelp if you
+>> :sakura.jp.as.dal.net 372 anteo_ :- require the immediate assistance of an IRC Operator.
+>> :sakura.jp.as.dal.net 372 anteo_ :-
+>> :sakura.jp.as.dal.net 372 anteo_ :- =====================================================================
+>> :sakura.jp.as.dal.net 372 anteo_ :-
+>> :sakura.jp.as.dal.net 372 anteo_ :- Thank you, and enjoy your day!
+>> :sakura.jp.as.dal.net 372 anteo_ :-
+>> :sakura.jp.as.dal.net 372 anteo_ :- =====================================================================
+>> :sakura.jp.as.dal.net 372 anteo_ :-
+>> :sakura.jp.as.dal.net 376 anteo_ :End of /MOTD command.
+>> :anteo_ MODE anteo_ :+iH
+>> :sakura.jp.as.dal.net 311 anteo_ anteo ~anteo 5626-2a9c-92a4-503c-675e.149.203.ip * :anteo
+--> nickfind event whois
+>> :sakura.jp.as.dal.net 319 anteo_ anteo :@#hello
+--> event empty
+>> :sakura.jp.as.dal.net 312 anteo_ anteo bitcoin.uk.eu.dal.net :i like turtles
+--> event empty
+>> :sakura.jp.as.dal.net 318 anteo_ anteo :End of /WHOIS list.
+--> event empty
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo_
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo_
+--> lag pong
+<< JOIN #hello
+>> :anteo_!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#hello
+>> :sakura.jp.as.dal.net 353 anteo_ = #hello :anteo_ @anteo
+>> :sakura.jp.as.dal.net 366 anteo_ #hello :End of /NAMES list.
+<< MODE #hello
+>> :sakura.jp.as.dal.net 324 anteo_ #hello +
+--> chanquery mode
+<< WHO #hello
+>> :sakura.jp.as.dal.net 329 anteo_ #hello 1756819535
+--> event 329
+>> :sakura.jp.as.dal.net 352 anteo_ #hello ~anteo 5626-2a9c-92a4-503c-675e.149.203.ip sakura.jp.as.dal.net anteo_ H :0 anteo
+--> silent event who
+>> :sakura.jp.as.dal.net 352 anteo_ #hello ~anteo 5626-2a9c-92a4-503c-675e.149.203.ip bitcoin.uk.eu.dal.net anteo H@ :6 anteo
+--> silent event who
+>> :sakura.jp.as.dal.net 315 anteo_ #hello :End of /WHO list.
+--> chanquery who end
+<< MODE #hello b
+>> :sakura.jp.as.dal.net 368 anteo_ #hello :End of Channel Ban List
+--> chanquery ban end
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo_
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo_
+--> lag pong
+<< PING sakura.jp.as.dal.net
+>> :sakura.jp.as.dal.net PONG sakura.jp.as.dal.net :anteo_
+--> lag pong
+<< PART #hello
+>> :anteo_!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip PART #hello
+<< JOIN #hello
+>> :anteo_!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#hello
+>> :sakura.jp.as.dal.net 353 anteo_ = #hello :anteo_ @anteo
+>> :sakura.jp.as.dal.net 366 anteo_ #hello :End of /NAMES list.
+<< MODE #hello
+>> :sakura.jp.as.dal.net 324 anteo_ #hello +
+--> chanquery mode
+<< WHO #hello
+>> :sakura.jp.as.dal.net 329 anteo_ #hello 1756819535
+--> event 329
+>> :sakura.jp.as.dal.net 352 anteo_ #hello ~anteo 5626-2a9c-92a4-503c-675e.149.203.ip sakura.jp.as.dal.net anteo_ H :0 anteo
+--> silent event who
+>> :sakura.jp.as.dal.net 352 anteo_ #hello ~anteo 5626-2a9c-92a4-503c-675e.149.203.ip bitcoin.uk.eu.dal.net anteo H@ :6 anteo
+--> silent event who
+>> :sakura.jp.as.dal.net 315 anteo_ #hello :End of /WHO list.
+--> chanquery who end
+<< MODE #hello b
+>> :sakura.jp.as.dal.net 368 anteo_ #hello :End of Channel Ban List
+--> chanquery ban end
+<< PART #hello
+>> :anteo_!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip PART #hello
+<< JOIN #hello
+>> :anteo_!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#hello
+>> :sakura.jp.as.dal.net 353 anteo_ = #hello :anteo_ @anteo
+>> :sakura.jp.as.dal.net 366 anteo_ #hello :End of /NAMES list.
+<< MODE #hello
+>> :sakura.jp.as.dal.net 324 anteo_ #hello +
+--> chanquery mode
+<< WHO #hello
+>> :sakura.jp.as.dal.net 329 anteo_ #hello 1756819535
+--> event 329
+>> :sakura.jp.as.dal.net 352 anteo_ #hello ~anteo 5626-2a9c-92a4-503c-675e.149.203.ip sakura.jp.as.dal.net anteo_ H :0 anteo
+--> silent event who
+>> :sakura.jp.as.dal.net 352 anteo_ #hello ~anteo 5626-2a9c-92a4-503c-675e.149.203.ip bitcoin.uk.eu.dal.net anteo H@ :6 anteo
+--> silent event who
+>> :sakura.jp.as.dal.net 315 anteo_ #hello :End of /WHO list.
+--> chanquery who end
+<< MODE #hello b
+>> :sakura.jp.as.dal.net 368 anteo_ #hello :End of Channel Ban List
+--> chanquery ban end
+<< PART #hello :bye
+>> :anteo_!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip PART #hello :bye
+<< JOIN #hello
+>> :anteo_!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip JOIN :#hello
+>> :sakura.jp.as.dal.net 353 anteo_ = #hello :anteo_ @anteo
+>> :sakura.jp.as.dal.net 366 anteo_ #hello :End of /NAMES list.
+<< MODE #hello
+>> :sakura.jp.as.dal.net 324 anteo_ #hello +
+--> chanquery mode
+<< WHO #hello
+>> :sakura.jp.as.dal.net 329 anteo_ #hello 1756819535
+--> event 329
+>> :sakura.jp.as.dal.net 352 anteo_ #hello ~anteo 5626-2a9c-92a4-503c-675e.149.203.ip sakura.jp.as.dal.net anteo_ H :0 anteo
+--> silent event who
+>> :sakura.jp.as.dal.net 352 anteo_ #hello ~anteo 5626-2a9c-92a4-503c-675e.149.203.ip bitcoin.uk.eu.dal.net anteo H@ :6 anteo
+--> silent event who
+>> :sakura.jp.as.dal.net 315 anteo_ #hello :End of /WHO list.
+--> chanquery who end
+<< MODE #hello b
+>> :sakura.jp.as.dal.net 368 anteo_ #hello :End of Channel Ban List
+--> chanquery ban end
+<< PART #hello :bye I will see y'all again
+>> :anteo_!~anteo@5626-2a9c-92a4-503c-675e.149.203.ip PART #hello :bye I will see y'all again
+<< QUIT :leaving
